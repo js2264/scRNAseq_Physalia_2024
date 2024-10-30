@@ -1,0 +1,125 @@
+# Welcome {-}
+
+```{r echo=FALSE}
+source("_common.R")
+.gh_url <- file.path('https://github.com', rmarkdown::metadata[['github-repo']])
+```
+
+This is the landing page for the **"Single-cell RNA-seq analysis with R/Bioconductor"** 
+workshop, ed. 2024.  
+
+`r rebook::openingDetails(Copyright='J. Serizay, O. Ashenberg & F. Almeida-Silva', Source=.gh_url)`
+
+## Program {-}
+
+| **Day** | **Time**          | **Session**                                  | **Instructor** |
+|---------|--------------------|----------------------------------------------|----------------|
+| **Day 1** | 14:00 - 15:00   | [Lecture 1: Introduction to scRNAseq analysis](content/day1/Lecture1_introduction.qmd) | Jacques        |
+|          | 15:10 - 16:10    | [Lecture 2: From sequencing reads to expression matrices](content/day1/Lecture2_Bcl2matrix.qmd) | Jacques |
+|          | 16:10 - 17:10    | **Break**                                        |                |
+|          | 17:10 - 18:30    | [Lab 1: Familiarizing with AWS instance](content/day1/Lab1_Intro.qmd)       | Jacques        |
+|          | 18:40 - 20:00    | [Lab 2: From .bcl to count matrix](Lab2_processingreads.qmd)             | Fabricio       |
+| **Day 2** | 14:00 - 14:50   | Flash talks                                 |                |
+|          | 15:00 - 16:00    | [Lecture 3: Quality control for scRNAseq data](content/day2/Lecture3_qualitycontrol.qmd) | Jacques       |
+|          | 16:00 - 17:00    | **Break**                                        |                |
+|          | 17:00 - 18:25    | [Lab 3: Introduction to R/Bioconductor](content/day2/Lab3_Rbioc.qmd)        | Fabricio       |
+|          | 18:35 - 20:00    | [Lab 4: scRNAseq data wrangling](content/day2/Lab4_data_wrangling_scRNAseq.qmd)    | Fabricio       |
+| **Day 3** | 14:00 - 15:30   | [Lecture 4: Identifying cell populations](content/day3/Lecture4_clustering.qmd)      | Jacques        |
+|          | 15:40 - 17:00    | [Lab 5: Dimension reduction, clustering, and annotations](content/day3/Lab5_clustering.qmd) | Jacques |
+|          | 17:00 - 18:00    | **Break**                                        |                |
+|          | 18:00 - 19:00    | [Lecture 5: Data integration and batch effect correction](content/day3/Lecture5_batchcorrection.qmd) | Orr or Jacques |
+|          | 19:10 - 20:00    | [Lab 6: Batch correction](content/day3/Lab6_batch_correction.qmd)                      | Orr            |
+| **Day 4** | 14:00 - 15:00   | [Lecture 6: Advances in single-cell genomics - The epigenome](content/day4/Lecture7_ATAC.qmd) | Orr    |
+|          | 15:10 - 16:20    | [Lab 7: scATACseq analysis workflow](content/day4/Lab8_atac-seq.qmd) | Orr          |
+|          | 16:20 - 17:20    | **Break**                                        |                |
+|          | 17:20 - 18:20    | [Lecture 7: Trajectories and pseudotimes](content/day4/Lecture6_pseudotime.qmd)      | Orr            |
+|          | 18:30 - 20:00    | [Lab 8: Pseudotime analyses](content/day4/Lab7_pseudotime.qmd)                   | Fabricio       |
+| **Day 5** | 14:00 - 15:00   | [Lecture 8: Advances in single-cell genomics - Spatial transcriptomics](content/day5/Lecture8_spatial-transcriptomics.qmd) | Orr |
+|          | 15:10 - 16:20    | Group Project: Project work | Jacques        |
+|          | 17:20 - 19:00    | Group Project: Project work | Jacques        |
+|          | 19:00 - 20:00    | Wrap-Up: Finalize Projects and Discussion    |                |
+
+More details about the program can be found [here](content/program.html). All the times 
+are in Berlin time (CET).
+
+## What {-}
+
+This course will introduce biologists and bioinformaticians to the field of 
+single-cell RNA sequencing. 
+We will cover a range of software and analysis workflows that extend 
+over the spectrum from the best practices in the filtering scRNA-seq data  
+to the downstream analysis of cell clusters and temporal ordering. 
+This course will help the attendees gain accurate insights in pre-processing, 
+analysis and interpretation of scRNA-seq data.
+
+We will start by introducing general concepts about single-cell RNA-sequencing. 
+From there, we will then continue to describe the main analysis steps to go 
+from raw sequencing data to processed and usable data. We will present 
+classical analysis workflows, their output and the possible paths to 
+investigate downstream of this.  
+
+Throughout the workshop, `bash` tools and `R/Bioconductor` packages will 
+be used to analyse datasets and learn new approaches. 
+
+## When {-}
+
+From November 4 to November 8, 2025.
+
+## Where {-}
+
+This course will be held online.
+
+## How {-}
+
+The course is structured in modules over five days. 
+Each day will include formal lectures covering the key concepts required to 
+understand scRNA-seq analysis. 
+The remainder of each day will consist in practical hands-on sessions focusing 
+on analysis of scRNA-seq data. 
+These sessions will involve a combination of both mirroring exercises with 
+the instructor to demonstrate a skill, as well as applying these skills on 
+your own to complete individual exercises.  
+During and after each exercise, interpretation of results will be discussed 
+as a group.
+
+## Who {-}
+
+The course will be mostly beneficial to those who have, or will shortly have, 
+scRNA-seq data ready to analyse.  
+
+The material is suitable both for experimentalists who want to learn 
+more about data-analysis as well as computational biologists 
+who want to learn about scRNA-seq methods.  
+
+Examples demonstrated in this course can be applied to any experimental protocol 
+or biological system.
+
+The requirements for this course are: 
+
+1. Working knowledge of Unix / command line interface (managing files, running programs, reading manuals!). Basic bash commands (`cd`, `ls`, `...`) and CLI usage will _not_ be covered in this course. We advice attendees to not register if they lack fundamental experience in CLI.
+2. Programming experience in `R` (writing a function, basic I/O operations, variable types, using packages). `Bioconductor` experience is a plus. 
+3. Familiarity with next-generation sequencing data and its analyses (using alignment and quantification tools for bulk sequencing data)
+
+## Why {-}
+
+At the end of this course, you should be able to:
+
+- Understand the pros/cons of different single-cell RNA-seq methods
+- Process and QC of scRNA-seq data
+- Normalize scRNA-seq data
+- Correct for batch effects
+- Visualise the data and applying dimensionality reduction
+- Perform cell clustering and annotation 
+- Perform differential gene expression analysis
+- Infer cell trajectory and pseudotime, and perform temporal differential expression 
+
+Throughout the course, we will also have a focus on reproducible research, documented content and interactive reports.
+
+## Instructors {-}
+
+[Jacques Serizay](mailto:jacques.serizay@pasteur.fr)
+
+[Orr Ashenberg](mailto:orr@broadinstitute.org)
+
+[Fabrício Almeida-Silva](mailto:fabricio_almeidasilva@hotmail.com)
+

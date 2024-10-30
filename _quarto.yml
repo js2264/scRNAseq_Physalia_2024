@@ -1,0 +1,85 @@
+project:
+  type: book
+  output-dir: docs
+
+IP: 35.87.99.161
+
+book:
+  title: "Single-cell RNAseq analysis with R/Bioconductor"
+  page-footer:
+    left: |
+      Single-cell RNAseq analysis with R/Bioconductor |  
+      J. Serizay, O. Ashenberg, F. Almeida-Silva
+    right: |
+      This book was built with <a href="https://quarto.org/">Quarto</a>.
+  site-url: https://js2264.github.io/scRNAseq_Physalia_2024/
+  repo-url: https://github.com/js2264/scRNAseq_Physalia_2024/
+  repo-branch: main
+  repo-actions: [edit, issue]
+  chapters:
+    - index.qmd
+    - content/program.qmd
+    - content/Rstudio.qmd
+    - content/prerequisites.qmd
+    - part: "Day 1"
+      chapters:
+        - content/day1/Lecture1_introduction.qmd
+        - content/day1/Lecture2_Bcl2matrix.qmd
+        - content/day1/Lab1_Intro.qmd
+        - content/day1/Lab2_processingreads.qmd
+    - part: "Day 2"
+      chapters:
+        - content/day2/Lecture3_qualitycontrol.qmd
+        - content/day2/Lab3_Rbioc.qmd
+        - content/day2/Lab4_data_wrangling_scRNAseq.qmd
+    - part: "Day 3"
+      chapters:
+        - content/day3/Lecture4_clustering.qmd
+        - content/day3/Lab5_clustering.qmd
+        - content/day3/Lecture5_batchcorrection.qmd
+        - content/day3/Lab6_batch_correction.qmd
+    - part: "Day 4"
+      chapters:
+        - content/day4/Lecture6_pseudotime.qmd
+        - content/day4/Lab7_pseudotime.qmd
+        - content/day4/Lecture7_ATAC.qmd
+        - content/day4/Lab8_atac-seq.qmd
+    - part: "Day 5"
+      chapters:
+        - content/day5/Lecture8_spatial-transcriptomics.qmd
+    - content/extra.qmd
+
+format:
+  html:
+    default-image-extension: pdf
+    theme:
+      - yeti
+      - theme.scss
+    code-link: true
+    author-meta: "J. Serizay, O. Ashenberg & F. Almeida-Silva"
+    highlight-style: atom-one-dark.theme
+    citations-hover: true
+    toc: true
+    toc-float: 
+      collapsed: false
+    toc-depth: 3
+    freeze: auto
+    website: 
+      sidebar: 
+        search: true
+        collapse-level: 5
+  pdf:
+    default-image-extension: pdf
+    theme:
+      - yeti
+      - OHCA.scss
+    code-link: true
+    author-meta: "J. Serizay, O. Ashenberg & F. Almeida-Silva"
+    documentclass: scrbook
+    papersize: a4
+    toc: true
+    toc-title: Contents
+    number-sections: true
+    colorlinks: true
+
+editor: visual

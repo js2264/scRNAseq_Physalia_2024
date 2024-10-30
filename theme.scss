@@ -1,0 +1,208 @@
+/*-- scss:defaults --*/
+
+$primary: #008CBA !default;
+
+/*-- scss:rules --*/
+
+.sidebar-title {
+  // color: #480F1F;
+}
+
+img.quarto-cover-image {
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+}
+
+/* Central column page ------------------------------------------------------ */
+
+@media (min-width: 992px){
+body.floating .page-columns {
+    display: grid;
+    gap: 0;
+    // grid-template-columns: [screen-start] 1.5em [screen-start-inset] 5fr [page-start] minmax(25px, 50px) [page-start-inset] minmax(50px, 150px) [body-start-outset] minmax(25px, 50px) [body-start] 1.5em [body-content-start] minmax(500px, calc( 1000px - 3em )) [body-content-end] 1.5em [body-end] minmax(25px, 50px) [body-end-outset] minmax(50px, 150px) [page-end-inset] minmax(25px, 50px) [page-end] 5fr [screen-end-inset] 1.5em [screen-end];
+    grid-template-columns: [screen-start] 0em [screen-start-inset] 0fr [page-start] minmax(300px, 25%) [body-start-outset] 0em [body-start] 1.5em [body-content-start] minmax(500px, 50%) [body-content-end] 1.5em [body-end] 0em [body-end-outset] minmax(50px, 15%) [page-end-inset] minmax(25px, 50px) [page-end] 0fr [screen-end-inset] 0em [screen-end];
+    grid-template-columns: [screen-start] 0em [screen-start-inset] 0em [page-start] minmax(300px, 25%) [body-start-outset] 0em [body-start] 3.5em [body-content-start] minmax(500px, 50%) [body-content-end] 1.5em [body-end] 0em [body-end-outset] minmax(50px, 15%) [page-end-inset] minmax(25px, 50px) [page-end] 0fr [screen-end-inset] 0em [screen-end];
+}}
+main {
+    margin-top: 0em;
+}
+div.sidebar.sidebar-navigation.rollup.quarto-sidebar-toggle-contents, nav.sidebar.sidebar-navigation:not(.rollup) {
+  background-color: #f1f1f1;
+}
+
+/* Left navbar ------------------------------------------------------ */
+
+div.sidebar-item-container .active, div.sidebar-item-container .show>.nav-link, div.sidebar-item-container .sidebar-link>code {
+  // color: #480f1f;
+  font-weight: 800;
+}
+
+.text-start {
+  text-align: left !important;
+  font-weight: 800;
+}
+
+/* right navbar ------------------------------------------------------ */
+
+
+.sidebar nav[role=doc-toc] ul>li>a.active, .sidebar nav[role=doc-toc] ul>li>ul>li>a.active {
+  // border-left: 4px solid #480f1f;
+  border-left: 4px solid;
+  // color: #480f1f !important;
+  font-weight: 800;
+}
+
+#toc-title+ ul > li > .nav-link {
+  font-weight: 800;
+}
+
+/* Headings ------------------------------------------------------ */
+
+h2 {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+h3 { margin-top: 1.5em; font-size: 1.2rem; }
+h4 { margin-top: 1.5em; font-size: 1.1rem; }
+h5 { margin-top: 1.5em; font-size: 1rem; }
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5 {
+  line-height: 2;
+  font-weight: 700;
+}
+
+.quarto-section-identifier {
+  color: #6C6C6C;
+  font-weight: normal;
+}
+
+/* Underlining links ------------------------------------ */
+
+.citation a, .footnote-ref {
+  text-decoration: underline;
+}
+
+/* Put a border around session info print ------------------------------------------------ */
+
+#session-info code, p+ pre code {
+  // border: 1px solid black
+}
+
+/* Code colors ------------------------------------------------------------------------- */
+
+// Text color of `backticked` words
+code {
+  color: #008CBA;
+}
+
+// Border of `backticked` words
+li code , .anchored code , p code , .flex-fill code {
+  // border: 1px solid #008CBA;
+}
+kbd, samp {
+  // border: 1px solid;
+}
+
+// background color of chunks of code *WITH A SPECIFIED LANGUAGE*
+.code-with-filename-file, .code-with-copy {
+  border: 1px solid rgb(0 0 0 / 65%);
+}
+
+.code-with-filename {
+  background-color: #c0c0c080;
+  border-color: #c0c0c080;
+}
+.code-with-filename .code-with-filename-file, .code-with-filename .code-with-filename-file pre {
+  background-color: #00000000;
+}
+
+.code-with-filename div.sourceCode, .reveal .code-with-filename div.sourceCode {
+  margin-top: 0;
+  border-radius: 0%;
+}
+
+.code-with-filename code {
+  background-image: none;
+}
+
+div.sourceCode {
+  border: none;
+  background-color: #f2f2f2;
+}
+
+pre.sourceCode {
+  border: none;
+  font-size: .875em;
+  overflow: visible !important;
+}
+
+.cell-output-stdout code , .code code {
+  background-color: transparent;
+  font-size: inherit;
+  color: inherit;
+  word-break: normal;
+  border: 1px solid rgb(0 0 0 / 65%);
+}
+
+
+/* Printing ------------------------------------------------ */
+
+@media print {
+  :root {
+    font-size: 11pt;
+  }
+  #quarto-sidebar, #TOC, .nav-page {
+    display: none;
+  }
+  .page-columns .content {
+    grid-column-start: page-start;
+  }
+  .fixed-top {
+    position: relative;
+  }
+  .panel-caption, .figure-caption, figcaption {
+    color: #666;
+  }
+}
+
+
+
+
+div.callout-question.callout {
+  border-left-color: #0df0a1;
+}
+
+div.callout-question.callout-style-default>.callout-header {
+  background-color: #bfebce;
+}
+
+.callout-question.icon.callout-style-default div.callout-icon-container {
+  padding-top: 0.1em;
+  padding-right: 0.35em;
+}
+
+div.callout-answer.callout {
+  border-left-color: #0dcaf0;
+}
+
+div.callout-answer.callout-style-default>.callout-header {
+  background-color: #bfe4eb;
+}
+
+.callout-answer.icon .callout-icon {
+  display: unset !important;
+}
+
+div.callout-answer.icon.callout-captioned .callout-icon::before {
+  // background-image: $icon;
+}
+
+.callout-answer.icon.callout-style-default div.callout-icon-container {
+  padding-top: 0.1em;
+  padding-right: 0.35em;
+}
+
+
+
+
+.flexbox { flex-grow: 1; border: none; margin: 0; padding: 0; }
