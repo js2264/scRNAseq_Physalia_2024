@@ -513,7 +513,7 @@ plot_grid(p[[1]], p[[2]])
 :::
 
 
-```{r eval = FALSE, echo = FALSE, batchcorrect_liger7, filename = "R"}
+```{r eval = FALSE, echo = FALSE, batchcorrect_liger7}
 # Let's look to see how the adjusted rand index changed compared to using no batch correction.
 tech <- unlist(lapply(1:length(data.liger@H), function(x) { 
   rep(names(data.liger@H)[x], nrow(data.liger@H[[x]]))}))
