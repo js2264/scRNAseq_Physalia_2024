@@ -20,7 +20,7 @@ The estimated time for this lab is around 1h30.
 :::
 
 ```{r eval = TRUE, echo = FALSE, warning = FALSE, error = FALSE, comment = FALSE, message = FALSE}
-knitr::opts_chunk$set(eval = FALSE)
+knitr::opts_chunk$set(eval = TRUE)
 ```
 
 In this lab, we will look at different single cell RNA-seq datasets collected from pancreatic islets. We will look at how different batch correction methods affect our data analysis.
@@ -298,7 +298,7 @@ ari$tech <- plyr::mapvalues(ari$tech, from = c("celseq", "celseq2", "fluidigmc1"
 adj.rand.index(as.numeric(ari$tech), as.numeric(ari$seurat_clusters))
 ```
 
-### Batch correction: canonical correlation analysis (CCA)+ mutual nearest neighbors (MNN) using Seurat v3
+## Batch correction: canonical correlation analysis (CCA)+ mutual nearest neighbors (MNN)
 
 We will now use Seurat to see to what extent it can remove potential batch effects.
 
@@ -404,28 +404,25 @@ FeaturePlot(gcdata, genes, ncol = 4)
 
 :::
 
-### Batch correction: integrative non-negative matrix factorization (NMF) using LIGER
+## Batch correction: integrative non-negative matrix factorization (NMF)
 
 Here we use integrative non-negative matrix factorization to see to what extent it can remove potential batch effects.
 
 The important parameters in the batch correction are the number of factors (k), the penalty parameter (lambda), and the clustering resolution. The number of factors sets the number of factors (consisting of shared and dataset-specific factors) used in factorizing the matrix. The penalty parameter sets the balance between factors shared across the batches and factors specific to the individual batches. The default setting of lambda=5.0 is usually used by the Macosko lab. Resolution=1.0 is used in the Louvain clustering of the shared neighbor factors that have been quantile normalized.
 
-```{r eval = FALSE, batchcorrect_liger, filename = "R"}
+```{r eval = TRUE, batchcorrect_liger, filename = "R"}
 ob.list <- list("celseq" = celseq, "celseq2" = celseq2, "fluidigmc1" = fluidigmc1, "smartseq2" = smartseq2)
 
 # Create a LIGER object with raw counts data from each batch.
 library(rliger)
-data.liger <- createLiger(
-  sapply(ob.list, function(data) data[['RNA']]@counts[, colnames(data)]), 
-  remove.missing = FALSE
-) 
+data.liger <- createLiger(sapply(ob.list, function(data) LayerData(data[['RNA']], 'counts')[, colnames(data)]))
 
 # Normalize gene expression for each batch.
 data.liger <- rliger::normalize(data.liger)
 
 # Find variable genes for LIGER analysis.
-data.liger <- selectGenes(data.liger, var.thresh = 0.1, do.plot = F)
-print(length(data.liger@var.genes))
+data.liger <- selectGenes(data.liger, var.thresh = 0.1, do.plot = FALSE)
+print(length(varFeatures(data.liger)))
 ```
 
 
@@ -439,7 +436,7 @@ Why does LIGER not center the data?
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
-```{r eval = FALSE, batchcorrect_liger2, filename = "R"}
+```{r eval = TRUE, batchcorrect_liger2, filename = "R"}
 data.liger <- scaleNotCenter(data.liger)
 ```
 
@@ -455,7 +452,7 @@ Use the `runIntegration` function to perform the integrative non-negative matrix
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
-```{r eval = FALSE, batchcorrect_liger3, filename = "R"}
+```{r eval = TRUE, batchcorrect_liger3, filename = "R"}
 data.liger <- runIntegration(data.liger) 
 ```
 
@@ -463,10 +460,10 @@ data.liger <- runIntegration(data.liger)
 
 What do matrices H, V, and W represent, and what are their dimensions?
 
-```{r eval = FALSE, batchcorrect_liger4, filename = "R"}
-dim(data.liger@H$celseq)
-dim(data.liger@V$celseq)
-dim(data.liger@W)
+```{r eval = TRUE, batchcorrect_liger4, filename = "R"}
+dim(getMatrix(data.liger, "H")$celseq)
+dim(getMatrix(data.liger, "V")$celseq)
+dim(getMatrix(data.liger, "W"))
 ```
 
 :::
@@ -478,17 +475,25 @@ Next, do clustering of cells in shared nearest factor space.
 
 Do quantile normalization, cluster quantile normalized data
 
-
 ::: {.callout-answer .icon .callout-note collapse=true}
 
-```{r eval = FALSE, batchcorrect_liger5, filename = "R"}
+```{r eval = TRUE, batchcorrect_liger5, filename = "R"}
 data.liger <- quantileNorm(data.liger, resolution = 1) 
-dim(data.liger@H.norm)
+data.liger <- runCluster(data.liger)
 ```
 
 :::
 
 What are the dimensions of H.norm. What does this represent? 
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r eval = TRUE, batchcorrect_liger6, filename = "R"}
+dim(getMatrix(data.liger, "H.norm"))
+```
+
+:::
+
 
 :::
 
@@ -501,43 +506,34 @@ Run UMAP on the quantile normalized data and visualize the clusters.
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
-```{r eval = FALSE, batchcorrect_liger6, filename = "R"}
+```{r eval = TRUE, batchcorrect_liger6b, filename = "R"}
 data.liger <- runUMAP(data.liger, n_neighbors = 15, min_dist = 0.5)
-p <- plotByDatasetAndCluster(data.liger, return.plots = TRUE) 
-print(p[[1]])
-plot_grid(p[[1]], p[[2]])
+p <- plotByDatasetAndCluster(data.liger) 
+p
 ```
 
 :::
 
 :::
 
+Here is the end of the LIGER analysis: 
 
-```{r eval = FALSE, echo = FALSE, batchcorrect_liger7}
+```{r eval = TRUE, batchcorrect_liger7}
 # Let's look to see how the adjusted rand index changed compared to using no batch correction.
-tech <- unlist(lapply(1:length(data.liger@H), function(x) { 
-  rep(names(data.liger@H)[x], nrow(data.liger@H[[x]]))}))
-clusters <- data.liger@clusters
+tech <- cellMeta(data.liger)$dataset
+clusters <- cellMeta(data.liger)$leiden_cluster
 ari <- data.frame("tech" = tech, "clusters" = clusters)
 ari$tech <- plyr::mapvalues(ari$tech, from = c("celseq", "celseq2", "fluidigmc1", "smartseq2"), to = c(0, 1, 2, 3))
 adj.rand.index(as.numeric(ari$tech), as.numeric(ari$clusters))
 
-# Look at genes that are specific to a dataset and shared across datasets.
-# Use the plotWordClouds function and choose 2 datasets.
-pdf(paste0(writedir, "word_clouds.pdf"))
-plotWordClouds(data.liger, dataset1 = "celseq2", dataset2 = "smartseq2")
-dev.off()
-
 # Look at factor loadings for each cell using plotFactors. 
-pdf(paste0(writedir, "plot_factors.pdf"))
-plotFactors(data.liger)
-dev.off()
+plotFactorDimRed(data.liger, factors = 1:5)
 
 # Identify shared and batch-specific marker genes from liger factorization.
 # Use the getFactorMarkers function and choose 2 datasets.
 # Then plot some genes of interest using plotGene.
 markers <- getFactorMarkers(data.liger, dataset1 = "celseq2", dataset2 = "smartseq2", num.genes = 10)
-plotGene(data.liger, gene = "INS", pt.size = 1)
+plotGeneDimRed(data.liger, features = "INS")
 ```
 
 ## Additional exploration

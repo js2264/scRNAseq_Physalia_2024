@@ -77,6 +77,9 @@ sudo Rscript -e 'pak::pkg_install(c("tidyverse", "devtools", "umap", "corrplot",
 ## Bioconductor Packages
 sudo Rscript -e 'pak::pkg_install(c("airway", "SingleCellExperiment", "scran", "scater", "batchelor", "DropletUtils", "AUCell", "plyranges", "ggraph", "clustree", "celldex", "SingleR", "slingshot", "tradeSeq", "velociraptor", "BUSpaRse", "org.Mm.eg.db", "org.Hs.eg.db", "destiny", "TENxPBMCData", "scRNAseq", "scDblFinder", "chromVAR", "EnsDb.Hsapiens.v75", "LoomExperiment", "biovizBase", "rebook", "bluster"))'
 
+## Github Packages
+sudo Rscript -e 'install.packages("RcppPlanc", repos = c(linux = 'https://welch-lab.r-universe.dev/bin/linux/noble/4.4/',sources = 'https://welch-lab.r-universe.dev',cran = 'https://cloud.r-project.org'))'
+
 ## --- Install other softwares (fastQC, samtools, cellranger and cellranger indexes, ffq)
 
 # fastqc samtools

@@ -276,7 +276,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/day4/Lab8_atac-seq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 7 - Single-cell ATAC-seq analysis workflow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 7: Single-cell ATAC-seq analysis workflow</span></span></a>
   </div>
 </li>
       </ul>
@@ -438,15 +438,15 @@ Answer
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> ~/Share/data_wrangling/cellranger-tiny-bcl-1.2.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code>total 32
+drwxr-xr-x  6 jacques  staff   192 Oct 29 10:54 Config
+drwxr-xr-x  3 jacques  staff    96 Oct 29 10:54 Data
+drwxr-xr-x  9 jacques  staff   288 Oct 29 10:54 InterOp
+-rw-r--r--  1 jacques  staff    48 Jun  7  2023 RTAComplete.txt
+-rw-r--r--  1 jacques  staff   673 Jun  7  2023 RunInfo.xml
+-rw-r--r--  1 jacques  staff  5366 Jun  7  2023 runParameters.xml</code></pre>
 </div>
-<div class="cell">
-<pre class="code cell-code"><code>total 28
-drwxr-xr-x 2 rsg rsg 4096 Oct 29 11:16 Config
-drwxr-xr-x 3 rsg rsg 4096 Oct 29 11:16 Data
-drwxr-xr-x 2 rsg rsg 4096 Oct 29 11:16 InterOp
--rw-r--r-- 1 rsg rsg   48 Oct 29 11:16 RTAComplete.txt
--rw-r--r-- 1 rsg rsg  673 Oct 29 11:16 RunInfo.xml
--rw-r--r-- 1 rsg rsg 5366 Oct 29 11:16 runParameters.xml</code></pre>
 </div>
 </div>
 </div>
@@ -555,14 +555,14 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>bash</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> tiny-bcl/outs/fastq_path/H35KCBCXY/test_sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> ~/tiny-bcl/outs/fastq_path/H35KCBCXY/test_sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code>total 96296
+-rw-r--r--  1 jacques  staff   3930346 Oct 30 23:46 test_sample_S1_L001_I1_001.fastq.gz
+-rw-r--r--  1 jacques  staff  11093755 Oct 30 23:46 test_sample_S1_L001_R1_001.fastq.gz
+-rw-r--r--  1 jacques  staff  34273874 Oct 30 23:46 test_sample_S1_L001_R2_001.fastq.gz</code></pre>
 </div>
-<div class="cell">
-<pre class="code cell-code"><code>total 48148
--rw-rw-r-- 1 rsg rsg  3930346 Oct 29 11:43 test_sample_S1_L001_I1_001.fastq.gz
--rw-rw-r-- 1 rsg rsg 11093755 Oct 29 11:43 test_sample_S1_L001_R1_001.fastq.gz
--rw-rw-r-- 1 rsg rsg 34273874 Oct 29 11:43 test_sample_S1_L001_R2_001.fastq.gz</code></pre>
 </div>
 </div>
 </div>
@@ -598,22 +598,8 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>bash</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> tiny-bcl/outs/fastq_path/H35KCBCXY/test_sample/test_sample_S1_L001_I1_001.fastq.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 12</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gzcat</span> tiny-bcl/outs/fastq_path/H35KCBCXY/test_sample/test_sample_S1_L001_I1_001.fastq.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 12</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="cell">
-<pre class="code cell-code"><code>@D00547:905:H35KCBCXY:1:1101:1284:1973 1:N:0:AGGTATTG
-AGGTATTG
-+
-GGGGGIII
-@D00547:905:H35KCBCXY:1:1101:1729:1981 1:N:0:AGGTATTG
-AGGTATTG
-+
-GAGGGIIG
-@D00547:905:H35KCBCXY:1:1101:2005:1944 1:N:0:AGGTATTG
-AGGTATTG
-+
-AA&lt;G.A.G</code></pre>
 </div>
 </div>
 </div>
@@ -653,7 +639,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>bash</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cellranger</span> count <span class="at">--id</span> counts <span class="at">--transcriptome</span> ~/Share/refdata-gex-mm10-2020-A/ <span class="at">--fastqs</span> tiny-bcl/outs/fastq_path/H35KCBCXY/test_sample <span class="at">--sample</span> test_sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cellranger</span> count <span class="at">--id</span> counts <span class="at">--transcriptome</span> ~/Share/refdata-gex-mm10-2020-A/ <span class="at">--fastqs</span> tiny-bcl/outs/fastq_path/H35KCBCXY/test_sample <span class="at">--sample</span> test_sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="cell">
@@ -736,7 +722,21 @@ Pipestance completed successfully!
 <div class="code-with-filename-file">
 <pre><strong>bash</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> counts/outs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> ~/counts/outs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>total 119792
+drwxr-xr-x  7 jacques  staff       224 Oct 30 23:51 analysis
+-rw-r--r--  1 jacques  staff   2522877 Oct 30 23:51 cloupe.cloupe
+drwxr-xr-x  5 jacques  staff       160 Oct 30 23:51 filtered_feature_bc_matrix
+-rw-r--r--  1 jacques  staff    489402 Oct 30 23:51 filtered_feature_bc_matrix.h5
+-rw-r--r--  1 jacques  staff       627 Oct 30 23:51 metrics_summary.csv
+-rw-r--r--  1 jacques  staff   2885171 Oct 30 23:51 molecule_info.h5
+-rw-r--r--  1 jacques  staff  47264234 Oct 30 23:51 possorted_genome_bam.bam
+-rw-r--r--  1 jacques  staff   1744960 Oct 30 23:51 possorted_genome_bam.bam.bai
+drwxr-xr-x  5 jacques  staff       160 Oct 30 23:51 raw_feature_bc_matrix
+-rw-r--r--  1 jacques  staff   3557585 Oct 30 23:51 raw_feature_bc_matrix.h5
+-rw-r--r--  1 jacques  staff   2848576 Oct 30 23:51 web_summary.html</code></pre>
 </div>
 </div>
 <p>Can you locate the feature-barcode matrices? What is the difference between the <code>raw_feature_bc_matrix</code> and <code>filtered_feature_bc_matrix</code> data types?</p>

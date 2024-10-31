@@ -255,7 +255,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../content/day3/Lab6_batch_correction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Lab 6 - Batch correction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Lab 6: Batch correction</span></span></a>
   </div>
 </li>
       </ul>
@@ -272,25 +272,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../content/day4/Lecture6_pseudotime.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 6 - Trajectories and pseudotimes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../content/day4/Lab7_pseudotime.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 7: Pseudotime analyses</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../content/day4/Lecture7_ATAC.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 7 - Advances in single-cell genomics: the epigenome</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 6 - Advances in single-cell genomics: the epigenome</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../content/day4/Lab8_atac-seq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 8 - Single-cell ATAC-seq analysis workflow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 7 - Single-cell ATAC-seq analysis workflow</span></span></a>
   </div>
 </li>
       </ul>
@@ -423,35 +423,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">## Bioconductor Packages</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> Rscript <span class="at">-e</span> <span class="st">'pak::pkg_install(c("airway", "SingleCellExperiment", "scran", "scater", "batchelor", "DropletUtils", "AUCell", "plyranges", "ggraph", "clustree", "celldex", "SingleR", "slingshot", "tradeSeq", "velociraptor", "BUSpaRse", "org.Mm.eg.db", "org.Hs.eg.db", "destiny", "TENxPBMCData", "scRNAseq", "scDblFinder", "chromVAR", "EnsDb.Hsapiens.v75", "LoomExperiment", "biovizBase", "rebook", "bluster"))'</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">## --- Install other softwares (fastQC, samtools, cellranger and cellranger indexes, ffq)</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># fastqc samtools</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install fastqc samtools python3.8</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">## Github Packages</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> Rscript <span class="at">-e</span> <span class="st">'install.packages("RcppPlanc", repos = c(linux = '</span>https://welch-lab.r-universe.dev/bin/linux/noble/4.4/<span class="st">',sources = '</span>https://welch-lab.r-universe.dev<span class="st">',cran = '</span>https://cloud.r-project.org<span class="st">'))'</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">## --- Install other softwares (fastQC, samtools, cellranger and cellranger indexes, ffq)</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># cellranger</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> wget <span class="at">-O</span> cellranger-7.1.0.tar.gz <span class="st">"https://cf.10xgenomics.com/releases/cell-exp/cellranger-7.1.0.tar.gz?Expires=1685143014&amp;Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZi4xMHhnZW5vbWljcy5jb20vcmVsZWFzZXMvY2VsbC1leHAvY2VsbHJhbmdlci03LjEuMC50YXIuZ3oiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODUxNDMwMTR9fX1dfQ__&amp;Signature=aD0ZgbtDMNwI4C62fEuZ0ppBoTm-wAiQ~d9KWtWinvv5G9LdyRzJXED98eMrJg07yCHfnbCd8v7owzUVoZvDW1-pgmpOjpd2qLiaCQuaWsWGKgxJ4MtyPAl0Oi~0zRnGLwsFk1geDPxDBZVH9OBIrQsG3aNlApBxhxw4u6yYUT62PXtu2OjRQ-PieGlvH7TFbr-JjkpUpR-YEcQ6i0ORrdLxNt9HzeZX9s6s0dJ~NybRywBZI89KEoseyN6LZU13vtHl9BtPGIeA1Hwvpb2A1xsO5ueql3palHsT5Lnf7lY9QwXH4FECVAAoMCI8eP2dXHKtliJy0y~xLKVPEnSgGw__&amp;Key-Pair-Id=APKAI7S6A5RYOXBWRPDA"</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tar <span class="at">-xzvf</span> cellranger-7.1.0.tar.gz</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ln <span class="at">-s</span> /opt/cellranger-7.1.0/cellranger /usr/local/bin/cellranger</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> wget https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-mm10-2020-A.tar.gz</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tar <span class="at">-xzvf</span> refdata-gex-mm10-2020-A.tar.gz</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co"># ffq</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install python3-distutils</span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pip install ffq</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># seqkit</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> wget <span class="at">-O</span> seqkit_linux_amd64.tar.gz https://github.com/shenwei356/seqkit/releases/download/v2.4.0/seqkit_linux_amd64.tar.gz</span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tar <span class="at">-xzvf</span> seqkit_linux_amd64.tar.gz</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ln <span class="at">-s</span> /opt/seqkit /usr/local/bin/seqkit</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co"># bcl2fastq</span></span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install alien</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> http://support.illumina.com/content/dam/illumina-support/documents/downloads/software/bcl2fastq/bcl2fastq2-v2.17.1.14-Linux-x86_64.rpm</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> alien bcl2fastq2-v2.17.1.14-Linux-x86_64.rpm</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dpkg <span class="at">-i</span> bcl2fastq2_0v2.17.1.14-2_amd64.deb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># fastqc samtools</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install fastqc samtools python3.8</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># cellranger</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> wget <span class="at">-O</span> cellranger-7.1.0.tar.gz <span class="st">"https://cf.10xgenomics.com/releases/cell-exp/cellranger-7.1.0.tar.gz?Expires=1685143014&amp;Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZi4xMHhnZW5vbWljcy5jb20vcmVsZWFzZXMvY2VsbC1leHAvY2VsbHJhbmdlci03LjEuMC50YXIuZ3oiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODUxNDMwMTR9fX1dfQ__&amp;Signature=aD0ZgbtDMNwI4C62fEuZ0ppBoTm-wAiQ~d9KWtWinvv5G9LdyRzJXED98eMrJg07yCHfnbCd8v7owzUVoZvDW1-pgmpOjpd2qLiaCQuaWsWGKgxJ4MtyPAl0Oi~0zRnGLwsFk1geDPxDBZVH9OBIrQsG3aNlApBxhxw4u6yYUT62PXtu2OjRQ-PieGlvH7TFbr-JjkpUpR-YEcQ6i0ORrdLxNt9HzeZX9s6s0dJ~NybRywBZI89KEoseyN6LZU13vtHl9BtPGIeA1Hwvpb2A1xsO5ueql3palHsT5Lnf7lY9QwXH4FECVAAoMCI8eP2dXHKtliJy0y~xLKVPEnSgGw__&amp;Key-Pair-Id=APKAI7S6A5RYOXBWRPDA"</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tar <span class="at">-xzvf</span> cellranger-7.1.0.tar.gz</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ln <span class="at">-s</span> /opt/cellranger-7.1.0/cellranger /usr/local/bin/cellranger</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> wget https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-mm10-2020-A.tar.gz</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tar <span class="at">-xzvf</span> refdata-gex-mm10-2020-A.tar.gz</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co"># ffq</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install python3-distutils</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> pip install ffq</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="co"># seqkit</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> wget <span class="at">-O</span> seqkit_linux_amd64.tar.gz https://github.com/shenwei356/seqkit/releases/download/v2.4.0/seqkit_linux_amd64.tar.gz</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> tar <span class="at">-xzvf</span> seqkit_linux_amd64.tar.gz</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ln <span class="at">-s</span> /opt/seqkit /usr/local/bin/seqkit</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="co"># bcl2fastq</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install alien</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /opt/</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> http://support.illumina.com/content/dam/illumina-support/documents/downloads/software/bcl2fastq/bcl2fastq2-v2.17.1.14-Linux-x86_64.rpm</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> alien bcl2fastq2-v2.17.1.14-Linux-x86_64.rpm</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> dpkg <span class="at">-i</span> bcl2fastq2_0v2.17.1.14-2_amd64.deb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

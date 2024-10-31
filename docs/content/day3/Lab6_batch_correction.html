@@ -276,7 +276,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/day4/Lab8_atac-seq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 7 - Single-cell ATAC-seq analysis workflow</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 7: Single-cell ATAC-seq analysis workflow</span></span></a>
   </div>
 </li>
       </ul>
@@ -314,23 +314,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
 <li><a href="#read-in-pancreas-expression-matrices" id="toc-read-in-pancreas-expression-matrices" class="nav-link active" data-scroll-target="#read-in-pancreas-expression-matrices"><span class="header-section-number">11.1</span> Read in pancreas expression matrices</a></li>
   <li><a href="#analyze-each-pancreas-dataset-without-batch-correction" id="toc-analyze-each-pancreas-dataset-without-batch-correction" class="nav-link" data-scroll-target="#analyze-each-pancreas-dataset-without-batch-correction"><span class="header-section-number">11.2</span> Analyze each pancreas dataset without batch correction</a></li>
+  <li><a href="#cluster-pancreatic-datasets-without-batch-correction" id="toc-cluster-pancreatic-datasets-without-batch-correction" class="nav-link" data-scroll-target="#cluster-pancreatic-datasets-without-batch-correction"><span class="header-section-number">11.3</span> Cluster pancreatic datasets without batch correction</a></li>
   <li>
-<a href="#cluster-pancreatic-datasets-without-batch-correction" id="toc-cluster-pancreatic-datasets-without-batch-correction" class="nav-link" data-scroll-target="#cluster-pancreatic-datasets-without-batch-correction"><span class="header-section-number">11.3</span> Cluster pancreatic datasets without batch correction</a>
+<a href="#batch-correction-canonical-correlation-analysis-cca-mutual-nearest-neighbors-mnn" id="toc-batch-correction-canonical-correlation-analysis-cca-mutual-nearest-neighbors-mnn" class="nav-link" data-scroll-target="#batch-correction-canonical-correlation-analysis-cca-mutual-nearest-neighbors-mnn"><span class="header-section-number">11.4</span> Batch correction: canonical correlation analysis (CCA)+ mutual nearest neighbors (MNN)</a>
   <ul class="collapse">
-<li><a href="#batch-correction-canonical-correlation-analysis-cca-mutual-nearest-neighbors-mnn-using-seurat-v3" id="toc-batch-correction-canonical-correlation-analysis-cca-mutual-nearest-neighbors-mnn-using-seurat-v3" class="nav-link" data-scroll-target="#batch-correction-canonical-correlation-analysis-cca-mutual-nearest-neighbors-mnn-using-seurat-v3"><span class="header-section-number">11.3.1</span> Batch correction: canonical correlation analysis (CCA)+ mutual nearest neighbors (MNN) using Seurat v3</a></li>
-  <li><a href="#differential-gene-expression-and-visualization" id="toc-differential-gene-expression-and-visualization" class="nav-link" data-scroll-target="#differential-gene-expression-and-visualization"><span class="header-section-number">11.3.2</span> Differential gene expression and visualization</a></li>
-  <li><a href="#batch-correction-integrative-non-negative-matrix-factorization-nmf-using-liger" id="toc-batch-correction-integrative-non-negative-matrix-factorization-nmf-using-liger" class="nav-link" data-scroll-target="#batch-correction-integrative-non-negative-matrix-factorization-nmf-using-liger"><span class="header-section-number">11.3.3</span> Batch correction: integrative non-negative matrix factorization (NMF) using LIGER</a></li>
+<li><a href="#differential-gene-expression-and-visualization" id="toc-differential-gene-expression-and-visualization" class="nav-link" data-scroll-target="#differential-gene-expression-and-visualization"><span class="header-section-number">11.4.1</span> Differential gene expression and visualization</a></li>
   </ul>
 </li>
+  <li><a href="#batch-correction-integrative-non-negative-matrix-factorization-nmf" id="toc-batch-correction-integrative-non-negative-matrix-factorization-nmf" class="nav-link" data-scroll-target="#batch-correction-integrative-non-negative-matrix-factorization-nmf"><span class="header-section-number">11.5</span> Batch correction: integrative non-negative matrix factorization (NMF)</a></li>
   <li>
-<a href="#additional-exploration" id="toc-additional-exploration" class="nav-link" data-scroll-target="#additional-exploration"><span class="header-section-number">11.4</span> Additional exploration</a>
+<a href="#additional-exploration" id="toc-additional-exploration" class="nav-link" data-scroll-target="#additional-exploration"><span class="header-section-number">11.6</span> Additional exploration</a>
   <ul class="collapse">
-<li><a href="#regressing-out-unwanted-covariates" id="toc-regressing-out-unwanted-covariates" class="nav-link" data-scroll-target="#regressing-out-unwanted-covariates"><span class="header-section-number">11.4.1</span> Regressing out unwanted covariates</a></li>
-  <li><a href="#kbet" id="toc-kbet" class="nav-link" data-scroll-target="#kbet"><span class="header-section-number">11.4.2</span> kBET</a></li>
+<li><a href="#regressing-out-unwanted-covariates" id="toc-regressing-out-unwanted-covariates" class="nav-link" data-scroll-target="#regressing-out-unwanted-covariates"><span class="header-section-number">11.6.1</span> Regressing out unwanted covariates</a></li>
+  <li><a href="#kbet" id="toc-kbet" class="nav-link" data-scroll-target="#kbet"><span class="header-section-number">11.6.2</span> kBET</a></li>
   </ul>
 </li>
-  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements"><span class="header-section-number">11.5</span> Acknowledgements</a></li>
-  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info"><span class="header-section-number">11.6</span> Session info</a></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements"><span class="header-section-number">11.7</span> Acknowledgements</a></li>
+  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info"><span class="header-section-number">11.8</span> Session info</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/js2264/scRNAseq_Physalia_2024/edit/main/content/day3/Lab6_batch_correction.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/js2264/scRNAseq_Physalia_2024/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -1036,16 +1036,16 @@ To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to
 This message will be shown once per session</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>09:43:47 UMAP embedding parameters a = 0.583 b = 1.334</code></pre>
+<pre><code>15:33:09 UMAP embedding parameters a = 0.583 b = 1.334</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>09:43:47 Read 6321 rows and found 20 numeric columns</code></pre>
+<pre><code>15:33:09 Read 6321 rows and found 20 numeric columns</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>09:43:47 Using Annoy for neighbor search, n_neighbors = 15</code></pre>
+<pre><code>15:33:09 Using Annoy for neighbor search, n_neighbors = 15</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>09:43:47 Building Annoy index with metric = euclidean, n_trees = 50</code></pre>
+<pre><code>15:33:09 Building Annoy index with metric = euclidean, n_trees = 50</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
@@ -1055,13 +1055,13 @@ This message will be shown once per session</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>**************************************************|
-09:43:47 Writing NN index file to temp file /var/folders/dg/mbw146s905lgqgswn6w4ghk80000gn/T//RtmpUlXPcm/fileb9666f16b7be
-09:43:47 Searching Annoy index using 1 thread, search_k = 1500
-09:43:48 Annoy recall = 100%
-09:43:48 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 15
-09:43:48 Initializing from normalized Laplacian + noise (using RSpectra)
-09:43:48 Commencing optimization for 500 epochs, with 127374 positive edges
-09:43:53 Optimization finished</code></pre>
+15:33:09 Writing NN index file to temp file /var/folders/dg/mbw146s905lgqgswn6w4ghk80000gn/T//RtmpFXp3TP/fileef8b70d80ad1
+15:33:09 Searching Annoy index using 1 thread, search_k = 1500
+15:33:10 Annoy recall = 100%
+15:33:10 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 15
+15:33:10 Initializing from normalized Laplacian + noise (using RSpectra)
+15:33:10 Commencing optimization for 500 epochs, with 127374 positive edges
+15:33:15 Optimization finished</code></pre>
 </div>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualize the Leiden clustering and the batches on the UMAP. </span></span>
 <span><span class="co"># Remember, the clustering is stored in @meta.data in column seurat_clusters and the technology is</span></span>
@@ -1115,8 +1115,8 @@ Attaching package: 'shapefiles'</code></pre>
 <pre><code>[1] 0.67147</code></pre>
 </div>
 </div>
-<section id="batch-correction-canonical-correlation-analysis-cca-mutual-nearest-neighbors-mnn-using-seurat-v3" class="level3" data-number="11.3.1"><h3 data-number="11.3.1" class="anchored" data-anchor-id="batch-correction-canonical-correlation-analysis-cca-mutual-nearest-neighbors-mnn-using-seurat-v3">
-<span class="header-section-number">11.3.1</span> Batch correction: canonical correlation analysis (CCA)+ mutual nearest neighbors (MNN) using Seurat v3</h3>
+</section><section id="batch-correction-canonical-correlation-analysis-cca-mutual-nearest-neighbors-mnn" class="level2" data-number="11.4"><h2 data-number="11.4" class="anchored" data-anchor-id="batch-correction-canonical-correlation-analysis-cca-mutual-nearest-neighbors-mnn">
+<span class="header-section-number">11.4</span> Batch correction: canonical correlation analysis (CCA)+ mutual nearest neighbors (MNN)</h2>
 <p>We will now use Seurat to see to what extent it can remove potential batch effects.</p>
 <p>The first piece of code will identify variable genes that are highly variable in at least 2/4 datasets. We will use these variable genes in our batch correction.</p>
 <p>Why would we implement such a requirement?</p>
@@ -1457,16 +1457,16 @@ Elapsed time: 0 seconds</code></pre>
 <div class="sourceCode" id="cb190"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># UMAP</span></span>
 <span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html">RunUMAP</a></span><span class="op">(</span><span class="va">gcdata</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, reduction <span class="op">=</span> <span class="st">"pca"</span>, n.neighbors <span class="op">=</span> <span class="fl">15</span>, min.dist <span class="op">=</span> <span class="fl">0.5</span>, spread <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, seed.use <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>09:45:32 UMAP embedding parameters a = 0.583 b = 1.334</code></pre>
+<pre><code>15:34:55 UMAP embedding parameters a = 0.583 b = 1.334</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>09:45:32 Read 6321 rows and found 30 numeric columns</code></pre>
+<pre><code>15:34:55 Read 6321 rows and found 30 numeric columns</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>09:45:32 Using Annoy for neighbor search, n_neighbors = 15</code></pre>
+<pre><code>15:34:55 Using Annoy for neighbor search, n_neighbors = 15</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>09:45:32 Building Annoy index with metric = euclidean, n_trees = 50</code></pre>
+<pre><code>15:34:55 Building Annoy index with metric = euclidean, n_trees = 50</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
@@ -1476,16 +1476,16 @@ Elapsed time: 0 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>**************************************************|
-09:45:32 Writing NN index file to temp file /var/folders/dg/mbw146s905lgqgswn6w4ghk80000gn/T//RtmpUlXPcm/fileb96665064fc8
-09:45:32 Searching Annoy index using 1 thread, search_k = 1500
-09:45:33 Annoy recall = 100%
-09:45:33 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 15
-09:45:34 Found 2 connected components, falling back to 'spca' initialization with init_sdev = 1
-09:45:34 Using 'irlba' for PCA
-09:45:34 PCA: 2 components explained 55.6% variance
-09:45:34 Scaling init to sdev = 1
-09:45:34 Commencing optimization for 500 epochs, with 139426 positive edges
-09:45:38 Optimization finished</code></pre>
+15:34:55 Writing NN index file to temp file /var/folders/dg/mbw146s905lgqgswn6w4ghk80000gn/T//RtmpFXp3TP/fileef8b2dad1538
+15:34:55 Searching Annoy index using 1 thread, search_k = 1500
+15:34:55 Annoy recall = 100%
+15:34:56 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 15
+15:34:56 Found 2 connected components, falling back to 'spca' initialization with init_sdev = 1
+15:34:56 Using 'irlba' for PCA
+15:34:56 PCA: 2 components explained 55.6% variance
+15:34:56 Scaling init to sdev = 1
+15:34:56 Commencing optimization for 500 epochs, with 139426 positive edges
+15:35:01 Optimization finished</code></pre>
 </div>
 <div class="sourceCode" id="cb198"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># After data integration, use the original expression data in all visualization and DE tests.</span></span>
 <span><span class="co"># The integrated data must not be used in DE tests as it violates assumptions of independence in DE tests!</span></span>
@@ -1518,8 +1518,8 @@ Elapsed time: 0 seconds</code></pre>
 <pre><code>[1] 0.2728</code></pre>
 </div>
 </div>
-</section><section id="differential-gene-expression-and-visualization" class="level3" data-number="11.3.2"><h3 data-number="11.3.2" class="anchored" data-anchor-id="differential-gene-expression-and-visualization">
-<span class="header-section-number">11.3.2</span> Differential gene expression and visualization</h3>
+<section id="differential-gene-expression-and-visualization" class="level3" data-number="11.4.1"><h3 data-number="11.4.1" class="anchored" data-anchor-id="differential-gene-expression-and-visualization">
+<span class="header-section-number">11.4.1</span> Differential gene expression and visualization</h3>
 <p>We can also identify conserved marker genes across the batches. Differential gene expression is done across each batch, and the p-values are combined. (requires <code>metap</code> package installation).</p>
 <div class="cell">
 <div class="code-with-filename">
@@ -1629,8 +1629,8 @@ Answer
 </div>
 </div>
 </div>
-</section><section id="batch-correction-integrative-non-negative-matrix-factorization-nmf-using-liger" class="level3" data-number="11.3.3"><h3 data-number="11.3.3" class="anchored" data-anchor-id="batch-correction-integrative-non-negative-matrix-factorization-nmf-using-liger">
-<span class="header-section-number">11.3.3</span> Batch correction: integrative non-negative matrix factorization (NMF) using LIGER</h3>
+</section></section><section id="batch-correction-integrative-non-negative-matrix-factorization-nmf" class="level2" data-number="11.5"><h2 data-number="11.5" class="anchored" data-anchor-id="batch-correction-integrative-non-negative-matrix-factorization-nmf">
+<span class="header-section-number">11.5</span> Batch correction: integrative non-negative matrix factorization (NMF)</h2>
 <p>Here we use integrative non-negative matrix factorization to see to what extent it can remove potential batch effects.</p>
 <p>The important parameters in the batch correction are the number of factors (k), the penalty parameter (lambda), and the clustering resolution. The number of factors sets the number of factors (consisting of shared and dataset-specific factors) used in factorizing the matrix. The penalty parameter sets the balance between factors shared across the batches and factors specific to the individual batches. The default setting of lambda=5.0 is usually used by the Macosko lab. Resolution=1.0 is used in the Louvain clustering of the shared neighbor factors that have been quantile normalized.</p>
 <div class="cell">
@@ -1641,18 +1641,122 @@ Answer
 <div class="sourceCode" id="cb214"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ob.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"celseq"</span> <span class="op">=</span> <span class="va">celseq</span>, <span class="st">"celseq2"</span> <span class="op">=</span> <span class="va">celseq2</span>, <span class="st">"fluidigmc1"</span> <span class="op">=</span> <span class="va">fluidigmc1</span>, <span class="st">"smartseq2"</span> <span class="op">=</span> <span class="va">smartseq2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create a LIGER object with raw counts data from each batch.</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://welch-lab.github.io/liger/">rliger</a></span><span class="op">)</span></span>
-<span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/createLiger.html">createLiger</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">ob.list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="va">data</span><span class="op">[[</span><span class="st">'RNA'</span><span class="op">]</span><span class="op">]</span><span class="op">@</span><span class="va">counts</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>, </span>
-<span>  remove.missing <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span> </span>
-<span></span>
-<span><span class="co"># Normalize gene expression for each batch.</span></span>
-<span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu">rliger</span><span class="fu">::</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Find variable genes for LIGER analysis.</span></span>
-<span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/selectGenes.html">selectGenes</a></span><span class="op">(</span><span class="va">data.liger</span>, var.thresh <span class="op">=</span> <span class="fl">0.1</span>, do.plot <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">@</span><span class="va">var.genes</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://welch-lab.github.io/liger/">rliger</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Package `rliger` has been updated massively since version 1.99.0, including the object structure which is not compatible with old versions.
+
+We recommand you backup your old analysis before overwriting any existing result.
+
+`readLiger()` is provided for reading an RDS file storing an old object and it converts the object to the up-to-date structure.</code></pre>
+</div>
+<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/createLiger.html">createLiger</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">ob.list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Layers.html">LayerData</a></span><span class="op">(</span><span class="va">data</span><span class="op">[[</span><span class="st">'RNA'</span><span class="op">]</span><span class="op">]</span>, <span class="st">'counts'</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ calculating QC for dataset "celseq"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ calculating QC for dataset "celseq" ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ calculating QC for dataset "celseq2"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ calculating QC for dataset "celseq2" ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ calculating QC for dataset "fluidigmc1"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ calculating QC for dataset "fluidigmc1" ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ calculating QC for dataset "smartseq2"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ calculating QC for dataset "smartseq2" ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Removing missing in dataset: "celseq"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Removing missing in dataset: "celseq2"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Removing missing in dataset: "fluidigmc1"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Removing missing in dataset: "smartseq2"</code></pre>
+</div>
+<div class="sourceCode" id="cb233"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Normalize gene expression for each batch.</span></span>
+<span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu">rliger</span><span class="fu">::</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Normalizing datasets "celseq"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Normalizing datasets "celseq2"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Normalizing datasets "fluidigmc1"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Normalizing datasets "smartseq2"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Normalizing datasets "smartseq2" ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Normalizing datasets "fluidigmc1"
+✔ Normalizing datasets "fluidigmc1" ... done
+
+ℹ Normalizing datasets "celseq2"
+✔ Normalizing datasets "celseq2" ... done
+
+ℹ Normalizing datasets "celseq"
+✔ Normalizing datasets "celseq" ... done</code></pre>
+</div>
+<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Find variable genes for LIGER analysis.</span></span>
+<span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/selectGenes.html">selectGenes</a></span><span class="op">(</span><span class="va">data.liger</span>, var.thresh <span class="op">=</span> <span class="fl">0.1</span>, do.plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `var.thresh` argument of `selectGenes.liger()` is deprecated as of rliger 1.99.0.
+ℹ Please use the `thresh` argument instead.
+ℹ The deprecated feature was likely used in the rliger package.
+  Please report the issue at &lt;https://github.com/welch-lab/liger/issues&gt;.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `do.plot` argument of `selectGenes.liger()` is deprecated as of rliger 1.99.0.
+ℹ Ignored.
+ℹ The deprecated feature was likely used in the rliger package.
+  Please report the issue at &lt;https://github.com/welch-lab/liger/issues&gt;.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Selecting variable features for dataset "celseq"
+✔ ... 3885 features selected out of 15217 shared features.
+ℹ Selecting variable features for dataset "celseq2"
+✔ ... 6990 features selected out of 15217 shared features.
+ℹ Selecting variable features for dataset "fluidigmc1"
+✔ ... 14985 features selected out of 15217 shared features.
+ℹ Selecting variable features for dataset "smartseq2"
+✔ ... 14909 features selected out of 15217 shared features.
+✔ Finally 15170 shared variable features are selected.</code></pre>
+</div>
+<div class="sourceCode" id="cb245"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/liger-class.html">varFeatures</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15170</code></pre>
 </div>
 </div>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
@@ -1685,7 +1789,43 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb215"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/scaleNotCenter.html">scaleNotCenter</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb247"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/scaleNotCenter.html">scaleNotCenter</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Scaling dataset "celseq"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Scaling dataset "celseq" ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Scaling dataset "celseq2"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Scaling dataset "celseq2" ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Scaling dataset "fluidigmc1"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Scaling dataset "fluidigmc1" ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Scaling dataset "smartseq2"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Scaling dataset "smartseq2" ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
 </div>
 </div>
 </div>
@@ -1722,7 +1862,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/runIntegration.html">runIntegration</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb260"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/runIntegration.html">runIntegration</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1734,9 +1874,18 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb217"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">@</span><span class="va">H</span><span class="op">$</span><span class="va">celseq</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">@</span><span class="va">V</span><span class="op">$</span><span class="va">celseq</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">@</span><span class="va">W</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb261"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/ligerDataset-class.html">getMatrix</a></span><span class="op">(</span><span class="va">data.liger</span>, <span class="st">"H"</span><span class="op">)</span><span class="op">$</span><span class="va">celseq</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]   20 1004</code></pre>
+</div>
+<div class="sourceCode" id="cb263"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/ligerDataset-class.html">getMatrix</a></span><span class="op">(</span><span class="va">data.liger</span>, <span class="st">"V"</span><span class="op">)</span><span class="op">$</span><span class="va">celseq</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15170    20</code></pre>
+</div>
+<div class="sourceCode" id="cb265"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/ligerDataset-class.html">getMatrix</a></span><span class="op">(</span><span class="va">data.liger</span>, <span class="st">"W"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15170    20</code></pre>
 </div>
 </div>
 </div>
@@ -1770,14 +1919,55 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/quantileNorm.html">quantileNorm</a></span><span class="op">(</span><span class="va">data.liger</span>, resolution <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">@</span><span class="va">H.norm</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/quantileNorm.html">quantileNorm</a></span><span class="op">(</span><span class="va">data.liger</span>, resolution <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Using largest dataset of recommended type as reference: "smartseq2" with 2394 cells</code></pre>
+</div>
+<div class="sourceCode" id="cb269"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/runCluster.html">runCluster</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ leiden clustering on quantile normalized cell factor loadings</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ leiden clustering on quantile normalized cell factor loadings ... Found 33 clusters.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ cellMeta variable "leiden_cluster" is now set as default.</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 <p>What are the dimensions of H.norm. What does this represent?</p>
+<div class="icon callout callout-style-default callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode" id="cb274"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/ligerDataset-class.html">getMatrix</a></span><span class="op">(</span><span class="va">data.liger</span>, <span class="st">"H.norm"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6321   20</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <p>Let’s see what the liger data looks like mapped onto a UMAP visualization.</p>
@@ -1793,7 +1983,7 @@ Question
 <div class="callout-body-container callout-body">
 <p>Run UMAP on the quantile normalized data and visualize the clusters.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-34-contents" aria-controls="callout-34" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1802,17 +1992,61 @@ Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-34" class="callout-34-contents callout-collapse collapse">
+<div id="callout-35" class="callout-35-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/runUMAP.html">runUMAP</a></span><span class="op">(</span><span class="va">data.liger</span>, n_neighbors <span class="op">=</span> <span class="fl">15</span>, min_dist <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/plotDimRed.html">plotByDatasetAndCluster</a></span><span class="op">(</span><span class="va">data.liger</span>, return.plots <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">p</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="fu">plot_grid</span><span class="op">(</span><span class="va">p</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">p</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb276"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/runUMAP.html">runUMAP</a></span><span class="op">(</span><span class="va">data.liger</span>, n_neighbors <span class="op">=</span> <span class="fl">15</span>, min_dist <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `n_neighbors` argument of `runUMAP()` is deprecated as of rliger 1.99.0.
+ℹ Please use the `nNeighbors` argument instead.
+ℹ The deprecated feature was likely used in the rliger package.
+  Please report the issue at &lt;https://github.com/welch-lab/liger/issues&gt;.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `min_dist` argument of `runUMAP()` is deprecated as of rliger 1.99.0.
+ℹ Please use the `minDist` argument instead.
+ℹ The deprecated feature was likely used in the rliger package.
+  Please report the issue at &lt;https://github.com/welch-lab/liger/issues&gt;.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Generating UMAP on quantile normalized cell factor loadings</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Generating UMAP on quantile normalized cell factor loadings ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ DimRed "UMAP" is now set as default.</code></pre>
+</div>
+<div class="sourceCode" id="cb283"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/plotDimRed.html">plotByDatasetAndCluster</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Plotting feature "dataset" on 6321 cells</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Plotting feature "dataset" on 6321 cells ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Plotting feature "leiden_cluster" on 6321 cells</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Plotting feature "leiden_cluster" on 6321 cells ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger6b-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1820,19 +2054,147 @@ Answer
 </div>
 </div>
 </div>
-</section></section><section id="additional-exploration" class="level2" data-number="11.4"><h2 data-number="11.4" class="anchored" data-anchor-id="additional-exploration">
-<span class="header-section-number">11.4</span> Additional exploration</h2>
-<section id="regressing-out-unwanted-covariates" class="level3" data-number="11.4.1"><h3 data-number="11.4.1" class="anchored" data-anchor-id="regressing-out-unwanted-covariates">
-<span class="header-section-number">11.4.1</span> Regressing out unwanted covariates</h3>
+<p>Here is the end of the LIGER analysis:</p>
+<div class="cell">
+<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Let's look to see how the adjusted rand index changed compared to using no batch correction.</span></span>
+<span><span class="va">tech</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/liger-class.html">cellMeta</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span><span class="op">$</span><span class="va">dataset</span></span>
+<span><span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/liger-class.html">cellMeta</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span><span class="op">$</span><span class="va">leiden_cluster</span></span>
+<span><span class="va">ari</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"tech"</span> <span class="op">=</span> <span class="va">tech</span>, <span class="st">"clusters"</span> <span class="op">=</span> <span class="va">clusters</span><span class="op">)</span></span>
+<span><span class="va">ari</span><span class="op">$</span><span class="va">tech</span> <span class="op">&lt;-</span> <span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/mapvalues.html">mapvalues</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">tech</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"celseq"</span>, <span class="st">"celseq2"</span>, <span class="st">"fluidigmc1"</span>, <span class="st">"smartseq2"</span><span class="op">)</span>, to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/fossil/man/rand.index.html">adj.rand.index</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">tech</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">clusters</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.30721</code></pre>
+</div>
+<div class="sourceCode" id="cb293"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Look at factor loadings for each cell using plotFactors. </span></span>
+<span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/plotDimRed.html">plotFactorDimRed</a></span><span class="op">(</span><span class="va">data.liger</span>, factors <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Plotting feature "Factor_1" on 6321 cells</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Plotting feature "Factor_1" on 6321 cells ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Plotting feature "Factor_2" on 6321 cells</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Plotting feature "Factor_2" on 6321 cells ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Plotting feature "Factor_3" on 6321 cells</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Plotting feature "Factor_3" on 6321 cells ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Plotting feature "Factor_4" on 6321 cells</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Plotting feature "Factor_4" on 6321 cells ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Plotting feature "Factor_5" on 6321 cells</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Plotting feature "Factor_5" on 6321 cells ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Factor_1</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger7-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+$Factor_2</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger7-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+$Factor_3</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger7-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+$Factor_4</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger7-4.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+$Factor_5</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger7-5.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode" id="cb314"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Identify shared and batch-specific marker genes from liger factorization.</span></span>
+<span><span class="co"># Use the getFactorMarkers function and choose 2 datasets.</span></span>
+<span><span class="co"># Then plot some genes of interest using plotGene.</span></span>
+<span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/getFactorMarkers.html">getFactorMarkers</a></span><span class="op">(</span><span class="va">data.liger</span>, dataset1 <span class="op">=</span> <span class="st">"celseq2"</span>, dataset2 <span class="op">=</span> <span class="st">"smartseq2"</span>, num.genes <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `num.genes` argument of `getFactorMarkers()` is deprecated as of rliger 1.99.0.
+ℹ Please use the `nGenes` argument instead.
+ℹ The deprecated feature was likely used in the rliger package.
+  Please report the issue at &lt;https://github.com/welch-lab/liger/issues&gt;.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Testing between {.val {dataset1}} and {.val {dataset2}} ■■■■■■■■■■■■■■■■                  50% | ETA:  1s</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Testing between {.val {dataset1}} and {.val {dataset2}} ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     94% | ETA:  0s</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Testing between {.val {dataset1}} and {.val {dataset2}} ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="sourceCode" id="cb320"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/plotDimRed.html">plotGeneDimRed</a></span><span class="op">(</span><span class="va">data.liger</span>, features <span class="op">=</span> <span class="st">"INS"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>ℹ Plotting feature "INS" on 6321 cells</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ Plotting feature "INS" on 6321 cells ... done</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code></code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger7-6.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section><section id="additional-exploration" class="level2" data-number="11.6"><h2 data-number="11.6" class="anchored" data-anchor-id="additional-exploration">
+<span class="header-section-number">11.6</span> Additional exploration</h2>
+<section id="regressing-out-unwanted-covariates" class="level3" data-number="11.6.1"><h3 data-number="11.6.1" class="anchored" data-anchor-id="regressing-out-unwanted-covariates">
+<span class="header-section-number">11.6.1</span> Regressing out unwanted covariates</h3>
 <p>Learn how to regress out different technical covariates (number of UMIs, number of genes, percent mitochondrial reads) by studying <a href="https://satijalab.org/seurat/pbmc3k_tutorial.html">Seurat’s PBMC tutorial</a> and the <code><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData()</a></code> function.</p>
-</section><section id="kbet" class="level3" data-number="11.4.2"><h3 data-number="11.4.2" class="anchored" data-anchor-id="kbet">
-<span class="header-section-number">11.4.2</span> kBET</h3>
+</section><section id="kbet" class="level3" data-number="11.6.2"><h3 data-number="11.6.2" class="anchored" data-anchor-id="kbet">
+<span class="header-section-number">11.6.2</span> kBET</h3>
 <p>Within your RStudio session, install <a href="https://github.com/theislab/kBET">k-nearest neighbour batch effect test</a> and learn how to use its functionality to quantify batch effects in the pancreatic data.</p>
-</section></section><section id="acknowledgements" class="level2" data-number="11.5"><h2 data-number="11.5" class="anchored" data-anchor-id="acknowledgements">
-<span class="header-section-number">11.5</span> Acknowledgements</h2>
+</section></section><section id="acknowledgements" class="level2" data-number="11.7"><h2 data-number="11.7" class="anchored" data-anchor-id="acknowledgements">
+<span class="header-section-number">11.7</span> Acknowledgements</h2>
 <p>This document builds off a tutorial from the <a href="https://www.dropbox.com/s/aji4ielg8gc70vj/multiple_pancreas_workflow.R?dl=1">Seurat website</a> and a tutorial from the <a href="http://htmlpreview.github.io/?https://github.com/welch-lab/liger/blob/master/vignettes/Integrating_multi_scRNA_data.html">LIGER website</a>.</p>
-</section><section id="session-info" class="level2" data-number="11.6"><h2 data-number="11.6" class="anchored" data-anchor-id="session-info">
-<span class="header-section-number">11.6</span> Session info</h2>
+</section><section id="session-info" class="level2" data-number="11.8"><h2 data-number="11.8" class="anchored" data-anchor-id="session-info">
+<span class="header-section-number">11.8</span> Session info</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -1904,6 +2266,7 @@ Answer
  lattice            0.22-6     2024-03-20 [1] CRAN (R 4.4.1)
  lazyeval           0.2.2      2019-03-15 [1] CRAN (R 4.4.0)
  leiden             0.4.3.1    2023-11-17 [1] CRAN (R 4.4.0)
+ leidenAlg          1.1.4      2024-10-17 [1] CRAN (R 4.4.1)
  lifecycle          1.0.4      2023-11-07 [1] CRAN (R 4.4.0)
  limma              3.60.6     2024-10-02 [1] Bioconduc~
  listenv            0.9.1      2024-01-29 [1] CRAN (R 4.4.0)
@@ -1950,18 +2313,22 @@ Answer
  Rcpp               1.0.13     2024-07-17 [1] CRAN (R 4.4.0)
  RcppAnnoy          0.0.22     2024-01-23 [1] CRAN (R 4.4.0)
  RcppHNSW           0.6.0      2024-02-04 [1] CRAN (R 4.4.0)
+ RcppPlanc          1.0.0      2024-10-29 [1] https://welch-lab.r-universe.dev (R 4.4.1)
  Rdpack             2.6.1      2024-08-06 [1] CRAN (R 4.4.0)
  remotes            2.5.0      2024-03-17 [1] CRAN (R 4.4.0)
  reshape2           1.4.4      2020-04-09 [1] CRAN (R 4.4.0)
  reticulate         1.39.0     2024-09-05 [1] CRAN (R 4.4.1)
  rlang              1.1.4      2024-06-04 [1] CRAN (R 4.4.0)
+ rliger           * 2.0.1      2024-04-04 [1] CRAN (R 4.4.0)
  rmarkdown          2.28       2024-08-17 [1] CRAN (R 4.4.0)
  ROCR               1.0-11     2020-05-02 [1] CRAN (R 4.4.0)
  RSpectra           0.16-2     2024-07-18 [1] CRAN (R 4.4.0)
  Rtsne              0.17       2023-12-07 [1] CRAN (R 4.4.0)
+ S4Vectors          0.42.1     2024-07-03 [1] Bioconduc~
  sandwich           3.1-1      2024-09-15 [1] CRAN (R 4.4.1)
  scales             1.3.0      2023-11-28 [1] CRAN (R 4.4.0)
  scattermore        1.2        2023-06-12 [1] CRAN (R 4.4.0)
+ sccore             1.0.5      2024-02-23 [1] CRAN (R 4.4.0)
  sctransform        0.4.1      2023-10-19 [1] CRAN (R 4.4.0)
  sessioninfo        1.2.2      2021-12-06 [1] CRAN (R 4.4.0)
  Seurat           * 5.1.0      2024-05-10 [1] CRAN (R 4.4.0)
