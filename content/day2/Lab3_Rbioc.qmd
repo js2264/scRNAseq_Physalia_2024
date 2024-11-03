@@ -4,7 +4,7 @@
 
 ## Notes
 
-The estimated time for this lab is around 1h30.
+The estimated time for this lab is around 1h20.
 
 :::
 
@@ -386,7 +386,6 @@ Notably, several packages are increasingly becoming central for single-cell anal
 **`SingleCellExperiment`** is the fundamental class designed to contain single-cell (RNA-seq) data in `Bioconductor` ecosystem. It is a modified version of the 
 `SummarizedExperiment` object, so most of the getters/setters are shared with this class. 
 
-<img src="https://github.com/js2264/scRNAseq_Physalia_2024/blob/main/content/day2/.img/2021-05-31-09-38-24.png?raw=true">
 
 ![](.img/2021-05-31-09-38-24.png)
 
@@ -396,6 +395,7 @@ source('~/Share/bin/prepare_Nestorowa.R') # Adapted from Nestorowa et al., Blood
 sce
 class(sce)
 ```
+
 
 Several slots can be accessed in a **`SingleCellExperiment`** object, just like the `SummarizedExperiment` object it's been adapted from: 
 
@@ -535,8 +535,8 @@ head(rownames(sce_seurat))
 head(sce_seurat[[]])
 head(sce_seurat$label)
 # Counts access
-Seurat::GetAssayData(object = sce_seurat, slot = "counts")[1:10, 1:10]
-Seurat::GetAssayData(object = sce_seurat, slot = "data")[1:10, 1:10]
+Seurat::GetAssayData(object = sce_seurat, layer = "counts")[1:10, 1:10]
+Seurat::GetAssayData(object = sce_seurat, layer = "data")[1:10, 1:10]
 # Embeddings 
 head(Seurat::Embeddings(object = sce_seurat, reduction = "diffusion"))
 ```

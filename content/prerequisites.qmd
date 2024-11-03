@@ -3,7 +3,7 @@
 The course is intended for those who have basic familiarity with Unix and 
 the R scripting language.
 
-We will also assume that you are familiar with mapping and analysing bulk 
+We will also assume that you are familiar with mapping and analyzing bulk 
 RNA-seq data as well as with the commonly available computational tools.
 
 * If a refresher is needed for Unix command line (hopefully not), please go over [this tutorial](https://ryanstutorials.net/linuxtutorial/) and its [companion cheatsheet](https://ryanstutorials.net/linuxtutorial/cheatsheet.php).
@@ -75,10 +75,14 @@ sudo Rscript -e 'install.packages("pak", repos = sprintf("https://r-lib.github.i
 sudo Rscript -e 'pak::pkg_install(c("tidyverse", "devtools", "umap", "corrplot", "gam", "ggbeeswarm", "ggthemes", "Matrix", "zeallot", "fossil", "rgl", "BiocManager", "Seurat", "rliger", "Signac", "multtest", "metap", "servr"))'
 
 ## Bioconductor Packages
-sudo Rscript -e 'pak::pkg_install(c("airway", "SingleCellExperiment", "scran", "scater", "batchelor", "DropletUtils", "AUCell", "plyranges", "ggraph", "clustree", "celldex", "SingleR", "slingshot", "tradeSeq", "velociraptor", "BUSpaRse", "org.Mm.eg.db", "org.Hs.eg.db", "destiny", "TENxPBMCData", "scRNAseq", "scDblFinder", "chromVAR", "EnsDb.Hsapiens.v75", "LoomExperiment", "biovizBase", "rebook", "bluster"))'
+sudo Rscript -e 'pak::pkg_install(c("airway", "SingleCellExperiment", "scran", "scater", "batchelor", "DropletUtils", "AUCell", "plyranges", "ggraph", "clustree", "celldex", "SingleR", "slingshot", "tradeSeq", "velociraptor", "BUSpaRse", "org.Mm.eg.db", "org.Hs.eg.db", "TENxPBMCData", "scRNAseq", "scDblFinder", "chromVAR", "EnsDb.Hsapiens.v75", "LoomExperiment", "biovizBase", "rebook", "bluster"))'
 
 ## Github Packages
 sudo Rscript -e 'install.packages("RcppPlanc", repos = c(linux = 'https://welch-lab.r-universe.dev/bin/linux/noble/4.4/',sources = 'https://welch-lab.r-universe.dev',cran = 'https://cloud.r-project.org'))'
+
+## For ubuntu < 24.04, instal with makevars: 
+
+# withr::with_makevars( c(CFLAGS = "-w", CXXFLAGS = "-w", CPPFLAGS = "-w", LDFLAGS = ""), { .... }, assignment = "+=")
 
 ## --- Install other softwares (fastQC, samtools, cellranger and cellranger indexes, ffq)
 
@@ -87,11 +91,19 @@ sudo apt install fastqc samtools python3.8
 
 # cellranger
 cd /opt/
-sudo wget -O cellranger-7.1.0.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-7.1.0.tar.gz?Expires=1685143014&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZi4xMHhnZW5vbWljcy5jb20vcmVsZWFzZXMvY2VsbC1leHAvY2VsbHJhbmdlci03LjEuMC50YXIuZ3oiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE2ODUxNDMwMTR9fX1dfQ__&Signature=aD0ZgbtDMNwI4C62fEuZ0ppBoTm-wAiQ~d9KWtWinvv5G9LdyRzJXED98eMrJg07yCHfnbCd8v7owzUVoZvDW1-pgmpOjpd2qLiaCQuaWsWGKgxJ4MtyPAl0Oi~0zRnGLwsFk1geDPxDBZVH9OBIrQsG3aNlApBxhxw4u6yYUT62PXtu2OjRQ-PieGlvH7TFbr-JjkpUpR-YEcQ6i0ORrdLxNt9HzeZX9s6s0dJ~NybRywBZI89KEoseyN6LZU13vtHl9BtPGIeA1Hwvpb2A1xsO5ueql3palHsT5Lnf7lY9QwXH4FECVAAoMCI8eP2dXHKtliJy0y~xLKVPEnSgGw__&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA"
-sudo tar -xzvf cellranger-7.1.0.tar.gz
-sudo ln -s /opt/cellranger-7.1.0/cellranger /usr/local/bin/cellranger
+sudo wget -O cellranger-8.0.1.tar.gz "https://cf.10xgenomics.com/releases/cell-exp/cellranger-8.0.1.tar.gz?Expires=1730426816&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA&Signature=RCkLqP02kkVLRceyojFWbQ4eXrjemlvkAfWxSxbkad0ZqAIjtxTlSsc5Tn3x7PLj-mZiwuTjqx4o~bcR9J5fSBHdtkUrSG~MUqLxquMxcCPom3eR2Or9vdqGvk4faMhv1-jrXS8GCOD82zU8ZdhqecdE5tJdXjLHz6flWo7bQt0jqHF3-roktu0uuXHtebw586Cg39xqzMIG8x9SkeTsRGsJAKB7~jL65YKCEPpAl~QndTghDIymv43gHO8MWiQ7QLbF-nsF16uhqUJR7sAsPZSjCkKPW0GZTIpUmie1nv2OnoenOw9O6-Wj4gIBzcWVHkt-qkmPwvnF3nXq~0xUUw__"
+sudo tar -xzvf cellranger-8.0.1.tar.gz
+sudo ln -s /opt/cellranger-8.0.1/cellranger /usr/local/bin/cellranger
 sudo wget https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-mm10-2020-A.tar.gz
 sudo tar -xzvf refdata-gex-mm10-2020-A.tar.gz
+sudo mv refdata-gex-mm10-2020-A ~/Share/
+
+## Copy Share from local to AWS
+# rsync --progress --recursive --verbose ~/Share/ physalia:
+
+# Make sure write permissions are only for the sudo owner, so that userX cannot modify or erase the Share folder and its contents
+sudo chown -R ubuntu:ubuntu ~/Share/
+sudo chmod -R 755 ~/Share
 
 # ffq
 sudo apt install python3-distutils
@@ -106,8 +118,11 @@ sudo ln -s /opt/seqkit /usr/local/bin/seqkit
 # bcl2fastq
 sudo apt install alien
 cd /opt/
-wget http://support.illumina.com/content/dam/illumina-support/documents/downloads/software/bcl2fastq/bcl2fastq2-v2.17.1.14-Linux-x86_64.rpm
+sudo wget http://support.illumina.com/content/dam/illumina-support/documents/downloads/software/bcl2fastq/bcl2fastq2-v2.17.1.14-Linux-x86_64.rpm
 sudo alien bcl2fastq2-v2.17.1.14-Linux-x86_64.rpm
 sudo dpkg -i bcl2fastq2_0v2.17.1.14-2_amd64.deb
+
+## Add basilisk external dir to system-wide Renviron
+sudo echo "BASILISK_EXTERNAL_DIR=/opt/basilisk_envs" >> /etc/R/Renviron
 ```
 

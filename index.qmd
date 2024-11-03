@@ -18,7 +18,7 @@ workshop, ed. 2024.
 |          | 15:10 - 16:10    | [Lecture 2: From sequencing reads to expression matrices](content/day1/Lecture2_Bcl2matrix.qmd) | Jacques |
 |          | 16:10 - 17:10    | **Break**                                        |                |
 |          | 17:10 - 18:30    | [Lab 1: Familiarizing with AWS instance](content/day1/Lab1_Intro.qmd)       | Jacques        |
-|          | 18:40 - 20:00    | [Lab 2: From .bcl to count matrix](Lab2_processingreads.qmd)             | Fabricio       |
+|          | 18:40 - 20:00    | [Lab 2: From .bcl to count matrix](content/day1/Lab2_processingreads.qmd)             | Fabricio       |
 | **Day 2** | 14:00 - 14:50   | Flash talks                                 |                |
 |          | 15:00 - 16:00    | [Lecture 3: Quality control for scRNAseq data](content/day2/Lecture3_qualitycontrol.qmd) | Jacques       |
 |          | 16:00 - 17:00    | **Break**                                        |                |
@@ -29,11 +29,11 @@ workshop, ed. 2024.
 |          | 17:00 - 18:00    | **Break**                                        |                |
 |          | 18:00 - 19:00    | [Lecture 5: Data integration and batch effect correction](content/day3/Lecture5_batchcorrection.qmd) | Orr or Jacques |
 |          | 19:10 - 20:00    | [Lab 6: Batch correction](content/day3/Lab6_batch_correction.qmd)                      | Orr            |
-| **Day 4** | 14:00 - 15:00   | [Lecture 6: Advances in single-cell genomics - The epigenome](content/day4/Lecture7_ATAC.qmd) | Orr    |
-|          | 15:10 - 16:20    | [Lab 7: scATACseq analysis workflow](content/day4/Lab8_atac-seq.qmd) | Orr          |
+| **Day 4** | 14:00 - 15:00   | [Lecture 6: Advances in single-cell genomics - The epigenome](content/day4/Lecture6_ATAC.qmd) | Orr    |
+|          | 15:10 - 16:20    | [Lab 7: scATACseq analysis workflow](content/day4/Lab7_atac-seq.qmd) | Orr          |
 |          | 16:20 - 17:20    | **Break**                                        |                |
-|          | 17:20 - 18:20    | [Lecture 7: Trajectories and pseudotimes](content/day4/Lecture6_pseudotime.qmd)      | Orr            |
-|          | 18:30 - 20:00    | [Lab 8: Pseudotime analyses](content/day4/Lab7_pseudotime.qmd)                   | Fabricio       |
+|          | 17:20 - 18:20    | [Lecture 7: Trajectories and pseudotimes](content/day4/Lecture7_pseudotime.qmd)      | Orr            |
+|          | 18:30 - 20:00    | [Lab 8: Pseudotime analyses](content/day4/Lab8_pseudotime.qmd)                   | Fabricio       |
 | **Day 5** | 14:00 - 15:00   | [Lecture 8: Advances in single-cell genomics - Spatial transcriptomics](content/day5/Lecture8_spatial-transcriptomics.qmd) | Orr |
 |          | 15:10 - 16:20    | Group Project: Project work | Jacques        |
 |          | 17:20 - 19:00    | Group Project: Project work | Jacques        |

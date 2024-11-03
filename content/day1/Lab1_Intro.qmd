@@ -4,7 +4,7 @@
 
 ## Notes
 
-The estimated time for this lab is around 1 hour.
+The estimated time for this lab is around 1h15.
 
 :::
 

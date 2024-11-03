@@ -61,7 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/day4/Lecture6_pseudotime.html" rel="next">
+<link href="../../content/day4/Lecture6_ATAC.html" rel="next">
 <link href="../../content/day3/Lecture5_batchcorrection.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -257,26 +257,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lecture6_pseudotime.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span></a>
+  <a href="../../content/day4/Lecture6_ATAC.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 6 - Advances in single-cell genomics: the epigenome</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lab7_pseudotime.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span></span></a>
+  <a href="../../content/day4/Lab7_atac-seq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 7: Single-cell ATAC-seq analysis workflow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lecture7_ATAC.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 6 - Advances in single-cell genomics: the epigenome</span></span></a>
+  <a href="../../content/day4/Lecture7_pseudotime.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lab8_atac-seq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 7: Single-cell ATAC-seq analysis workflow</span></span></a>
+  <a href="../../content/day4/Lab8_pseudotime.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span></span></a>
   </div>
 </li>
       </ul>
@@ -360,7 +360,7 @@ Notes
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The estimated time for this lab is around 1h30.</p>
+<p>The estimated time for this lab is around 1h20.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1036,16 +1036,16 @@ To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to
 This message will be shown once per session</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:33:09 UMAP embedding parameters a = 0.583 b = 1.334</code></pre>
+<pre><code>15:51:39 UMAP embedding parameters a = 0.583 b = 1.334</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:33:09 Read 6321 rows and found 20 numeric columns</code></pre>
+<pre><code>15:51:39 Read 6321 rows and found 20 numeric columns</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:33:09 Using Annoy for neighbor search, n_neighbors = 15</code></pre>
+<pre><code>15:51:39 Using Annoy for neighbor search, n_neighbors = 15</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:33:09 Building Annoy index with metric = euclidean, n_trees = 50</code></pre>
+<pre><code>15:51:39 Building Annoy index with metric = euclidean, n_trees = 50</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
@@ -1055,13 +1055,13 @@ This message will be shown once per session</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>**************************************************|
-15:33:09 Writing NN index file to temp file /var/folders/dg/mbw146s905lgqgswn6w4ghk80000gn/T//RtmpFXp3TP/fileef8b70d80ad1
-15:33:09 Searching Annoy index using 1 thread, search_k = 1500
-15:33:10 Annoy recall = 100%
-15:33:10 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 15
-15:33:10 Initializing from normalized Laplacian + noise (using RSpectra)
-15:33:10 Commencing optimization for 500 epochs, with 127374 positive edges
-15:33:15 Optimization finished</code></pre>
+15:51:39 Writing NN index file to temp file /var/folders/dg/mbw146s905lgqgswn6w4ghk80000gn/T//RtmpmeI3uf/filec4c630907302
+15:51:39 Searching Annoy index using 1 thread, search_k = 1500
+15:51:40 Annoy recall = 100%
+15:51:40 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 15
+15:51:41 Initializing from normalized Laplacian + noise (using RSpectra)
+15:51:41 Commencing optimization for 500 epochs, with 127374 positive edges
+15:51:45 Optimization finished</code></pre>
 </div>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualize the Leiden clustering and the batches on the UMAP. </span></span>
 <span><span class="co"># Remember, the clustering is stored in @meta.data in column seurat_clusters and the technology is</span></span>
@@ -1457,16 +1457,16 @@ Elapsed time: 0 seconds</code></pre>
 <div class="sourceCode" id="cb190"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># UMAP</span></span>
 <span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html">RunUMAP</a></span><span class="op">(</span><span class="va">gcdata</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, reduction <span class="op">=</span> <span class="st">"pca"</span>, n.neighbors <span class="op">=</span> <span class="fl">15</span>, min.dist <span class="op">=</span> <span class="fl">0.5</span>, spread <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, seed.use <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:34:55 UMAP embedding parameters a = 0.583 b = 1.334</code></pre>
+<pre><code>15:53:26 UMAP embedding parameters a = 0.583 b = 1.334</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:34:55 Read 6321 rows and found 30 numeric columns</code></pre>
+<pre><code>15:53:26 Read 6321 rows and found 30 numeric columns</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:34:55 Using Annoy for neighbor search, n_neighbors = 15</code></pre>
+<pre><code>15:53:26 Using Annoy for neighbor search, n_neighbors = 15</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:34:55 Building Annoy index with metric = euclidean, n_trees = 50</code></pre>
+<pre><code>15:53:26 Building Annoy index with metric = euclidean, n_trees = 50</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
@@ -1476,16 +1476,16 @@ Elapsed time: 0 seconds</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>**************************************************|
-15:34:55 Writing NN index file to temp file /var/folders/dg/mbw146s905lgqgswn6w4ghk80000gn/T//RtmpFXp3TP/fileef8b2dad1538
-15:34:55 Searching Annoy index using 1 thread, search_k = 1500
-15:34:55 Annoy recall = 100%
-15:34:56 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 15
-15:34:56 Found 2 connected components, falling back to 'spca' initialization with init_sdev = 1
-15:34:56 Using 'irlba' for PCA
-15:34:56 PCA: 2 components explained 55.6% variance
-15:34:56 Scaling init to sdev = 1
-15:34:56 Commencing optimization for 500 epochs, with 139426 positive edges
-15:35:01 Optimization finished</code></pre>
+15:53:27 Writing NN index file to temp file /var/folders/dg/mbw146s905lgqgswn6w4ghk80000gn/T//RtmpmeI3uf/filec4c666ff06ea
+15:53:27 Searching Annoy index using 1 thread, search_k = 1500
+15:53:27 Annoy recall = 100%
+15:53:28 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 15
+15:53:28 Found 2 connected components, falling back to 'spca' initialization with init_sdev = 1
+15:53:28 Using 'irlba' for PCA
+15:53:28 PCA: 2 components explained 55.6% variance
+15:53:28 Scaling init to sdev = 1
+15:53:28 Commencing optimization for 500 epochs, with 139426 positive edges
+15:53:33 Optimization finished</code></pre>
 </div>
 <div class="sourceCode" id="cb198"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># After data integration, use the original expression data in all visualization and DE tests.</span></span>
 <span><span class="co"># The integrated data must not be used in DE tests as it violates assumptions of independence in DE tests!</span></span>
@@ -2157,10 +2157,7 @@ $Factor_5</code></pre>
   Please report the issue at &lt;https://github.com/welch-lab/liger/issues&gt;.</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Testing between {.val {dataset1}} and {.val {dataset2}} ■■■■■■■■■■■■■■■■                  50% | ETA:  1s</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Testing between {.val {dataset1}} and {.val {dataset2}} ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     94% | ETA:  0s</code></pre>
+<pre><code>Testing between {.val {dataset1}} and {.val {dataset2}} ■■■■■■■■■■■■■■■■■■■■■■■■          78% | ETA:  1s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Testing between {.val {dataset1}} and {.val {dataset2}} ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s</code></pre>
@@ -2168,7 +2165,7 @@ $Factor_5</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code></code></pre>
 </div>
-<div class="sourceCode" id="cb320"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/plotDimRed.html">plotGeneDimRed</a></span><span class="op">(</span><span class="va">data.liger</span>, features <span class="op">=</span> <span class="st">"INS"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb319"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/plotDimRed.html">plotGeneDimRed</a></span><span class="op">(</span><span class="va">data.liger</span>, features <span class="op">=</span> <span class="st">"INS"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Plotting feature "INS" on 6321 cells</code></pre>
 </div>
@@ -2207,7 +2204,7 @@ $Factor_5</code></pre>
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       Europe/Paris
- date     2024-10-30
+ date     2024-11-03
  pandoc   2.19.2 @ /opt/homebrew/bin/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -2612,8 +2609,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/day4/Lecture6_pseudotime.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/day4/Lecture6_ATAC.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 6 - Advances in single-cell genomics: the epigenome</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

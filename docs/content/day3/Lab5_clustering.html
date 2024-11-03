@@ -241,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../content/day3/Lab6_batch_correction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Lab 6 - Batch correction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Lab 6: Batch correction</span></span></a>
   </div>
 </li>
       </ul>
@@ -257,26 +257,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lecture6_pseudotime.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span></a>
+  <a href="../../content/day4/Lecture6_ATAC.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 6 - Advances in single-cell genomics: the epigenome</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lab7_pseudotime.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span></span></a>
+  <a href="../../content/day4/Lab7_atac-seq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 7: Single-cell ATAC-seq analysis workflow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lecture7_ATAC.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 6 - Advances in single-cell genomics: the epigenome</span></span></a>
+  <a href="../../content/day4/Lecture7_pseudotime.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lab8_atac-seq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 7 - Single-cell ATAC-seq analysis workflow</span></span></a>
+  <a href="../../content/day4/Lab8_pseudotime.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span></span></a>
   </div>
 </li>
       </ul>
@@ -368,7 +368,7 @@ Notes
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The estimated time for this lab is around 1h30.</p>
+<p>The estimated time for this lab is around 1h20.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -920,8 +920,8 @@ Answer
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18 
-512 365 695  40 129 374  61 196 354 386 331 219 191 141 126 192  10  18 </code></pre>
+  1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17 
+502 359 682  40 129 393  61 193 349 363 376 218 190 151 127 197  10 </code></pre>
 </div>
 </div>
 </div>
@@ -968,24 +968,23 @@ Answer
 <div class="cell-output cell-output-stdout">
 <pre><code>         sce_clust2
 sce_clust   1   2   3   4   5   6   7   8
-       1  512   0   0   0   0   0   0   0
-       2    0 326  31   0   0   8   0   0
-       3    0  22 673   0   0   0   0   0
-       4    0   0   0  35   2   0   3   0
-       5   23   0   0   0 106   0   0   0
-       6    0   0   0 374   0   0   0   0
-       7   58   0   1   2   0   0   0   0
-       8    0 182  14   0   0   0   0   0
-       9  354   0   0   0   0   0   0   0
-       10   0   1   0   0   0 385   0   0
-       11   0   1 330   0   0   0   0   0
-       12   0   0   0 219   0   0   0   0
-       13   0   0   0   1   0  22 168   0
-       14   0   0   0   0   0 141   0   0
-       15  13   0   0   0   1   0   0 112
-       16   0 162   1   0   0  29   0   0
-       17   0   5   2   3   0   0   0   0
-       18   0   0   0  15   0   3   0   0</code></pre>
+       1  502   0   0   0   0   0   0   0
+       2    0 321  29   0   0   9   0   0
+       3    0  23 659   0   0   0   0   0
+       4    0   0   0  37   1   0   2   0
+       5   23   0   0 106   0   0   0   0
+       6    0   1   0   0 389   3   0   0
+       7   58   0   1   0   2   0   0   0
+       8    0 181  12   0   0   0   0   0
+       9    0   1 348   0   0   0   0   0
+       10 363   0   0   0   0   0   0   0
+       11   0   1   0   0   0 374   1   0
+       12   0   0   0   0 218   0   0   0
+       13   0   0   0   0   1  22 167   0
+       14   0   0   0   0   0 151   0   0
+       15  14   0   0   1   0   0   0 112
+       16   0 167   1   0   0  29   0   0
+       17   0   5   2   0   3   0   0   0</code></pre>
 </div>
 </div>
 </div>
@@ -1046,17 +1045,17 @@ names(3): PCA TSNE UMAP</code></pre>
 </div>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'UMAP'</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        UMAP1     UMAP2
- [1,] 10.7822 -0.043302
- [2,] 10.4568  0.305291
- [3,]  9.3566  0.615241
- [4,] -4.4563 -4.724670
- [5,] -4.5822 -7.484820
- [6,] -4.6269 -2.111891
- [7,]  4.9713  7.195904
- [8,]  9.8108  4.409719
- [9,]  1.0997 15.787210
-[10,]  9.6268  2.310749</code></pre>
+<pre><code>        UMAP1    UMAP2
+ [1,] 10.4762 -1.74452
+ [2,]  9.9714 -1.70896
+ [3,]  8.9500 -1.36885
+ [4,] -6.3458 -3.38246
+ [5,] -5.7974 -6.26426
+ [6,] -6.6016 -1.30995
+ [7,]  8.3734 11.37350
+ [8,]  8.4162  2.35892
+ [9,]  2.7606 14.29711
+[10,]  8.8376  0.10778</code></pre>
 </div>
 </div>
 </div>
@@ -1095,7 +1094,11 @@ Answer
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span></span>
 <span><span class="va">p</span><span class="op">&lt;-</span> <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'PCA'</span>, colour_by <span class="op">=</span> <span class="st">'clusters_graph'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'denoised PCA'</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'TSNE'</span>, colour_by <span class="op">=</span> <span class="st">'clusters_graph'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'tSNE'</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'UMAP'</span>, colour_by <span class="op">=</span> <span class="st">'clusters_graph'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'UMAP'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>    <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'UMAP'</span>, colour_by <span class="op">=</span> <span class="st">'clusters_graph'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'UMAP'</span><span class="op">)</span></span>
+<span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<p><img src="Lab5_clustering_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1183,7 +1186,11 @@ k.50_cluster.fun.louvain        50     louvain</code></pre>
 <span>    nrow <span class="op">=</span> <span class="fl">2</span>, </span>
 <span>    rel_heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fl">0.7</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">$</span><span class="va">clusters</span><span class="op">[</span>, <span class="st">'k.5_cluster.fun.louvain'</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab5_clustering_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">clusters</span><span class="op">$</span><span class="va">clusters</span><span class="op">[</span>, <span class="st">'k.5_cluster.fun.louvain'</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18 
@@ -1206,7 +1213,7 @@ k.50_cluster.fun.louvain        50     louvain</code></pre>
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu">scran</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scran/man/findMarkers.html">findMarkers</a></span><span class="op">(</span><span class="va">sce</span>, groups <span class="op">=</span> <span class="va">sce</span><span class="op">$</span><span class="va">clusters_graph</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu">scran</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scran/man/findMarkers.html">findMarkers</a></span><span class="op">(</span><span class="va">sce</span>, groups <span class="op">=</span> <span class="va">sce</span><span class="op">$</span><span class="va">clusters_graph</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
@@ -1237,7 +1244,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu">scran</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scran/man/findMarkers.html">findMarkers</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu">scran</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scran/man/findMarkers.html">findMarkers</a></span><span class="op">(</span></span>
 <span>    <span class="va">sce</span>, </span>
 <span>    groups <span class="op">=</span> <span class="va">sce</span><span class="op">$</span><span class="va">clusters_graph</span>, </span>
 <span>    direction <span class="op">=</span> <span class="st">"up"</span>, </span>
@@ -1246,25 +1253,25 @@ Answer
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">markers</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>DataFrame with 6 rows and 21 columns
+<pre><code>DataFrame with 6 rows and 20 columns
                     Top      p.value          FDR summary.logFC   logFC.2   logFC.3   logFC.4   logFC.5   logFC.6   logFC.7   logFC.8   logFC.9  logFC.10  logFC.11  logFC.12  logFC.13  logFC.14
               &lt;integer&gt;    &lt;numeric&gt;    &lt;numeric&gt;     &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
-S100A9                1  0.00000e+00  0.00000e+00       5.39735   5.42227   5.39735   5.37714  3.519594   5.40233  1.292572   5.30138  1.392078   5.50282   5.29882   5.25981   5.57336   5.37922
-S100A12               1 9.41870e-191 2.44118e-187       3.16199   3.13794   3.15134   3.05805  2.746979   3.16292  1.315399   3.13222  1.456099   3.15186   3.10676   3.13925   3.16199   3.12637
-S100A8                1  0.00000e+00  0.00000e+00       5.33554   5.41151   5.33554   5.23935  3.993514   5.36867  1.420356   5.33714  1.641058   5.43852   5.42007   5.35787   5.56151   5.41021
-MNDA                  1 6.18106e-177 1.30166e-173       2.69098   2.62036   2.65845   2.68345  1.037175   2.63495  0.867175   2.61998  0.476738   2.67961   2.65877   2.63662   2.69098   2.66942
-LYZ                   1  0.00000e+00  0.00000e+00       5.26795   5.25586   5.26795   5.32049  0.753716   5.22742  0.991414   5.32348  0.321017   5.30989   5.27680   5.30060   5.49327   5.24954
-RP11-1143G9.4         1 8.27689e-204 2.32401e-200       3.22149   3.15787   3.15457   3.03056  1.369485   3.15940  0.928994   3.17550  0.868891   3.16883   3.15164   3.16193   3.17073   3.22149
-               logFC.15  logFC.16  logFC.17  logFC.18
-              &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
-S100A9          4.11678   5.39811   5.32975   5.16683
-S100A12         3.05697   3.10559   3.05514   3.15919
-S100A8          4.62666   5.44288   5.41036   5.25639
-MNDA            1.18399   2.66700   2.70361   2.65503
-LYZ             3.04714   5.26227   5.19116   5.14054
-RP11-1143G9.4   2.71478   3.21358   3.20238   3.14867</code></pre>
+S100A9                1  0.00000e+00  0.00000e+00       5.41682   5.43237   5.41682   5.38506  3.527516   5.40582  1.300493   5.30313   5.29337  1.367411   5.51013   5.25562   5.57793   5.39685
+S100A12               1 3.00254e-186 7.78211e-183       3.16760   3.14991   3.15614   3.06390  2.752834   3.16872  1.321253   3.13691   3.11275  1.428806   3.15624   3.14479   3.16760   3.13757
+S100A8                1  0.00000e+00  0.00000e+00       5.35071   5.40804   5.35071   5.24867  4.002828   5.36811  1.429670   5.33249   5.42634  1.615361   5.44104   5.37566   5.57562   5.42914
+MNDA                  1 6.44450e-174 1.35713e-170       2.69302   2.62331   2.65953   2.68560  1.039333   2.63823  0.869333   2.62066   2.66382  0.469773   2.68082   2.63842   2.69302   2.67460
+LYZ                   1  0.00000e+00  0.00000e+00       5.27217   5.25980   5.27217   5.32183  0.755057   5.22486  0.992756   5.33170   5.26958  0.312196   5.30534   5.30214   5.49214   5.27623
+RP11-1143G9.4         1 6.20347e-200 1.74183e-196       3.22726   3.16209   3.16589   3.04120  1.380130   3.16979  0.939639   3.18494   3.16750  0.865393   3.18003   3.17216   3.18095   3.22726
+               logFC.15  logFC.16  logFC.17
+              &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
+S100A9          4.11810   5.40420   5.33767
+S100A12         3.05345   3.10968   3.06099
+S100A8          4.62013   5.46970   5.41967
+MNDA            1.17765   2.66604   2.70577
+LYZ             3.03608   5.25555   5.19250
+RP11-1143G9.4   2.72497   3.22522   3.21302</code></pre>
 </div>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">markers</span>, <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">markers</span>, <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="va">df</span><span class="op">$</span><span class="va">Top</span> <span class="op">&lt;=</span> <span class="fl">5</span>,<span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1301,7 +1308,11 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'TSNE'</span>, colour_by <span class="op">=</span> <span class="va">markers</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'TSNE'</span>, colour_by <span class="op">=</span> <span class="va">markers</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<p><img src="Lab5_clustering_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1317,7 +1328,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu">celldex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/celldex/man/BlueprintEncodeData.html">BlueprintEncodeData</a></span><span class="op">(</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ref</span> <span class="op">&lt;-</span> <span class="fu">celldex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/celldex/man/BlueprintEncodeData.html">BlueprintEncodeData</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">prediction_types</span> <span class="op">&lt;-</span> <span class="fu">SingleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SingleR/man/SingleR.html">SingleR</a></span><span class="op">(</span></span>
 <span>    test <span class="op">=</span> <span class="va">sce</span>, </span>
 <span>    ref <span class="op">=</span> <span class="va">ref</span>, </span>
@@ -1331,17 +1342,17 @@ Answer
      B-cells CD4+ T-cells CD8+ T-cells           DC          HSC    Monocytes     NK cells 
          616          881         1390            1           14         1201          237 </code></pre>
 </div>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">sce</span><span class="op">$</span><span class="va">annotation</span>, <span class="va">sce</span><span class="op">$</span><span class="va">clusters_graph</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">sce</span><span class="op">$</span><span class="va">annotation</span>, <span class="va">sce</span><span class="op">$</span><span class="va">clusters_graph</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              
-                 1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
-  B-cells        0   0   0  14   0 374   0   0   0   0   0 219   0   0   0   0   1   8
-  CD4+ T-cells   0 163 496   0   0   0   1  98   0   0  37   0   0   0   0  86   0   0
-  CD8+ T-cells   0 202 199   0   0   0   0  98   0 351 294   0   4 127   0 106   0   9
-  DC             0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0
-  HSC            0   0   0   5   0   0   0   0   0   0   0   0   0   0   0   0   9   0
-  Monocytes    512   0   0  21 128   0  60   0 354   0   0   0   0   0 126   0   0   0
-  NK cells       0   0   0   0   0   0   0   0   0  35   0   0 187  14   0   0   0   1</code></pre>
+                 1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17
+  B-cells        0   0   0  14   0 383   0   0   0   0   0 218   0   0   0   0   1
+  CD4+ T-cells   0 158 490   0   0   0   1  96  47   0   0   0   0   0   0  89   0
+  CD8+ T-cells   0 201 192   0   0   9   0  97 302   0 342   0   3 136   0 108   0
+  DC             0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0
+  HSC            0   0   0   5   0   0   0   0   0   0   0   0   0   0   0   0   9
+  Monocytes    502   0   0  21 128   0  60   0   0 363   0   0   0   0 127   0   0
+  NK cells       0   0   0   0   0   1   0   0   0   0  34   0 187  15   0   0   0</code></pre>
 </div>
 </div>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
@@ -1373,19 +1384,23 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">SingleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SingleR/man/plotScoreHeatmap.html">plotScoreHeatmap</a></span><span class="op">(</span><span class="va">prediction_types</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">SingleR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SingleR/man/plotScoreHeatmap.html">plotScoreHeatmap</a></span><span class="op">(</span><span class="va">prediction_types</span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <p><img src="Lab5_clustering_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'TSNE'</span>, colour_by <span class="op">=</span> <span class="st">'annotation'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'Automated annotation'</span><span class="op">)</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'TSNE'</span>, colour_by <span class="op">=</span> <span class="st">'annotation'</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">'Automated annotation'</span><span class="op">)</span></span>
+<span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab5_clustering_files/figure-html/unnamed-chunk-17-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">pheatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pheatmap/man/pheatmap.html">pheatmap</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log2</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span>Annotation <span class="op">=</span> <span class="va">sce</span><span class="op">$</span><span class="va">annotation</span>, Cluster <span class="op">=</span> <span class="va">sce</span><span class="op">$</span><span class="va">clusters_graph</span><span class="op">)</span><span class="op">+</span><span class="fl">10</span><span class="op">)</span>, </span>
 <span>    color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"darkred"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">101</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Lab5_clustering_files/figure-html/unnamed-chunk-17-2.png" class="img-fluid" width="672"></p>
+<p><img src="Lab5_clustering_files/figure-html/unnamed-chunk-17-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1413,7 +1428,7 @@ Answer
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       Europe/Paris
- date     2024-10-29
+ date     2024-11-03
  pandoc   2.19.2 @ /opt/homebrew/bin/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────

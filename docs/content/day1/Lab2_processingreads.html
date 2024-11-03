@@ -257,26 +257,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lecture6_pseudotime.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span></a>
+  <a href="../../content/day4/Lecture6_ATAC.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 6 - Advances in single-cell genomics: the epigenome</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lab7_pseudotime.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span></span></a>
+  <a href="../../content/day4/Lab7_atac-seq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 7: Single-cell ATAC-seq analysis workflow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lecture7_ATAC.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 6 - Advances in single-cell genomics: the epigenome</span></span></a>
+  <a href="../../content/day4/Lecture7_pseudotime.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lab8_atac-seq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 7: Single-cell ATAC-seq analysis workflow</span></span></a>
+  <a href="../../content/day4/Lab8_pseudotime.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span></span></a>
   </div>
 </li>
       </ul>
@@ -343,7 +343,7 @@ Notes
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The estimated time for this lab is around 1 hour.</p>
+<p>The estimated time for this lab is around 1h15.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -367,7 +367,7 @@ Aims
 </h2>
 <p>Navigate to your terminal in <code>RStudio</code> on AWS.</p>
 <p>Go to the <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/using/mkfastq">cellranger mkfastq page</a> and read the <strong>Overview</strong>.</p>
-<p>For this workshop, we are going to look at a toi dataset provided by 10x Genomics. The dataset is <code>cellranger-tiny-bcl-1.2.0</code>, provided in the <code>~/Share/</code> folder.</p>
+<p>For this workshop, we are going to look at a toy dataset provided by 10x Genomics. The dataset is <code>cellranger-tiny-bcl-1.2.0</code>, provided in the <code>~/Share/data_wrangling/</code> folder. With the <code>cellranger-tiny-bcl-1.2.0</code> dataset, we have a samplesheet file <code>cellranger-tiny-bcl-simple-1.2.0.csv</code> that contains the sample information.</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -453,6 +453,135 @@ drwxr-xr-x  9 jacques  staff   288 Oct 29 10:54 InterOp
 </div>
 </div>
 </div>
+<p>Now we can demultiplex our bcl files by running the following command in the terminal. To do that, we will use the <code>cellranger mkfastq</code> command.</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bash</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cellranger</span> mkfastq <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="cell">
+<pre class="code cell-code"><code>/opt/cellranger/bin
+
+cellranger mkfastq (cellranger-5.0.1)
+Copyright (c) 2020 10x Genomics, Inc.  All rights reserved.
+-------------------------------------------------------------------------------
+
+Run Illumina demultiplexer on sample sheets that contain 10x-specific sample 
+index sets, and generate 10x-specific quality metrics after the demultiplex.  
+Any bcl2fastq argument will work (except a few that are set by the pipeline 
+to ensure proper trimming and sample indexing). The FASTQ output generated 
+will be the same as when running bcl2fastq directly.
+
+These bcl2fastq arguments are overridden by this pipeline:
+    --fastq-cluster-count
+    --minimum-trimmed-read-length
+    --mask-short-adapter-reads
+
+Usage:
+    cellranger mkfastq --run=PATH [options]
+    cellranger mkfastq -h | --help | --version
+
+Required:
+    --run=PATH          Path of Illumina BCL run folder.
+
+Optional:
+# Sample Sheet
+    --id=NAME           Name of the folder created by mkfastq. If not supplied,
+                            will default to the name of the flowcell referred to
+                            by the --run argument.
+    --csv=PATH
+    --samplesheet=PATH
+    --sample-sheet=PATH
+                        Path to the sample sheet. The sample sheet can either be
+                            a simple CSV with lane, sample and index columns, or
+                            an Illumina Experiment Manager-compatible sample
+                            sheet. Sample sheet indexes can refer to 10x sample
+                            index set names (e.g., SI-GA-A12).
+    --simple-csv=PATH   Deprecated. Same meaning as --csv.
+    --qc                Deprecated: will be removed in a future version.
+                        Calculate both sequencing and 10x-specific metrics,
+                            including per-sample barcode matching rate. Will not
+                            be performed unless this flag is specified.
+    --force-single-index
+                        If 10x-supplied i7/i5 paired indices are specified,
+                            but the flowcell was run with only one sample
+                            index, allow the demultiplex to proceed using
+                                the i7 half of the sample index pair.
+    --filter-single-index
+                        Only demultiplex samples identified
+                            by an i7-only sample index, ignoring dual-indexed
+                            samples.  Dual-indexed samples will not be
+                            demultiplexed.
+    --filter-dual-index
+                        Only demultiplex samples identified
+                          by i7/i5 dual-indices (e.g., SI-TT-A6), ignoring single-
+                          index samples.  Single-index samples will not be 
+                          demultiplexed.
+    --rc-i2-override=BOOL
+                        Indicates if the bases in the I2 read are emitted as 
+                          reverse complement by the sequencing workflow.
+                          Set to 'true' for Workflow A / NovaSeq Reagent Kit v1.5
+                          or greater. Set to 'false' for Wokflow B / older NovaSeq
+                          Reagent Kits. NOTE: this parameter is autodetected based 
+                          and should only be passed in special circumstances.
+    
+# bcl2fastq Pass-Through
+    --lanes=NUMS        Comma-delimited series of lanes to demultiplex. Shortcut
+                            for the --tiles argument.
+    --use-bases-mask=MASK
+                        Same as bcl2fastq; override the read lengths as
+                            specified in RunInfo.xml. See Illumina bcl2fastq
+                            documentation for more information.
+    --delete-undetermined
+                        Delete the Undetermined FASTQ files left by bcl2fastq
+                            Useful if your sample sheet is only expected to
+                            match a subset of the flowcell.
+    --output-dir=PATH   Same as in bcl2fastq. Folder where FASTQs, reports and
+                            stats will be generated.
+    --project=NAME      Custom project name, to override the samplesheet or to
+                            use in conjunction with the --csv argument.
+
+# Martian Runtime
+    --jobmode=MODE      Job manager to use. Valid options: local (default), sge,
+                            lsf, or a .template file
+    --localcores=NUM    Set max cores the pipeline may request at one time. Only
+                            applies to local jobs.
+    --localmem=NUM      Set max GB the pipeline may request at one time. Only
+                            applies to local jobs.
+    --localvmem=NUM     Set max virtual address space in GB for the pipeline.
+                            Only applies to local jobs.
+    --mempercore=NUM    Reserve enough threads for each job to ensure enough
+                        memory will be available, assuming each core on your
+                        cluster has at least this much memory available. Only
+                            applies in cluster jobmodes.
+    --maxjobs=NUM       Set max jobs submitted to cluster at one time. Only
+                            applies in cluster jobmodes.
+    --jobinterval=NUM   Set delay between submitting jobs to cluster, in ms.
+                            Only applies in cluster jobmodes.
+    --overrides=PATH    The path to a JSON file that specifies stage-level
+                            overrides for cores and memory. Finer-grained
+                            than --localcores, --mempercore and --localmem.
+                            Consult the 10x support website for an example
+                            override file.
+
+    --uiport=PORT       Serve web UI at http://localhost:PORT
+    --disable-ui        Do not serve the UI.
+    --noexit            Keep web UI running after pipestance completes or fails.
+    --nopreflight       Skip preflight checks.
+
+    -h --help           Show this message.
+    --version           Show version.
+
+If you demultiplexed with 'cellranger mkfastq' or directly with Illumina
+bcl2fastq, then set --fastqs to the project folder containing FASTQ files. In
+addition, set --sample to the name prefixed to the FASTQ files comprising
+your sample. For example, if your FASTQs are named:
+    subject1_S1_L001_R1_001.fastq.gz
+then set --sample=subject1</code></pre>
+</div>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -463,7 +592,8 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Now we can demultiplex our bcl files by running the following command in the terminal. Use <code>cellranger mkfastq</code> to demultiplex the sequencing data.</p>
+<p>What is the purpose of <code>--id</code>, <code>--run</code>, and <code>--csv</code> arguments ?</p>
+<p>Choose these arguments wisely and execute the command to demultiplex the sequencing data.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -481,7 +611,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>bash</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cellranger</span> mkfastq <span class="at">--id</span> tiny-bcl <span class="at">--run</span> ~/Share/data_wrangling/cellranger-tiny-bcl-1.2.0 <span class="at">--csv</span> ~/Share/data_wrangling/cellranger-tiny-bcl-simple-1.2.0.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cellranger</span> mkfastq <span class="at">--id</span> tiny-bcl <span class="at">--run</span> ~/Share/data_wrangling/cellranger-tiny-bcl-1.2.0 <span class="at">--csv</span> ~/Share/data_wrangling/cellranger-tiny-bcl-simple-1.2.0.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="cell">
@@ -527,6 +657,20 @@ Saving pipestance info to "tiny-bcl/tiny-bcl.mri.tgz"</code></pre>
 </div>
 </div>
 <p>The output folders can be viewed by running the <code>ls</code> command:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bash</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> ~/tiny-bcl/outs/fastq_path/H35KCBCXY/test_sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>total 96296
+-rw-r--r--  1 jacques  staff   3930346 Oct 30 23:46 test_sample_S1_L001_I1_001.fastq.gz
+-rw-r--r--  1 jacques  staff  11093755 Oct 30 23:46 test_sample_S1_L001_R1_001.fastq.gz
+-rw-r--r--  1 jacques  staff  34273874 Oct 30 23:46 test_sample_S1_L001_R2_001.fastq.gz</code></pre>
+</div>
+</div>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -537,7 +681,8 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Inspect the output folder generated by <code>cellranger mkfastq</code>.</p>
+<p>Look at the first reads listed in index read (<code>I1</code>), read 1 (<code>R1</code>), and read (<code>R2</code>) files.</p>
+<p>What is the purpose of the index read? What does it contain?</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -555,20 +700,94 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>bash</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> ~/tiny-bcl/outs/fastq_path/H35KCBCXY/test_sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>total 96296
--rw-r--r--  1 jacques  staff   3930346 Oct 30 23:46 test_sample_S1_L001_I1_001.fastq.gz
--rw-r--r--  1 jacques  staff  11093755 Oct 30 23:46 test_sample_S1_L001_R1_001.fastq.gz
--rw-r--r--  1 jacques  staff  34273874 Oct 30 23:46 test_sample_S1_L001_R2_001.fastq.gz</code></pre>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> tiny-bcl/outs/fastq_path/H35KCBCXY/test_sample/test_sample_S1_L001_I1_001.fastq.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 12</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+<div class="cell">
+<pre class="code cell-code"><code>@D00547:905:H35KCBCXY:1:1101:1284:1973 1:N:0:AGGTATTG
+AGGTATTG
++
+GGGGGIII
+@D00547:905:H35KCBCXY:1:1101:1729:1981 1:N:0:AGGTATTG
+AGGTATTG
++
+GAGGGIIG
+@D00547:905:H35KCBCXY:1:1101:2005:1944 1:N:0:AGGTATTG
+AGGTATTG
++
+AA&lt;G.A.G</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
+</div>
+<p>Open the html file <code>tiny-bcl/outs/fastq_path/Reports/html/index.html</code> by navigating to the file in RStudio, using the Files Tab. When you click on the file, select the option to View in Web Browser. Take some time to explore the demultiplexed outputs.</p>
+</section><section id="generating-gene-count-matrices-with-cellranger-count" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="generating-gene-count-matrices-with-cellranger-count">
+<span class="header-section-number">4.2</span> Generating gene count matrices with <code>cellranger count</code>
+</h2>
+<p>Go to the <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview">cellranger count algorithm overview</a> and read the section on <strong>Alignment</strong> (Read Trimming, Genome Alignment, MAPQ adjustment, Transcriptome Alignment, UMI Counting).</p>
+<p>In bash, the <code>cellranger count</code> command is used to generate gene count matrices from the demultiplexed reads.</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>bash</strong></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cellranger</span> count <span class="at">--help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="cell">
+<pre class="code cell-code"><code>cellranger-count 
+Count gene expression (targeted or whole-transcriptome) and/or feature barcode reads from a single sample and GEM well
+
+USAGE:
+    cellranger count [FLAGS] [OPTIONS] --id &lt;ID&gt; --transcriptome &lt;PATH&gt;
+
+FLAGS:
+        --no-target-umi-filter    Turn off the target UMI filtering subpipeline
+        --no-bam                  Do not generate a bam file
+        --nosecondary             Disable secondary analysis, e.g. clustering. Optional
+        --include-introns         Include intronic reads in count
+        --no-libraries            Proceed with processing using a --feature-ref but no Feature Barcode libraries specified with the 'libraries' flag
+        --dry                     Do not execute the pipeline. Generate a pipeline invocation (.mro) file and stop
+        --disable-ui              Do not serve the web UI
+        --noexit                  Keep web UI running after pipestance completes or fails
+        --nopreflight             Skip preflight checks
+    -h, --help                    Prints help information
+
+OPTIONS:
+        --id &lt;ID&gt;                 A unique run id and output folder name [a-zA-Z0-9_-]+
+        --description &lt;TEXT&gt;      Sample description to embed in output files
+        --transcriptome &lt;PATH&gt;    Path of folder containing 10x-compatible transcriptome reference
+        --fastqs &lt;PATH&gt;...        Path to input FASTQ data
+        --project &lt;TEXT&gt;          Name of the project folder within a mkfastq or bcl2fastq-generated folder to pick FASTQs from
+        --sample &lt;PREFIX&gt;...      Prefix of the filenames of FASTQs to select
+        --lanes &lt;NUMS&gt;...         Only use FASTQs from selected lanes
+        --libraries &lt;CSV&gt;         CSV file declaring input library data sources
+        --feature-ref &lt;CSV&gt;       Feature reference CSV file, declaring Feature Barcode constructs and associated barcodes
+        --target-panel &lt;CSV&gt;      The target panel CSV file declaring the target panel used, if any
+        --expect-cells &lt;NUM&gt;      Expected number of recovered cells
+        --force-cells &lt;NUM&gt;       Force pipeline to use this number of cells, bypassing cell detection
+        --r1-length &lt;NUM&gt;         Hard trim the input Read 1 to this length before analysis
+        --r2-length &lt;NUM&gt;         Hard trim the input Read 2 to this length before analysis
+        --chemistry &lt;CHEM&gt;        Assay configuration. NOTE: by default the assay configuration is detected automatically, which is the recommened mode. You usually will not
+                                  need to specify a chemistry. Options are: 'auto' for autodetection, 'threeprime' for Single Cell 3', 'fiveprime' for  Single Cell 5',
+                                  'SC3Pv1' or 'SC3Pv2' or 'SC3Pv3' for Single Cell 3' v1/v2/v3, 'SC5P-PE' or 'SC5P-R2' for Single Cell 5', paired-end/R2-only, 'SC-FB' for
+                                  Single Cell Antibody-only 3' v2 or 5' [default: auto]
+        --jobmode &lt;MODE&gt;          Job manager to use. Valid options: local (default), sge, lsf, slurm or a .template file. Search for help on "Cluster Mode" at
+                                  support.10xgenomics.com for more details on configuring the pipeline to use a compute cluster [default: local]
+        --localcores &lt;NUM&gt;        Set max cores the pipeline may request at one time. Only applies to local jobs
+        --localmem &lt;NUM&gt;          Set max GB the pipeline may request at one time. Only applies to local jobs
+        --localvmem &lt;NUM&gt;         Set max virtual address space in GB for the pipeline. Only applies to local jobs
+        --mempercore &lt;NUM&gt;        Reserve enough threads for each job to ensure enough memory will be available, assuming each core on your cluster has at least this much
+                                  memory available. Only applies in cluster jobmodes
+        --maxjobs &lt;NUM&gt;           Set max jobs submitted to cluster at one time. Only applies in cluster jobmodes
+        --jobinterval &lt;NUM&gt;       Set delay between submitting jobs to cluster, in ms. Only applies in cluster jobmodes
+        --overrides &lt;PATH&gt;        The path to a JSON file that specifies stage-level overrides for cores and memory. Finer-grained than --localcores, --mempercore and
+                                  --localmem. Consult the 10x support website for an example override file
+        --uiport &lt;PORT&gt;           Serve web UI at http://localhost:PORT</code></pre>
+</div>
+<p>Now, we will generate a gene count matrix for the <code>test_sample</code> reads using <code>cellranger count</code> and the transcriptome reference provided in <code>~/Share/refdata-gex-mm10-2020-A/</code></p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -579,8 +798,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Look at the first reads listed in index read (<code>I1</code>), read 1 (<code>R1</code>), and read (<code>R2</code>) files.</p>
-<p>What is the purpose of the index read? What does it contain?</p>
+<p>What is the purpose of the <code>--id</code>, <code>--transcriptome</code>, <code>--fastqs</code>, <code>--sample</code>, and <code>--create-bam</code> arguments?</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -598,48 +816,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>bash</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gzcat</span> tiny-bcl/outs/fastq_path/H35KCBCXY/test_sample/test_sample_S1_L001_I1_001.fastq.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 12</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>Open the html file <code>tiny-bcl/outs/fastq_path/Reports/html/index.html</code> by navigating to the file in RStudio, using the Files Tab. When you click on the file, select the option to View in Web Browser. Take some time to explore the demultiplexed outputs.</p>
-</section><section id="generating-gene-count-matrices-with-cellranger-count" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="generating-gene-count-matrices-with-cellranger-count">
-<span class="header-section-number">4.2</span> Generating gene count matrices with <code>cellranger count</code>
-</h2>
-<p>Go to the <a href="https://support.10xgenomics.com/single-cell-gene-expression/software/pipelines/latest/algorithms/overview">cellranger count algorithm overview</a> and read the section on <strong>Alignment</strong> (Read Trimming, Genome Alignment, MAPQ adjustment, Transcriptome Alignment, UMI Counting).</p>
-<div class="icon callout callout-style-default callout-question no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Question
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Generate a gene count matrix for the <code>test_sample</code> reads using <code>cellranger count</code> and the transcriptome reference provided in <code>~/Share/refdata-gex-mm10-2020-A/</code></p>
-<div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-13" class="callout-13-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>bash</strong></pre>
-</div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cellranger</span> count <span class="at">--id</span> counts <span class="at">--transcriptome</span> ~/Share/refdata-gex-mm10-2020-A/ <span class="at">--fastqs</span> tiny-bcl/outs/fastq_path/H35KCBCXY/test_sample <span class="at">--sample</span> test_sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cellranger</span> count <span class="at">--id</span> counts <span class="at">--transcriptome</span> ~/Share/refdata-gex-mm10-2020-A/ <span class="at">--fastqs</span> tiny-bcl/outs/fastq_path/H35KCBCXY/test_sample <span class="at">--sample</span> test_sample <span class="at">--create-bam</span> true</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="cell">
@@ -722,7 +899,7 @@ Pipestance completed successfully!
 <div class="code-with-filename-file">
 <pre><strong>bash</strong></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> ~/counts/outs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-l</span> ~/counts/outs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>total 119792

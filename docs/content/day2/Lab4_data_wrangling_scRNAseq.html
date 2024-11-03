@@ -257,26 +257,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lecture6_pseudotime.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span></a>
+  <a href="../../content/day4/Lecture6_ATAC.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 6 - Advances in single-cell genomics: the epigenome</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lab7_pseudotime.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span></span></a>
+  <a href="../../content/day4/Lab7_atac-seq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 7: Single-cell ATAC-seq analysis workflow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lecture7_ATAC.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 6 - Advances in single-cell genomics: the epigenome</span></span></a>
+  <a href="../../content/day4/Lecture7_pseudotime.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lab8_atac-seq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 7: Single-cell ATAC-seq analysis workflow</span></span></a>
+  <a href="../../content/day4/Lab8_pseudotime.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span></span></a>
   </div>
 </li>
       </ul>
@@ -316,7 +316,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">7.1</span> Introduction</a>
   <ul class="collapse">
 <li><a href="#load-necessary-packages" id="toc-load-necessary-packages" class="nav-link" data-scroll-target="#load-necessary-packages"><span class="header-section-number">7.1.1</span> Load necessary packages</a></li>
-  <li><a href="#read-in-pancreas-counts-matrix." id="toc-read-in-pancreas-counts-matrix." class="nav-link" data-scroll-target="#read-in-pancreas-counts-matrix."><span class="header-section-number">7.1.2</span> Read in Pancreas counts matrix.</a></li>
+  <li><a href="#create-a-singlecellexperiment-object-from-scratch" id="toc-create-a-singlecellexperiment-object-from-scratch" class="nav-link" data-scroll-target="#create-a-singlecellexperiment-object-from-scratch"><span class="header-section-number">7.1.2</span> Create a <code>SingleCellExperiment</code> object from scratch</a></li>
+  <li><a href="#read-in-pancreas-counts-matrix." id="toc-read-in-pancreas-counts-matrix." class="nav-link" data-scroll-target="#read-in-pancreas-counts-matrix."><span class="header-section-number">7.1.3</span> Read in Pancreas counts matrix.</a></li>
   </ul>
 </li>
   <li><a href="#basic-qcs" id="toc-basic-qcs" class="nav-link" data-scroll-target="#basic-qcs"><span class="header-section-number">7.2</span> Basic QCs</a></li>
@@ -325,7 +326,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
 <li><a href="#assay-slots" id="toc-assay-slots" class="nav-link" data-scroll-target="#assay-slots"><span class="header-section-number">7.3.1</span> Assay slots</a></li>
   <li><a href="#embeddings" id="toc-embeddings" class="nav-link" data-scroll-target="#embeddings"><span class="header-section-number">7.3.2</span> Embeddings</a></li>
-  <li><a href="#multiple-modalities" id="toc-multiple-modalities" class="nav-link" data-scroll-target="#multiple-modalities"><span class="header-section-number">7.3.3</span> Multiple modalities</a></li>
   </ul>
 </li>
   <li>
@@ -367,7 +367,7 @@ Notes
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The estimated time for this lab is around 1h30.</p>
+<p>The estimated time for this lab is around 1h20.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -550,9 +550,159 @@ The following objects are masked from 'package:matrixStats':
 </div>
 </div>
 </div>
-</section><section id="read-in-pancreas-counts-matrix." class="level3" data-number="7.1.2"><h3 data-number="7.1.2" class="anchored" data-anchor-id="read-in-pancreas-counts-matrix.">
-<span class="header-section-number">7.1.2</span> Read in Pancreas counts matrix.</h3>
-<p>For this tutorial, we will be analyzing a human pancreas scRNAseq dataset. It is freely available from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE114802">GEO: link</a>. We start by downloading the cell, features and counts matrix.</p>
+</section><section id="create-a-singlecellexperiment-object-from-scratch" class="level3" data-number="7.1.2"><h3 data-number="7.1.2" class="anchored" data-anchor-id="create-a-singlecellexperiment-object-from-scratch">
+<span class="header-section-number">7.1.2</span> Create a <code>SingleCellExperiment</code> object from scratch</h3>
+<p>In the previous lab, we have been working with <code>airway</code> object (a <code>SummarizedExperiment</code> object) and <code>sce</code>, a <code>SingleCellExperiment</code> object. We will now create a toy <code>SingleCellExperiment</code> object from scratch, using the <code>SingleCellExperiment</code> constructor.</p>
+<p>To create a <code>SingleCellExperiment</code> object, we need to provide the following:</p>
+<ul>
+<li>
+<code>colData</code>: a data frame (or tibble) with columns corresponding to cell metadata.</li>
+<li>
+<code>rowData</code>: a data frame (or tibble) with columns corresponding to gene metadata.</li>
+<li>
+<code>assays</code>: a list of matrices, each matrix corresponding to a different assay. The first matrix is typically the counts matrix.</li>
+</ul>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>idx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">'cell'</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span>  <span class="co">## `cd` stands for colData</span></span>
+<span><span class="va">cd</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 100 × 1
+   idx   
+   &lt;chr&gt; 
+ 1 cell1 
+ 2 cell2 
+ 3 cell3 
+ 4 cell4 
+ 5 cell5 
+ 6 cell6 
+ 7 cell7 
+ 8 cell8 
+ 9 cell9 
+10 cell10
+# ℹ 90 more rows</code></pre>
+</div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>    gene_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">'gene'</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>,</span>
+<span>    gene_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'protein_coding'</span>, <span class="st">'non_coding'</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="co">## `rd` stands for rowData</span></span>
+<span><span class="va">rd</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 2
+   gene_name gene_type     
+   &lt;chr&gt;     &lt;fct&gt;         
+ 1 gene1     protein_coding
+ 2 gene2     protein_coding
+ 3 gene3     protein_coding
+ 4 gene4     protein_coding
+ 5 gene5     protein_coding
+ 6 gene6     non_coding    
+ 7 gene7     non_coding    
+ 8 gene8     non_coding    
+ 9 gene9     non_coding    
+10 gene10    non_coding    </code></pre>
+</div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cnts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">5</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="co">## `cnts` stands for counts</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">cd</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 100   1</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">rd</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10  2</code></pre>
+</div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">cnts</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  10 100</code></pre>
+</div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">cd</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">cnts</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">rd</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">cnts</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">toy_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html">SingleCellExperiment</a></span><span class="op">(</span></span>
+<span>    colData <span class="op">=</span> <span class="va">cd</span>, </span>
+<span>    rowData <span class="op">=</span> <span class="va">rd</span>, </span>
+<span>    assays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">'counts'</span> <span class="op">=</span> <span class="va">cnts</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">toy_sce</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class: SingleCellExperiment 
+dim: 10 100 
+metadata(0):
+assays(1): counts
+rownames: NULL
+rowData names(2): gene_name gene_type
+colnames: NULL
+colData names(1): idx
+reducedDimNames(0):
+mainExpName: NULL
+altExpNames(0):</code></pre>
+</div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 100 rows and 1 column
+            idx
+    &lt;character&gt;
+1         cell1
+2         cell2
+3         cell3
+4         cell4
+5         cell5
+...         ...
+96       cell96
+97       cell97
+98       cell98
+99       cell99
+100     cell100</code></pre>
+</div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 10 rows and 2 columns
+     gene_name      gene_type
+   &lt;character&gt;       &lt;factor&gt;
+1        gene1 protein_coding
+2        gene2 protein_coding
+3        gene3 protein_coding
+4        gene4 protein_coding
+5        gene5 protein_coding
+6        gene6 non_coding    
+7        gene7 non_coding    
+8        gene8 non_coding    
+9        gene9 non_coding    
+10      gene10 non_coding    </code></pre>
+</div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assays</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of length 1
+names(1): counts</code></pre>
+</div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assays</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">)</span><span class="op">[[</span><span class="st">"counts"</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+ [1,]   11    3    5    2    6    3    6    3   11     3
+ [2,]    8    1    6    4    5    5    3    5    6     4
+ [3,]    7    9    4    3    6    5    7    6    5     3
+ [4,]    2    4    4    7    6    4    4    6    3     5
+ [5,]    3    3    5    5    4    4    4    7    4     9
+ [6,]    5    7    6    6    8    6    5    5    5     5
+ [7,]    7    7    4    4    4    5    1    4    6     6
+ [8,]    5    0    5    5    4    7    5    4    4     4
+ [9,]    4    3    7    5    3    6    4    4    5     6
+[10,]    5    3    2    4    5    2    4    4    2     2</code></pre>
+</div>
+</div>
+</section><section id="read-in-pancreas-counts-matrix." class="level3" data-number="7.1.3"><h3 data-number="7.1.3" class="anchored" data-anchor-id="read-in-pancreas-counts-matrix.">
+<span class="header-section-number">7.1.3</span> Read in Pancreas counts matrix.</h3>
+<p>We will now analyze a real human pancreas scRNAseq dataset. It is freely available from <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE114802">GEO: link</a>. We start by downloading the cell, features and counts matrix.</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -581,7 +731,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">'https://ftp.ncbi.nlm.nih.gov/geo/series/GSE114nnn/GSE114802/suppl/GSE114802_org4_barcodes.tsv.gz'</span>, <span class="st">'GSE114802_org4_barcodes.tsv.gz'</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">'https://ftp.ncbi.nlm.nih.gov/geo/series/GSE114nnn/GSE114802/suppl/GSE114802_org4_barcodes.tsv.gz'</span>, <span class="st">'GSE114802_org4_barcodes.tsv.gz'</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">'https://ftp.ncbi.nlm.nih.gov/geo/series/GSE114nnn/GSE114802/suppl/GSE114802_org4_genes.tsv.gz'</span>, <span class="st">'GSE114802_org4_genes.tsv.gz'</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="st">'https://ftp.ncbi.nlm.nih.gov/geo/series/GSE114nnn/GSE114802/suppl/GSE114802_org4_counts.csv.gz'</span>, <span class="st">'GSE114802_org4_counts.csv.gz'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -589,6 +739,37 @@ Answer
 </div>
 </div>
 </div>
+</div>
+</div>
+<p>In this dataset, the barcodes file contains the cell barcodes, the genes file contains the gene names, and the counts file contains the counts matrix. We can import the data into R using the <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv()</a></code> and <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> functions (already available in the loaded <code>tidyverse</code> package).</p>
+<p>For example, to read the barcodes file, we can use the following command:</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cells</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span><span class="op">(</span><span class="st">'~/Share/GSE114802_org4_barcodes.tsv.gz'</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 1421 Columns: 1
+── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Delimiter: "\t"
+chr (1): X1
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">cells</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 1
+  X1                
+  &lt;chr&gt;             
+1 AAACCTGAGGCTCATT-1
+2 AAACCTGAGGTGCACA-1
+3 AAACCTGCAGGTGCCT-1
+4 AAACCTGGTTAGAACA-1
+5 AAACCTGTCACCACCT-1
+6 AAACCTGTCCGAGCCA-1</code></pre>
 </div>
 </div>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
@@ -601,7 +782,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Read the barcodes, genes and counts files into R.</p>
+<p>Also read the genes and counts files into R.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -619,18 +800,8 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cells</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span><span class="op">(</span><span class="st">'~/Share/GSE114802_org4_barcodes.tsv.gz'</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span><span class="op">(</span><span class="st">'~/Share/GSE114802_org4_genes.tsv.gz'</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 1421 Columns: 1
-── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-Delimiter: "\t"
-chr (1): X1
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv</a></span><span class="op">(</span><span class="st">'~/Share/GSE114802_org4_genes.tsv.gz'</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 33694 Columns: 2
 ── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -640,7 +811,24 @@ chr (2): X1, X2
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">'~/Share/GSE114802_org4_counts.csv.gz'</span>, col_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">genes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 33,694 × 2
+   X1              X2           
+   &lt;chr&gt;           &lt;chr&gt;        
+ 1 ENSG00000243485 RP11-34P13.3 
+ 2 ENSG00000237613 FAM138A      
+ 3 ENSG00000186092 OR4F5        
+ 4 ENSG00000238009 RP11-34P13.7 
+ 5 ENSG00000239945 RP11-34P13.8 
+ 6 ENSG00000239906 RP11-34P13.14
+ 7 ENSG00000241599 RP11-34P13.9 
+ 8 ENSG00000279928 FO538757.3   
+ 9 ENSG00000279457 FO538757.2   
+10 ENSG00000228463 AP006222.2   
+# ℹ 33,684 more rows</code></pre>
+</div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">'~/Share/GSE114802_org4_counts.csv.gz'</span>, col_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>New names:
 Rows: 33694 Columns: 1422
@@ -651,12 +839,48 @@ AAACGGGCAGCGTTCG-1, AAAC...
 ℹ Use `spec()` to retrieve the full column specification for this data. ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 • `` -&gt; `...1`</code></pre>
 </div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="va">counts</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">counts</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 6
+   ...1            `AAACCTGAGGCTCATT-1` `AAACCTGAGGTGCACA-1` `AAACCTGCAGGTGCCT-1` `AAACCTGGTTAGAACA-1` `AAACCTGTCACCACCT-1`
+   &lt;chr&gt;                          &lt;dbl&gt;                &lt;dbl&gt;                &lt;dbl&gt;                &lt;dbl&gt;                &lt;dbl&gt;
+ 1 ENSG00000243485                    0                    0                    0                    0                    0
+ 2 ENSG00000237613                    0                    0                    0                    0                    0
+ 3 ENSG00000186092                    0                    0                    0                    0                    0
+ 4 ENSG00000238009                    0                    0                    0                    0                    0
+ 5 ENSG00000239945                    0                    0                    0                    0                    0
+ 6 ENSG00000239906                    0                    0                    0                    0                    0
+ 7 ENSG00000241599                    0                    0                    0                    0                    0
+ 8 ENSG00000279928                    0                    0                    0                    0                    0
+ 9 ENSG00000279457                    0                    0                    0                    0                    0
+10 ENSG00000228463                    0                    0                    3                    2                    0</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Note how the first column of the counts dataframe is the gene names. We will need to strip this column, and turn the data frame into a matrix.</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="va">counts</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/as.html">as</a></span><span class="op">(</span><span class="va">counts</span>, <span class="st">'matrix'</span><span class="op">)</span></span>
-<span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/as.html">as</a></span><span class="op">(</span><span class="va">counts</span>, <span class="st">'dgCMatrix'</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">counts</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">genes</span><span class="op">$</span><span class="va">X1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">counts</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      AAACCTGAGGCTCATT-1 AAACCTGAGGTGCACA-1 AAACCTGCAGGTGCCT-1 AAACCTGGTTAGAACA-1 AAACCTGTCACCACCT-1 AAACCTGTCCGAGCCA-1
+ [1,]                  0                  0                  0                  0                  0                  0
+ [2,]                  0                  0                  0                  0                  0                  0
+ [3,]                  0                  0                  0                  0                  0                  0
+ [4,]                  0                  0                  0                  0                  0                  0
+ [5,]                  0                  0                  0                  0                  0                  0
+ [6,]                  0                  0                  0                  0                  0                  0
+ [7,]                  0                  0                  0                  0                  0                  0
+ [8,]                  0                  0                  0                  0                  0                  0
+ [9,]                  0                  0                  0                  0                  0                  0
+[10,]                  0                  0                  3                  2                  0                  0</code></pre>
 </div>
 </div>
 </div>
@@ -689,7 +913,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html">SingleCellExperiment</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html">SingleCellExperiment</a></span><span class="op">(</span></span>
 <span>    colData <span class="op">=</span> <span class="va">cells</span>, </span>
 <span>    rowData <span class="op">=</span> <span class="va">genes</span>, </span>
 <span>    assays <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">'counts'</span> <span class="op">=</span> <span class="va">counts</span><span class="op">)</span></span>
@@ -729,7 +953,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DataFrame with 1421 rows and 1 column
@@ -747,57 +971,51 @@ TTTGTCAGTACCTACA-1 TTTGTCAGTACCTACA-1
 TTTGTCAGTCTCACCT-1 TTTGTCAGTCTCACCT-1
 TTTGTCAGTGAAATCA-1 TTTGTCAGTGAAATCA-1</code></pre>
 </div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DataFrame with 33694 rows and 2 columns
-                             X1           X2
-                    &lt;character&gt;  &lt;character&gt;
-ENSG00000243485 ENSG00000243485 RP11-34P13.3
-ENSG00000237613 ENSG00000237613      FAM138A
-ENSG00000186092 ENSG00000186092        OR4F5
-ENSG00000238009 ENSG00000238009 RP11-34P13.7
-ENSG00000239945 ENSG00000239945 RP11-34P13.8
-...                         ...          ...
-ENSG00000277856 ENSG00000277856   AC233755.2
-ENSG00000275063 ENSG00000275063   AC233755.1
-ENSG00000271254 ENSG00000271254   AC240274.1
-ENSG00000277475 ENSG00000277475   AC213203.1
-ENSG00000268674 ENSG00000268674      FAM231B</code></pre>
+                   X1           X2
+          &lt;character&gt;  &lt;character&gt;
+1     ENSG00000243485 RP11-34P13.3
+2     ENSG00000237613      FAM138A
+3     ENSG00000186092        OR4F5
+4     ENSG00000238009 RP11-34P13.7
+5     ENSG00000239945 RP11-34P13.8
+...               ...          ...
+33690 ENSG00000277856   AC233755.2
+33691 ENSG00000275063   AC233755.1
+33692 ENSG00000271254   AC240274.1
+33693 ENSG00000277475   AC213203.1
+33694 ENSG00000268674      FAM231B</code></pre>
 </div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">metadata</span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">metadata</span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code><a href="https://rdrr.io/r/base/list.html">list()</a></code></pre>
 </div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 33694  1421</code></pre>
 </div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assays</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assays</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of length 1
 names(1): counts</code></pre>
 </div>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>10 x 10 sparse Matrix of class "dgCMatrix"</code></pre>
+<pre><code>      AAACCTGAGGCTCATT-1 AAACCTGAGGTGCACA-1 AAACCTGCAGGTGCCT-1 AAACCTGGTTAGAACA-1 AAACCTGTCACCACCT-1 AAACCTGTCCGAGCCA-1 AAACCTGTCGTGACAT-1 AAACGGGAGTAGTGCG-1 AAACGGGCAGCGTTCG-1 AAACGGGCATGTTCCC-1
+ [1,]                  0                  0                  0                  0                  0                  0                  0                  0                  0                  0
+ [2,]                  0                  0                  0                  0                  0                  0                  0                  0                  0                  0
+ [3,]                  0                  0                  0                  0                  0                  0                  0                  0                  0                  0
+ [4,]                  0                  0                  0                  0                  0                  0                  0                  0                  0                  0
+ [5,]                  0                  0                  0                  0                  0                  0                  0                  0                  0                  0
+ [6,]                  0                  0                  0                  0                  0                  0                  0                  0                  0                  0
+ [7,]                  0                  0                  0                  0                  0                  0                  0                  0                  0                  0
+ [8,]                  0                  0                  0                  0                  0                  0                  0                  0                  0                  0
+ [9,]                  0                  0                  0                  0                  0                  0                  0                  0                  0                  0
+[10,]                  0                  0                  3                  2                  0                  0                  0                  0                  1                  0</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>  [[ suppressing 10 column names 'AAACCTGAGGCTCATT-1', 'AAACCTGAGGTGCACA-1', 'AAACCTGCAGGTGCCT-1' ... ]]</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                   
-ENSG00000243485 . . . . . . . . . .
-ENSG00000237613 . . . . . . . . . .
-ENSG00000186092 . . . . . . . . . .
-ENSG00000238009 . . . . . . . . . .
-ENSG00000239945 . . . . . . . . . .
-ENSG00000239906 . . . . . . . . . .
-ENSG00000241599 . . . . . . . . . .
-ENSG00000279928 . . . . . . . . . .
-ENSG00000279457 . . . . . . . . . .
-ENSG00000228463 . . 3 2 . . . . 1 .</code></pre>
-</div>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDims</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDims</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of length 0
 names(0): </code></pre>
@@ -808,6 +1026,72 @@ names(0): </code></pre>
 </div>
 </div>
 </div>
+<!-- 
+::: {.callout-question .icon .callout-note}
+
+How much memory does the `SingleCellExperiment` object take up? (use `object.size()` to get the size of an object...). 
+
+Can you compare it to the size of the counts matrix coerced to a dense matrix?
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+
+::: {.cell filename='R'}
+
+```{.r .cell-code}
+object.size(sce) 
+```
+
+::: {.cell-output .cell-output-stdout}
+```
+388283304 bytes
+```
+:::
+
+```{.r .cell-code}
+object.size(as.matrix(counts(sce))) 
+```
+
+::: {.cell-output .cell-output-stdout}
+```
+383158880 bytes
+```
+:::
+:::
+
+
+:::
+
+:::
+
+::: {.callout-question .icon .callout-note}
+
+Compare these results to the sparsity of the counts (the % of the counts equal to 0). Comment.
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+
+::: {.cell filename='R'}
+
+```{.r .cell-code}
+sum(counts > 0) / (nrow(sce)*ncol(sce))
+```
+
+::: {.cell-output .cell-output-stdout}
+```
+[1] 0.11431
+```
+:::
+:::
+
+
+:::
+
+::: -->
+</section></section><section id="basic-qcs" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="basic-qcs">
+<span class="header-section-number">7.2</span> Basic QCs</h2>
+<p>You can learn a lot about your scRNA-seq data’s quality with simple plotting.<br>
+Let’s do some plotting to look at the number of reads per cell, reads per genes, expressed genes per cell (often called complexity), and rarity of genes (cells expressing genes).</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -818,8 +1102,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>How much memory does the <code>SingleCellExperiment</code> object take up? (use <code><a href="https://rdrr.io/r/utils/object.size.html">object.size()</a></code> to get the size of an object…).</p>
-<p>Can you compare it to the size of the counts matrix coerced to a dense matrix?</p>
+<p>Plot the number of counts per cell, the number of expressed genes per cell, and the relationship between the two.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -837,108 +1120,22 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/object.size.html">object.size</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>75785760 bytes</code></pre>
-</div>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/object.size.html">object.size</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>385584896 bytes</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="icon callout callout-style-default callout-question no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Question
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Compare these results to the sparsity of the counts (the % of the counts equal to 0). Comment.</p>
-<div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>R</strong></pre>
-</div>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">counts</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.11431</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section></section><section id="basic-qcs" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="basic-qcs">
-<span class="header-section-number">7.2</span> Basic QCs</h2>
-<p>You can learn a lot about your scRNA-seq data’s quality with simple plotting.<br>
-Let’s do some plotting to look at the number of reads per cell, reads per genes, expressed genes per cell (often called complexity), and rarity of genes (cells expressing genes).</p>
-<div class="icon callout callout-style-default callout-question no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Question
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Plot the number of counts per cell, the number of expressed genes per cell, and the relationship between the two.</p>
-<div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-17" class="callout-17-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>R</strong></pre>
-</div>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">counts_per_cell</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">colSums</a></span><span class="op">(</span><span class="va">counts</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">counts_per_cell</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">colSums</a></span><span class="op">(</span><span class="va">counts</span><span class="op">)</span></span>
 <span><span class="va">counts_per_gene</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">rowSums</a></span><span class="op">(</span><span class="va">counts</span><span class="op">)</span></span>
 <span><span class="va">genes_per_cell</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">colSums</a></span><span class="op">(</span><span class="va">counts</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="co"># count gene only if it has non-zero reads mapped.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">counts_per_cell</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">'# of counts per cell'</span>, col <span class="op">=</span> <span class="st">'wheat'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">genes_per_cell</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">'# of expressed genes per cell'</span>, col <span class="op">=</span> <span class="st">'wheat'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">genes_per_cell</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">'# of expressed genes per cell'</span>, col <span class="op">=</span> <span class="st">'wheat'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid" width="672"></p>
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">counts_per_cell</span>, <span class="va">genes_per_cell</span>, log <span class="op">=</span> <span class="st">'xy'</span>, col <span class="op">=</span> <span class="st">'wheat'</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">counts_per_cell</span>, <span class="va">genes_per_cell</span>, log <span class="op">=</span> <span class="st">'xy'</span>, col <span class="op">=</span> <span class="st">'wheat'</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/title.html">title</a></span><span class="op">(</span><span class="st">'Counts vs genes per cell'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-9-3.png" class="img-fluid" width="672"></p>
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-12-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -958,7 +1155,7 @@ Question
 <div class="callout-body-container callout-body">
 <p>Look at the summary counts for genes and cells. Can you plot a histogram of counts per gene in log10 scale?</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -967,18 +1164,18 @@ Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cells_per_gene</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">rowSums</a></span><span class="op">(</span><span class="va">counts</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="co"># only count cells where the gene is expressed</span></span>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">cells_per_gene</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">rowSums</a></span><span class="op">(</span><span class="va">counts</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="co"># only count cells where the gene is expressed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">cells_per_gene</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span>, main <span class="op">=</span> <span class="st">'# of cells expressing each gene'</span>, col <span class="op">=</span> <span class="st">'wheat'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -999,7 +1196,7 @@ Question
 <div class="callout-body-container callout-body">
 <p>Plot cells ranked by their number of detected genes. Comment.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1008,26 +1205,64 @@ Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">genes_per_cell</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
 <span>    xlab <span class="op">=</span> <span class="st">'cell'</span>, log <span class="op">=</span> <span class="st">'y'</span>, main <span class="op">=</span> <span class="st">'# of genes per cell (ordered)'</span>, </span>
 <span>    type <span class="op">=</span> <span class="st">'l'</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
 </div>
 </div>
+</div>
+</div>
+<p>Several QCs can be automatically computed using <code><a href="https://rdrr.io/pkg/scuttle/man/quickPerCellQC.html">quickPerCellQC()</a></code>.</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">toy_sce</span> <span class="op">&lt;-</span> <span class="fu">scuttle</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/quickPerCellQC.html">quickPerCellQC</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>DataFrame with 91 rows and 7 columns
+            idx       sum  detected     total     low_lib_size   low_n_features   discard
+    &lt;character&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;outlier.filter&gt; &lt;outlier.filter&gt; &lt;logical&gt;
+1         cell1        57        10        57            FALSE            FALSE     FALSE
+2         cell3        48        10        48            FALSE            FALSE     FALSE
+3         cell4        45        10        45            FALSE            FALSE     FALSE
+4         cell5        51        10        51            FALSE            FALSE     FALSE
+5         cell6        47        10        47            FALSE            FALSE     FALSE
+...         ...       ...       ...       ...              ...              ...       ...
+87       cell94        45        10        45            FALSE            FALSE     FALSE
+88       cell95        44        10        44            FALSE            FALSE     FALSE
+89       cell96        46        10        46            FALSE            FALSE     FALSE
+90       cell97        57        10        57            FALSE            FALSE     FALSE
+91       cell99        41        10        41            FALSE            FALSE     FALSE</code></pre>
+</div>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">$</span><span class="va">low_lib_size</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE 
+   91 </code></pre>
+</div>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">$</span><span class="va">low_n_features</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+FALSE 
+   91 </code></pre>
 </div>
 </div>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
@@ -1040,10 +1275,9 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Several QCs can be automatically computed using <code><a href="https://rdrr.io/pkg/scuttle/man/quickPerCellQC.html">quickPerCellQC()</a></code>. Try it out and check the results.</p>
-<p>What are the <code>total</code> and <code>detected</code> columns?</p>
+<p>Run <code><a href="https://rdrr.io/pkg/scuttle/man/quickPerCellQC.html">quickPerCellQC()</a></code> on the <code>SingleCellExperiment</code> object. Inspect the new <code>colData</code> of the object.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1052,20 +1286,20 @@ Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">scuttle</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/quickPerCellQC.html">quickPerCellQC</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">scuttle</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/quickPerCellQC.html">quickPerCellQC</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DataFrame with 1420 rows and 7 columns
                                    X1       sum  detected     total     low_lib_size   low_n_features   discard
-                          &lt;character&gt; &lt;numeric&gt; &lt;integer&gt; &lt;numeric&gt; &lt;outlier.filter&gt; &lt;outlier.filter&gt; &lt;logical&gt;
+                          &lt;character&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;outlier.filter&gt; &lt;outlier.filter&gt; &lt;logical&gt;
 AAACCTGAGGCTCATT-1 AAACCTGAGGCTCATT-1     18836      4512     18836            FALSE            FALSE     FALSE
 AAACCTGAGGTGCACA-1 AAACCTGAGGTGCACA-1     22583      3915     22583            FALSE            FALSE     FALSE
 AAACCTGCAGGTGCCT-1 AAACCTGCAGGTGCCT-1     34931      6449     34931            FALSE            FALSE     FALSE
@@ -1090,6 +1324,39 @@ TTTGTCAGTGAAATCA-1 TTTGTCAGTGAAATCA-1     12646      3268     12646            F
 <span class="header-section-number">7.3.1</span> Assay slots</h3>
 <p>For typical scRNA-seq experiments, a <code>SingleCellExperiment</code> can have multiple assays, corresponding to different metrics. The most basic one is <code>counts</code>.<br>
 Different assays store different ‘transformations’ of the <code>counts</code>(e.g.&nbsp;`logcounts).</p>
+<p>For example, one can compute mean-centered counts and store it in a new slot.</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mean_centered_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">)</span>, center <span class="op">=</span> <span class="cn">TRUE</span>, scale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span><span class="op">(</span><span class="va">toy_sce</span>, <span class="st">'mean_centered'</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">mean_centered_counts</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assays</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of length 2
+names(2): counts mean_centered</code></pre>
+</div>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span><span class="op">(</span><span class="va">toy_sce</span>, <span class="st">'mean_centered'</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+ [1,]  5.3  0.2 -2.5  0.9 -1.7  1.7 -1.8  5.9 -1.7   2.9
+ [2,]  2.3  1.2 -0.5 -0.1  0.3 -1.3  0.2  0.9 -0.7  -1.1
+ [3,]  1.3 -0.8 -1.5  0.9  0.3  2.7  1.2 -0.1 -1.7  -0.1
+ [4,] -3.7 -0.8  2.5  0.9 -0.7 -0.3  1.2 -2.1  0.3   2.9
+ [5,] -2.7  0.2  0.5 -1.1 -0.7 -0.3  2.2 -1.1  4.3  -1.1
+ [6,] -0.7  1.2  1.5  2.9  1.3  0.7  0.2 -0.1  0.3   1.9
+ [7,]  1.3 -0.8 -0.5 -1.1  0.3 -3.3 -0.8  0.9  1.3  -3.1
+ [8,] -0.7  0.2  0.5 -1.1  2.3  0.7 -0.8 -1.1 -0.7   1.9
+ [9,] -1.7  2.2  0.5 -2.1  1.3 -0.3 -0.8 -0.1  1.3  -1.1
+[10,] -0.7 -2.8 -0.5 -0.1 -2.7 -0.3 -0.8 -3.1 -2.7  -3.1</code></pre>
+</div>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span><span class="op">(</span><span class="va">toy_sce</span>, <span class="st">'mean_centered'</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.1712e-17</code></pre>
+</div>
+</div>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1101,6 +1368,232 @@ Question
 </div>
 <div class="callout-body-container callout-body">
 <p>Try to manually compute logcounts from counts and store it in a new slot.</p>
+<div class="icon callout callout-style-default callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'logcounts'</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html">logcounts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      AAACCTGAGGCTCATT-1 AAACCTGAGGTGCACA-1 AAACCTGCAGGTGCCT-1 AAACCTGGTTAGAACA-1 AAACCTGTCACCACCT-1 AAACCTGTCCGAGCCA-1 AAACCTGTCGTGACAT-1 AAACGGGAGTAGTGCG-1 AAACGGGCAGCGTTCG-1 AAACGGGCATGTTCCC-1
+ [1,]                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000                  0
+ [2,]                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000                  0
+ [3,]                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000                  0
+ [4,]                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000                  0
+ [5,]                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000                  0
+ [6,]                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000                  0
+ [7,]                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000                  0
+ [8,]                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000                  0
+ [9,]                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000                  0
+[10,]                  0                  0            0.60206            0.47712                  0                  0                  0                  0            0.30103                  0</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="embeddings" class="level3" data-number="7.3.2"><h3 data-number="7.3.2" class="anchored" data-anchor-id="embeddings">
+<span class="header-section-number">7.3.2</span> Embeddings</h3>
+<p>Embeddings allow for a representation of large-scale data (N cells x M genes) into smaller dimensions (e.g.&nbsp;2-50 dimensions). Typical embeddings can be PCA, t-SNE, UMAP, etc… Many embeddings can be computed using <code>run...()</code> functions from Bioconductor packages (e.g.&nbsp;<code>scran</code>, <code>scater</code>, …).</p>
+<p>For example, one can compute PCA and store it in a new slot.</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://bioconductor.org/packages/scater/">scater</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: scuttle</code></pre>
+</div>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html">logcounts</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">toy_sce</span> <span class="op">&lt;-</span> <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html">runPCA</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in check_numbers(k = k, nu = nu, nv = nv, limit = min(dim(x)) - : more singular values/vectors requested than available</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE, : You're computing too large a percentage of total singular values, use a standard svd instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in (function (A, nv = 5, nu = nv, maxit = 1000, work = nv + 7, reorth = TRUE, : did not converge--results might be invalid!; try increasing work or maxit</code></pre>
+</div>
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDims</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>List of length 1
+names(1): PCA</code></pre>
+</div>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDim</a></span><span class="op">(</span><span class="va">toy_sce</span>, <span class="st">'PCA'</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             PC1        PC2       PC3       PC4        PC5       PC6        PC7       PC8        PC9
+ [1,] -0.4269241  0.2770703  0.040464  0.011101 -0.0905776 -0.139943  0.0052699  0.061907  0.0949146
+ [2,] -0.0752433 -0.1804089 -0.040888  0.221613  0.0017994 -0.070413  0.0074647  0.094725  0.0879006
+ [3,]  0.1896939 -0.2637306  0.047464 -0.059461 -0.0294352  0.125050 -0.0538721  0.081399 -0.0419140
+ [4,] -0.0052209  0.0461005 -0.143536 -0.142892 -0.1844590 -0.094570 -0.0690900 -0.014200  0.0205512
+ [5,] -0.0369835 -0.1788274 -0.022743  0.101437  0.0400642 -0.027818  0.0733583  0.282297 -0.0056744
+ [6,]  0.2805255  0.1934287 -0.157491  0.141569 -0.0850000 -0.115990  0.0619579  0.011684 -0.0102393
+ [7,]  0.1219353 -0.0688337 -0.091505 -0.104105  0.0811481  0.057121  0.0157687  0.013568  0.1065238
+ [8,] -0.3673286 -0.0019512 -0.119952  0.181115  0.0039182 -0.166871  0.0242721 -0.030501  0.0308548
+ [9,] -0.0100844 -0.3204644 -0.060936  0.098437  0.2401735  0.090652 -0.0963534  0.011799  0.0153486
+[10,]  0.1970275 -0.1038143 -0.390062  0.317542 -0.2324288 -0.098581  0.1797298 -0.016561 -0.2208396</code></pre>
+</div>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">toy_sce</span>, <span class="st">'PCA'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="icon callout callout-style-default callout-question no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Try to compute PCA, t-SNE and UMAP embeddings of the pancreas dataset using <code><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html">runPCA()</a></code>, <code><a href="https://rdrr.io/pkg/scater/man/runTSNE.html">runTSNE()</a></code> and <code><a href="https://rdrr.io/pkg/scater/man/runUMAP.html">runUMAP()</a></code> from <code>scater</code> package.</p>
+<div class="icon callout callout-style-default callout-answer no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html">runPCA</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"PCA"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output-display">
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/runTSNE.html">runTSNE</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"TSNE"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-20-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html">runUMAP</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"UMAP"</span>, colour_by <span class="op">=</span> <span class="st">'sum'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-20-3.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"UMAP"</span>, colour_by <span class="op">=</span> <span class="st">'detected'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-20-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 
+### Multiple modalities
+
+Alternative 'modalities' can be stored in the same `SingleCellExperiment` object (e.g. if you perform paired single-cell RNA-seq and ATAC-seq). 
+This is done through `altExps` which can store summarized experiments. 
+
+::: {.callout-question .icon .callout-note}
+
+Try to add an altExp (using `altExp<-` function) and swap it with the `counts` assay.
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+
+::: {.cell filename='R'}
+
+```{.r .cell-code}
+altExp(sce, "ATAC_counts") <- SummarizedExperiment(matrix(rpois(1000, 5), ncol = ncol(sce)))
+```
+
+::: {.cell-output .cell-output-stderr}
+```
+Warning in matrix(rpois(1000, 5), ncol = ncol(sce)): data length [1000] is not a sub-multiple or multiple of the number of columns [1420]
+```
+:::
+
+::: {.cell-output .cell-output-stderr}
+```
+Warning in .check_altexp_columns(x, value, withDimnames = withDimnames, : 'colnames(value)' are not the same as 'colnames(x)' for 'altExp<-'. This will be an error in the next release of
+Bioconductor.
+```
+:::
+
+```{.r .cell-code}
+swapAltExp(sce, "ATAC_counts", saved = "RNA_counts")
+```
+
+::: {.cell-output .cell-output-stdout}
+```
+class: SingleCellExperiment 
+dim: 1 1420 
+metadata(0):
+assays(1): ''
+rownames: NULL
+rowData names(0):
+colnames(1420): AAACCTGAGGCTCATT-1 AAACCTGAGGTGCACA-1 ... TTTGTCAGTCTCACCT-1 TTTGTCAGTGAAATCA-1
+colData names(7): X1 sum ... low_n_features discard
+reducedDimNames(0):
+mainExpName: ATAC_counts
+altExpNames(1): RNA_counts
+```
+:::
+:::
+
+
+:::
+
+:::
+
+Note that features can be different between different `altExps`. -->
+</section></section><section id="filtering-cells-and-features" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="filtering-cells-and-features">
+<span class="header-section-number">7.4</span> Filtering cells and features</h2>
+<section id="pre-filtering" class="level3" data-number="7.4.1"><h3 data-number="7.4.1" class="anchored" data-anchor-id="pre-filtering">
+<span class="header-section-number">7.4.1</span> Pre-filtering</h3>
+<p>Filtering operations are often performed on the <code>SingleCellExperiment</code> object, for example to remove low-quality cells (columns) or genes (rows).</p>
+<p>To do this, one can use standard R syntax to subset the <code>SingleCellExperiment</code> object.</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">toy_sce_filtered</span> <span class="op">&lt;-</span> <span class="va">toy_sce</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">toy_sce</span><span class="op">)</span><span class="op">$</span><span class="va">gene_type</span> <span class="op">==</span> <span class="st">'protein_coding'</span>, <span class="va">toy_sce</span><span class="op">$</span><span class="va">sum</span> <span class="op">&gt;</span> <span class="fl">50</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="icon callout callout-style-default callout-question no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Filter the SCE to only include cells that have a complexity of 2000 genes or more and genes that are are expressed in 10 or more cells.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1118,195 +1611,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">'logcounts'</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html">logcounts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>10 x 10 Matrix of class "dgeMatrix"
-                AAACCTGAGGCTCATT-1 AAACCTGAGGTGCACA-1 AAACCTGCAGGTGCCT-1 AAACCTGGTTAGAACA-1 AAACCTGTCACCACCT-1 AAACCTGTCCGAGCCA-1 AAACCTGTCGTGACAT-1 AAACGGGAGTAGTGCG-1 AAACGGGCAGCGTTCG-1
-ENSG00000243485                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000
-ENSG00000237613                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000
-ENSG00000186092                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000
-ENSG00000238009                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000
-ENSG00000239945                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000
-ENSG00000239906                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000
-ENSG00000241599                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000
-ENSG00000279928                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000
-ENSG00000279457                  0                  0            0.00000            0.00000                  0                  0                  0                  0            0.00000
-ENSG00000228463                  0                  0            0.60206            0.47712                  0                  0                  0                  0            0.30103
-                AAACGGGCATGTTCCC-1
-ENSG00000243485                  0
-ENSG00000237613                  0
-ENSG00000186092                  0
-ENSG00000238009                  0
-ENSG00000239945                  0
-ENSG00000239906                  0
-ENSG00000241599                  0
-ENSG00000279928                  0
-ENSG00000279457                  0
-ENSG00000228463                  0</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section><section id="embeddings" class="level3" data-number="7.3.2"><h3 data-number="7.3.2" class="anchored" data-anchor-id="embeddings">
-<span class="header-section-number">7.3.2</span> Embeddings</h3>
-<p>Embeddings allow for a representation of large-scale data (N cells x M genes) into smaller dimensions (e.g.&nbsp;2-50 dimensions). Typical embeddings can be PCA, t-SNE, UMAP, etc… Many embeddings can be computed using <code>run...()</code> functions from Bioconductor packages (e.g.&nbsp;<code>scran</code>, <code>scater</code>, …).</p>
-<div class="icon callout callout-style-default callout-question no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Question
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Try to compute PCA, t-SNE and UMAP embeddings of the dataset using <code><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html">runPCA()</a></code>, <code><a href="https://rdrr.io/pkg/scater/man/runTSNE.html">runTSNE()</a></code> and <code><a href="https://rdrr.io/pkg/scater/man/runUMAP.html">runUMAP()</a></code> from <code>scater</code> package.</p>
-<div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-27" class="callout-27-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>R</strong></pre>
-</div>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://bioconductor.org/packages/scater/">scater</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: scuttle</code></pre>
-</div>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html">runPCA</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"PCA"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/runTSNE.html">runTSNE</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"TSNE"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">scater</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html">runUMAP</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"UMAP"</span>, colour_by <span class="op">=</span> <span class="st">'sum'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-14-3.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"UMAP"</span>, colour_by <span class="op">=</span> <span class="st">'detected'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-14-4.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section><section id="multiple-modalities" class="level3" data-number="7.3.3"><h3 data-number="7.3.3" class="anchored" data-anchor-id="multiple-modalities">
-<span class="header-section-number">7.3.3</span> Multiple modalities</h3>
-<p>Alternative ‘modalities’ can be stored in the same <code>SingleCellExperiment</code> object (e.g.&nbsp;if you perform paired single-cell RNA-seq and ATAC-seq). This is done through <code>altExps</code> which can store summarized experiments.</p>
-<div class="icon callout callout-style-default callout-question no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Question
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Try to add an altExp (using <code>altExp&lt;-</code> function) and swap it with the <code>counts</code> assay.</p>
-<div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-29" class="callout-29-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>R</strong></pre>
-</div>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/altExps.html">altExp</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"ATAC_counts"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/RangedSummarizedExperiment-class.html">SummarizedExperiment</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">5</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in matrix(rpois(1000, 5), ncol = ncol(sce)): data length [1000] is not a sub-multiple or multiple of the number of columns [1420]</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in .check_altexp_columns(x, value, withDimnames = withDimnames, : 'colnames(value)' are not the same as 'colnames(x)' for 'altExp&lt;-'. This will be an error in the next release of
-Bioconductor.</code></pre>
-</div>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/swapAltExp.html">swapAltExp</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"ATAC_counts"</span>, saved <span class="op">=</span> <span class="st">"RNA_counts"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>class: SingleCellExperiment 
-dim: 1 1420 
-metadata(0):
-assays(1): ''
-rownames: NULL
-rowData names(0):
-colnames(1420): AAACCTGAGGCTCATT-1 AAACCTGAGGTGCACA-1 ... TTTGTCAGTCTCACCT-1 TTTGTCAGTGAAATCA-1
-colData names(7): X1 sum ... low_n_features discard
-reducedDimNames(0):
-mainExpName: ATAC_counts
-altExpNames(1): RNA_counts</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>Note that features can be different between different <code>altExps</code>.</p>
-</section></section><section id="filtering-cells-and-features" class="level2" data-number="7.4"><h2 data-number="7.4" class="anchored" data-anchor-id="filtering-cells-and-features">
-<span class="header-section-number">7.4</span> Filtering cells and features</h2>
-<section id="pre-filtering" class="level3" data-number="7.4.1"><h3 data-number="7.4.1" class="anchored" data-anchor-id="pre-filtering">
-<span class="header-section-number">7.4.1</span> Pre-filtering</h3>
-<div class="icon callout callout-style-default callout-question no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Question
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Filter the SCE to only include cells that have a complexity of 2000 genes or more and genes that are are expressed in 10 or more cells.</p>
-<div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-31" class="callout-31-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="code-with-filename">
-<div class="code-with-filename-file">
-<pre><strong>R</strong></pre>
-</div>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce_filtered</span> <span class="op">&lt;-</span> <span class="va">sce</span><span class="op">[</span></span>
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce_filtered</span> <span class="op">&lt;-</span> <span class="va">sce</span><span class="op">[</span></span>
 <span>    <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">10</span>, </span>
 <span>    <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">2000</span></span>
 <span><span class="op">]</span></span>
@@ -1317,7 +1622,7 @@ Answer
 dim: 16606 1419 
 metadata(0):
 assays(2): counts logcounts
-rownames(16606): ENSG00000279457 ENSG00000228463 ... ENSG00000278817 ENSG00000271254
+rownames: NULL
 rowData names(2): X1 X2
 colnames(1419): AAACCTGAGGCTCATT-1 AAACCTGAGGTGCACA-1 ... TTTGTCAGTCTCACCT-1 TTTGTCAGTGAAATCA-1
 colData names(7): X1 sum ... low_n_features discard
@@ -1335,70 +1640,42 @@ altExpNames(1): ATAC_counts</code></pre>
 </section><section id="filtering-low-quality-cells-mitochondrial-counts" class="level3" data-number="7.4.2"><h3 data-number="7.4.2" class="anchored" data-anchor-id="filtering-low-quality-cells-mitochondrial-counts">
 <span class="header-section-number">7.4.2</span> Filtering low-quality cells: mitochondrial counts</h3>
 <p>For each cell, we can calculate the percentage of counts mapping on mitochondrial genes and store it in a column <code>percent_mito</code> in our <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData()</a></code>.</p>
-<div class="icon callout callout-style-default callout-question no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Question
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Find mitochondrial genes, compute the % of total counts associated with these genes, and store it in <code>colData</code></p>
-<div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-33" class="callout-33-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>DataFrame with 16606 rows and 2 columns
-                             X1            X2
-                    &lt;character&gt;   &lt;character&gt;
-ENSG00000279457 ENSG00000279457    FO538757.2
-ENSG00000228463 ENSG00000228463    AP006222.2
-ENSG00000237094 ENSG00000237094 RP4-669L17.10
-ENSG00000237491 ENSG00000237491 RP11-206L10.9
-ENSG00000225880 ENSG00000225880     LINC00115
-...                         ...           ...
-ENSG00000198727 ENSG00000198727        MT-CYB
-ENSG00000276256 ENSG00000276256    AC011043.1
-ENSG00000273748 ENSG00000273748    AL592183.1
-ENSG00000278817 ENSG00000278817    AC007325.4
-ENSG00000271254 ENSG00000271254    AC240274.1</code></pre>
+                   X1            X2
+          &lt;character&gt;   &lt;character&gt;
+1     ENSG00000279457    FO538757.2
+2     ENSG00000228463    AP006222.2
+3     ENSG00000237094 RP4-669L17.10
+4     ENSG00000237491 RP11-206L10.9
+5     ENSG00000225880     LINC00115
+...               ...           ...
+16602 ENSG00000198727        MT-CYB
+16603 ENSG00000276256    AC011043.1
+16604 ENSG00000273748    AL592183.1
+16605 ENSG00000278817    AC007325.4
+16606 ENSG00000271254    AC240274.1</code></pre>
 </div>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mito_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"^MT-"</span>, x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">X2</span><span class="op">)</span><span class="op">]</span></span>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mito_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"^MT-"</span>, x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">X2</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">mito_genes_counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">[</span><span class="va">mito_genes</span>, <span class="op">]</span></span>
 <span><span class="va">percent_mito</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="va">mito_genes_counts</span><span class="op">)</span> <span class="op">/</span> <span class="va">sce_filtered</span><span class="op">$</span><span class="va">total</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">percent_mito</span><span class="op">*</span><span class="fl">100</span>, main <span class="op">=</span> <span class="st">'% of total counts over mitochondrial genes'</span>, col <span class="op">=</span> <span class="st">'wheat'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">percent_mito</span> <span class="op">&lt;-</span> <span class="va">percent_mito</span></span>
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">percent_mito</span> <span class="op">&lt;-</span> <span class="va">percent_mito</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">percent_mito</span> <span class="op">&gt;</span> <span class="fl">0.1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-FALSE  TRUE 
- 1398    21 </code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
+FALSE 
+ 1419 </code></pre>
 </div>
 </div>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
@@ -1413,7 +1690,7 @@ Question
 <div class="callout-body-container callout-body">
 <p>Remove cells with a % of mitochondrial counts greater than 10%.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1422,14 +1699,14 @@ Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-35" class="callout-35-contents callout-collapse collapse">
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce_filtered</span> <span class="op">&lt;-</span> <span class="va">sce_filtered</span><span class="op">[</span></span>
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce_filtered</span> <span class="op">&lt;-</span> <span class="va">sce_filtered</span><span class="op">[</span></span>
 <span>    , </span>
 <span>    <span class="va">sce_filtered</span><span class="op">$</span><span class="va">percent_mito</span> <span class="op">&lt;=</span> <span class="fl">0.10</span></span>
 <span><span class="op">]</span></span>
@@ -1437,12 +1714,12 @@ Answer
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class: SingleCellExperiment 
-dim: 16606 1398 
+dim: 16606 1419 
 metadata(0):
 assays(2): counts logcounts
-rownames(16606): ENSG00000279457 ENSG00000228463 ... ENSG00000278817 ENSG00000271254
+rownames: NULL
 rowData names(2): X1 X2
-colnames(1398): AAACCTGAGGCTCATT-1 AAACCTGAGGTGCACA-1 ... TTTGTCAGTCTCACCT-1 TTTGTCAGTGAAATCA-1
+colnames(1419): AAACCTGAGGCTCATT-1 AAACCTGAGGTGCACA-1 ... TTTGTCAGTCTCACCT-1 TTTGTCAGTGAAATCA-1
 colData names(8): X1 sum ... discard percent_mito
 reducedDimNames(3): PCA TSNE UMAP
 mainExpName: NULL
@@ -1457,6 +1734,23 @@ altExpNames(1): ATAC_counts</code></pre>
 </section><section id="checking-housekeeping-genes" class="level3" data-number="7.4.3"><h3 data-number="7.4.3" class="anchored" data-anchor-id="checking-housekeeping-genes">
 <span class="header-section-number">7.4.3</span> Checking housekeeping genes</h3>
 <p>Another metric we use is the number of house keeping genes expressed in a cell. These genes reflect commomn processes active in a cell and hence are a good global quality measure. They are also abundant and are usually steadliy expressed in cells, thus less sensitive to the high dropout.</p>
+<p>We first load the list of housekeeping genes (from <code>~/Share/tirosh_house_keeping.txt</code>), match them to the genes in the <code>rowData</code> of the <code>SingleCellExperiment</code> object (using <code>match</code> and <code>rownames</code>), remove <code>NA</code>s (genes not found in the <code>rowData</code>), and store the list of housekeeping genes in a new variable.</p>
+<div class="cell">
+<div class="code-with-filename">
+<div class="code-with-filename-file">
+<pre><strong>R</strong></pre>
+</div>
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load the list of housekeeping genes</span></span>
+<span><span class="va">hkgenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"~/Share/tirosh_house_keeping.txt"</span>, skip <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">hkgenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="va">hkgenes</span><span class="op">$</span><span class="va">V1</span><span class="op">)</span></span>
+<span><span class="va">hkgenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="va">hkgenes</span>, <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">X2</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">hkgenes</span> <span class="op">&lt;-</span> <span class="va">hkgenes</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">hkgenes</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">hkgenes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1467,10 +1761,9 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Load the list of housekeeping genes (from <code>~/Share/tirosh_house_keeping.txt</code>), match them to the genes in the <code>rowData</code> of the <code>SingleCellExperiment</code> object (using <code>match</code> and <code>rownames</code>), remove <code>NA</code>s (genes not found in the <code>rowData</code>), and store the list of housekeeping genes in a new variable.</p>
-<p>Then, calculate the number of expressed housekeeping genes per cell (genes with a count &gt; 0) and store the number of expressed housekeeping genes per cell in <code>colData</code>.</p>
+<p>Calculate the number of expressed housekeeping genes per cell (genes with a count &gt; 0) and store the number of expressed housekeeping genes per cell in <code>colData</code>.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-37-contents" aria-controls="callout-37" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1479,38 +1772,20 @@ Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-37" class="callout-37-contents callout-collapse collapse">
+<div id="callout-29" class="callout-29-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load the list of housekeeping genes</span></span>
-<span><span class="va">hkgenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="st">"~/Share/tirosh_house_keeping.txt"</span>, skip <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="va">hkgenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">as.vector</a></span><span class="op">(</span><span class="va">hkgenes</span><span class="op">$</span><span class="va">V1</span><span class="op">)</span></span>
-<span><span class="va">hkgenes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="va">hkgenes</span>, <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">X2</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">hkgenes</span> <span class="op">&lt;-</span> <span class="va">hkgenes</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">hkgenes</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">hkgenes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "ENSG00000075624" "ENSG00000166710" "ENSG00000126067" "ENSG00000159377" "ENSG00000196262" "ENSG00000147224" "ENSG00000101911" "ENSG00000161542" "ENSG00000141127" "ENSG00000147403"
-[11] "ENSG00000198755" "ENSG00000142676" "ENSG00000197958" "ENSG00000167526" "ENSG00000188846" "ENSG00000174748" "ENSG00000265681" "ENSG00000063177" "ENSG00000108298" "ENSG00000122026"
-[21] "ENSG00000116251" "ENSG00000163584" "ENSG00000125691" "ENSG00000114391" "ENSG00000161970" "ENSG00000131469" "ENSG00000108107" "ENSG00000162244" "ENSG00000100316" "ENSG00000156482"
-[31] "ENSG00000144713" "ENSG00000109475" "ENSG00000136942" "ENSG00000130255" "ENSG00000145592" "ENSG00000172809" "ENSG00000198918" "ENSG00000163923" "ENSG00000174444" "ENSG00000229117"
-[41] "ENSG00000122406" "ENSG00000089009" "ENSG00000147604" "ENSG00000148303" "ENSG00000146223" "ENSG00000161016" "ENSG00000163682" "ENSG00000089157" "ENSG00000137818" "ENSG00000177600"
-[51] "ENSG00000124614" "ENSG00000142534" "ENSG00000112306" "ENSG00000110700" "ENSG00000164587" "ENSG00000115268" "ENSG00000134419" "ENSG00000105193" "ENSG00000182774" "ENSG00000231500"
-[61] "ENSG00000105372" "ENSG00000008988" "ENSG00000171858" "ENSG00000138326" "ENSG00000118181" "ENSG00000197728" "ENSG00000177954" "ENSG00000143947" "ENSG00000185088" "ENSG00000233927"
-[71] "ENSG00000213741" "ENSG00000149273" "ENSG00000145425" "ENSG00000198034" "ENSG00000083845" "ENSG00000137154" "ENSG00000117676" "ENSG00000071242" "ENSG00000177189" "ENSG00000162302"
-[81] "ENSG00000100784" "ENSG00000072133" "ENSG00000108443" "ENSG00000175634" "ENSG00000136643" "ENSG00000198208" "ENSG00000171863" "ENSG00000142937" "ENSG00000170889" "ENSG00000168028"
-[91] "ENSG00000104447" "ENSG00000170315"</code></pre>
-</div>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">n_expressed_hkgenes</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">[</span><span class="va">hkgenes</span>, <span class="op">]</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">n_expressed_hkgenes</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">[</span><span class="va">hkgenes</span>, <span class="op">]</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">n_expressed_hkgenes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
- 73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  91 
-  5  10  50 108 201 225 242 189 115  80  65  41  25  13  11  11   4   3 </code></pre>
+   0 
+1419 </code></pre>
 </div>
 </div>
 </div>
@@ -1530,7 +1805,7 @@ Question
 <div class="callout-body-container callout-body">
 <p>Plot (in a boxplot) the relationship between the # of detected housekeeping genes and the total UMI count (or # of detected genes) per cell. Comment.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-39-contents" aria-controls="callout-39" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1539,22 +1814,22 @@ Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-39" class="callout-39-contents callout-collapse collapse">
+<div id="callout-31" class="callout-31-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">n_expressed_hkgenes</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">[</span><span class="va">hkgenes</span>, <span class="op">]</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">n_expressed_hkgenes</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html">counts</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">[</span><span class="va">hkgenes</span>, <span class="op">]</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">total</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">n_expressed_hkgenes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">detected</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">n_expressed_hkgenes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">detected</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">n_expressed_hkgenes</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-20-2.png" class="img-fluid" width="672"></p>
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-28-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1574,7 +1849,7 @@ Question
 <div class="callout-body-container callout-body">
 <p>Remove cells with a # of expressed housekeeping genes greater than 85.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-41-contents" aria-controls="callout-41" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1583,24 +1858,24 @@ Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-41" class="callout-41-contents callout-collapse collapse">
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce_filtered</span> <span class="op">&lt;-</span> <span class="va">sce_filtered</span><span class="op">[</span>, <span class="va">sce_filtered</span><span class="op">$</span><span class="va">n_expressed_hkgenes</span> <span class="op">&lt;=</span> <span class="fl">85</span><span class="op">]</span></span>
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sce_filtered</span> <span class="op">&lt;-</span> <span class="va">sce_filtered</span><span class="op">[</span>, <span class="va">sce_filtered</span><span class="op">$</span><span class="va">n_expressed_hkgenes</span> <span class="op">&lt;=</span> <span class="fl">85</span><span class="op">]</span></span>
 <span><span class="va">sce_filtered</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class: SingleCellExperiment 
-dim: 16606 1356 
+dim: 16606 1419 
 metadata(0):
 assays(2): counts logcounts
-rownames(16606): ENSG00000279457 ENSG00000228463 ... ENSG00000278817 ENSG00000271254
+rownames: NULL
 rowData names(2): X1 X2
-colnames(1356): AAACCTGAGGCTCATT-1 AAACCTGAGGTGCACA-1 ... TTTGTCAGTCTCACCT-1 TTTGTCAGTGAAATCA-1
+colnames(1419): AAACCTGAGGCTCATT-1 AAACCTGAGGTGCACA-1 ... TTTGTCAGTCTCACCT-1 TTTGTCAGTGAAATCA-1
 colData names(9): X1 sum ... percent_mito n_expressed_hkgenes
 reducedDimNames(3): PCA TSNE UMAP
 mainExpName: NULL
@@ -1621,7 +1896,7 @@ altExpNames(1): ATAC_counts</code></pre>
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">genes_dissoc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ATF3"</span>, <span class="st">"BTG2"</span>, <span class="st">"CEBPB"</span>, <span class="st">"CEBPD"</span>, <span class="st">"CXCL3"</span>, <span class="st">"CXCL2"</span>, <span class="st">"CXCL1"</span>, <span class="st">"DNAJA1"</span>, <span class="st">"DNAJB1"</span>, <span class="st">"DUSP1"</span>, <span class="st">"EGR1"</span>, <span class="st">"FOS"</span>, <span class="st">"FOSB"</span>, <span class="st">"HSP90AA1"</span>, <span class="st">"HSP90AB1"</span>, <span class="st">"HSPA1A"</span>, <span class="st">"HSPA1B"</span>, <span class="st">"HSPA1A"</span>, <span class="st">"HSPA1B"</span>, <span class="st">"HSPA8"</span>, <span class="st">"HSPB1"</span>, <span class="st">"HSPE1"</span>, <span class="st">"HSPH1"</span>, <span class="st">"ID3"</span>, <span class="st">"IER2"</span>, <span class="st">"JUN"</span>, <span class="st">"JUNB"</span>, <span class="st">"JUND"</span>, <span class="st">"MT1X"</span>, <span class="st">"NFKBIA"</span>, <span class="st">"NR4A1"</span>, <span class="st">"PPP1R15A"</span>, <span class="st">"SOCS3"</span>, <span class="st">"ZFP36"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">genes_dissoc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ATF3"</span>, <span class="st">"BTG2"</span>, <span class="st">"CEBPB"</span>, <span class="st">"CEBPD"</span>, <span class="st">"CXCL3"</span>, <span class="st">"CXCL2"</span>, <span class="st">"CXCL1"</span>, <span class="st">"DNAJA1"</span>, <span class="st">"DNAJB1"</span>, <span class="st">"DUSP1"</span>, <span class="st">"EGR1"</span>, <span class="st">"FOS"</span>, <span class="st">"FOSB"</span>, <span class="st">"HSP90AA1"</span>, <span class="st">"HSP90AB1"</span>, <span class="st">"HSPA1A"</span>, <span class="st">"HSPA1B"</span>, <span class="st">"HSPA1A"</span>, <span class="st">"HSPA1B"</span>, <span class="st">"HSPA8"</span>, <span class="st">"HSPB1"</span>, <span class="st">"HSPE1"</span>, <span class="st">"HSPH1"</span>, <span class="st">"ID3"</span>, <span class="st">"IER2"</span>, <span class="st">"JUN"</span>, <span class="st">"JUNB"</span>, <span class="st">"JUND"</span>, <span class="st">"MT1X"</span>, <span class="st">"NFKBIA"</span>, <span class="st">"NR4A1"</span>, <span class="st">"PPP1R15A"</span>, <span class="st">"SOCS3"</span>, <span class="st">"ZFP36"</span><span class="op">)</span></span>
 <span><span class="va">genes_dissoc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/match.html">match</a></span><span class="op">(</span><span class="va">genes_dissoc</span>, <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">X2</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">genes_dissoc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">genes_dissoc</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">genes_dissoc</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1638,7 +1913,7 @@ Question
 <div class="callout-body-container callout-body">
 <p>Calculate the average gene set expression for each cell.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-43-contents" aria-controls="callout-43" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-35-contents" aria-controls="callout-35" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1647,14 +1922,14 @@ Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-43" class="callout-43-contents callout-collapse collapse">
+<div id="callout-35" class="callout-35-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ave_expr_genes_dissoc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html">logcounts</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">[</span><span class="va">genes_dissoc</span>, <span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ave_expr_genes_dissoc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html">logcounts</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">[</span><span class="va">genes_dissoc</span>, <span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span><span class="op">(</span><span class="va">sce_filtered</span><span class="op">)</span><span class="op">$</span><span class="va">ave_expr_genes_dissoc</span> <span class="op">&lt;-</span> <span class="va">ave_expr_genes_dissoc</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
@@ -1675,7 +1950,7 @@ Question
 <div class="callout-body-container callout-body">
 <p>Plot an embedding of the dataset, using a color scale representing the average expression of genes involved in the stress signature upon cell dissociation. Comment.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-45-contents" aria-controls="callout-45" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-37-contents" aria-controls="callout-37" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1684,17 +1959,17 @@ Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-45" class="callout-45-contents callout-collapse collapse">
+<div id="callout-37" class="callout-37-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce_filtered</span>, dimred <span class="op">=</span> <span class="st">'PCA'</span>, colour_by <span class="op">=</span> <span class="st">'ave_expr_genes_dissoc'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plotReducedDim.html">plotReducedDim</a></span><span class="op">(</span><span class="va">sce_filtered</span>, dimred <span class="op">=</span> <span class="st">'PCA'</span>, colour_by <span class="op">=</span> <span class="st">'ave_expr_genes_dissoc'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+<p><img src="Lab4_data_wrangling_scRNAseq_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1716,7 +1991,7 @@ Answer
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       Europe/Paris
- date     2024-10-29
+ date     2024-11-03
  pandoc   2.19.2 @ /opt/homebrew/bin/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────

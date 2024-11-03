@@ -270,7 +270,7 @@ Infer lineages, using cluster annotations as information to build the MST. Note 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
 ```{r eval = TRUE, filename = "R"}
-  reducedDim(germcells, 'corrected_2') <- reducedDim(germcells, 'corrected')[, 1:49]
+reducedDim(germcells, 'corrected_2') <- reducedDim(germcells, 'corrected')[, 1:49]
 germcells_slingshot <- slingshot::slingshot(
     germcells, 
     reducedDim = 'corrected_2', 
@@ -478,8 +478,8 @@ dim(germcells)
 dim(full_GSE112013_counts_germcells)
 
 ## - Add spliced/unspliced counts to germcells
-assay(germcells, 'spliced', withDimnames=FALSE) <- assay(full_GSE112013_counts_germcells, 'spliced')
-assay(germcells, 'unspliced', withDimnames=FALSE) <- assay(full_GSE112013_counts_germcells, 'unspliced')
+assay(germcells, 'spliced', withDimnames=FALSE) <- as(assay(full_GSE112013_counts_germcells, 'spliced'), 'dgCMatrix')
+assay(germcells, 'unspliced', withDimnames=FALSE) <- as(assay(full_GSE112013_counts_germcells, 'unspliced'), 'dgCMatrix')
 germcells
 
 ## - Run velociraptor

@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.433">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="J. Serizay, O. Ashenberg &amp; F. Almeida-Silva">
-<title>Single-cell RNAseq analysis with R/Bioconductor - 13&nbsp; Lab 8: Pseudotime analyses</title>
+<title>Single-cell RNAseq analysis with R/Bioconductor - 15&nbsp; Lab 8: Pseudotime analyses</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -61,8 +61,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../content/day4/Lecture7_ATAC.html" rel="next">
-<link href="../../content/day4/Lecture6_pseudotime.html" rel="prev">
+<link href="../../content/day5/Lecture8_spatial-transcriptomics.html" rel="next">
+<link href="../../content/day4/Lecture7_pseudotime.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/day4/Lecture6_pseudotime.html">Day 4</a></li><li class="breadcrumb-item"><a href="../../content/day4/Lab7_pseudotime.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../content/day4/Lecture6_ATAC.html">Day 4</a></li><li class="breadcrumb-item"><a href="../../content/day4/Lab8_pseudotime.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -257,26 +257,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lecture6_pseudotime.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span></a>
+  <a href="../../content/day4/Lecture6_ATAC.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 6 - Advances in single-cell genomics: the epigenome</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lab7_pseudotime.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span></span></a>
+  <a href="../../content/day4/Lab7_atac-seq.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 7: Single-cell ATAC-seq analysis workflow</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lecture7_ATAC.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 6 - Advances in single-cell genomics: the epigenome</span></span></a>
+  <a href="../../content/day4/Lecture7_pseudotime.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../content/day4/Lab8_atac-seq.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 7: Single-cell ATAC-seq analysis workflow</span></span></a>
+  <a href="../../content/day4/Lab8_pseudotime.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span></span></a>
   </div>
 </li>
       </ul>
@@ -313,29 +313,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
 <li>
-<a href="#process-testis-data-in-r" id="toc-process-testis-data-in-r" class="nav-link active" data-scroll-target="#process-testis-data-in-r"><span class="header-section-number">13.1</span> Process testis data in R</a>
+<a href="#process-testis-data-in-r" id="toc-process-testis-data-in-r" class="nav-link active" data-scroll-target="#process-testis-data-in-r"><span class="header-section-number">15.1</span> Process testis data in R</a>
   <ul class="collapse">
-<li><a href="#import-testis-data-from-gse112013-and-pre-process-it" id="toc-import-testis-data-from-gse112013-and-pre-process-it" class="nav-link" data-scroll-target="#import-testis-data-from-gse112013-and-pre-process-it"><span class="header-section-number">13.1.1</span> Import testis data from GSE112013 and pre-process it</a></li>
-  <li><a href="#annotate-cells-using-hpa-resources" id="toc-annotate-cells-using-hpa-resources" class="nav-link" data-scroll-target="#annotate-cells-using-hpa-resources"><span class="header-section-number">13.1.2</span> Annotate cells using HPA resources</a></li>
-  <li><a href="#filter-the-testis-dataset-to-only-germinal-cells." id="toc-filter-the-testis-dataset-to-only-germinal-cells." class="nav-link" data-scroll-target="#filter-the-testis-dataset-to-only-germinal-cells."><span class="header-section-number">13.1.3</span> Filter the testis dataset to only germinal cells.</a></li>
+<li><a href="#import-testis-data-from-gse112013-and-pre-process-it" id="toc-import-testis-data-from-gse112013-and-pre-process-it" class="nav-link" data-scroll-target="#import-testis-data-from-gse112013-and-pre-process-it"><span class="header-section-number">15.1.1</span> Import testis data from GSE112013 and pre-process it</a></li>
+  <li><a href="#annotate-cells-using-hpa-resources" id="toc-annotate-cells-using-hpa-resources" class="nav-link" data-scroll-target="#annotate-cells-using-hpa-resources"><span class="header-section-number">15.1.2</span> Annotate cells using HPA resources</a></li>
+  <li><a href="#filter-the-testis-dataset-to-only-germinal-cells." id="toc-filter-the-testis-dataset-to-only-germinal-cells." class="nav-link" data-scroll-target="#filter-the-testis-dataset-to-only-germinal-cells."><span class="header-section-number">15.1.3</span> Filter the testis dataset to only germinal cells.</a></li>
   </ul>
 </li>
   <li>
-<a href="#trajectory-inference-ti-in-scrnaseq" id="toc-trajectory-inference-ti-in-scrnaseq" class="nav-link" data-scroll-target="#trajectory-inference-ti-in-scrnaseq"><span class="header-section-number">13.2</span> Trajectory inference (TI) in scRNAseq</a>
+<a href="#trajectory-inference-ti-in-scrnaseq" id="toc-trajectory-inference-ti-in-scrnaseq" class="nav-link" data-scroll-target="#trajectory-inference-ti-in-scrnaseq"><span class="header-section-number">15.2</span> Trajectory inference (TI) in scRNAseq</a>
   <ul class="collapse">
-<li><a href="#trajectory" id="toc-trajectory" class="nav-link" data-scroll-target="#trajectory"><span class="header-section-number">13.2.1</span> Trajectory</a></li>
-  <li><a href="#pseudotime" id="toc-pseudotime" class="nav-link" data-scroll-target="#pseudotime"><span class="header-section-number">13.2.2</span> Pseudotime</a></li>
-  <li><a href="#bonus-daunting-snippet-but-that-makes-a-cool-figure-for-a-paper-modeling-pseudotime-dependent-gene-expression" id="toc-bonus-daunting-snippet-but-that-makes-a-cool-figure-for-a-paper-modeling-pseudotime-dependent-gene-expression" class="nav-link" data-scroll-target="#bonus-daunting-snippet-but-that-makes-a-cool-figure-for-a-paper-modeling-pseudotime-dependent-gene-expression"><span class="header-section-number">13.2.3</span> BONUS: Daunting snippet but that makes a cool figure for a paper: modeling pseudotime-dependent gene expression</a></li>
+<li><a href="#trajectory" id="toc-trajectory" class="nav-link" data-scroll-target="#trajectory"><span class="header-section-number">15.2.1</span> Trajectory</a></li>
+  <li><a href="#pseudotime" id="toc-pseudotime" class="nav-link" data-scroll-target="#pseudotime"><span class="header-section-number">15.2.2</span> Pseudotime</a></li>
+  <li><a href="#bonus-daunting-snippet-but-that-makes-a-cool-figure-for-a-paper-modeling-pseudotime-dependent-gene-expression" id="toc-bonus-daunting-snippet-but-that-makes-a-cool-figure-for-a-paper-modeling-pseudotime-dependent-gene-expression" class="nav-link" data-scroll-target="#bonus-daunting-snippet-but-that-makes-a-cool-figure-for-a-paper-modeling-pseudotime-dependent-gene-expression"><span class="header-section-number">15.2.3</span> BONUS: Daunting snippet but that makes a cool figure for a paper: modeling pseudotime-dependent gene expression</a></li>
   </ul>
 </li>
-  <li><a href="#ordering-trajectory-with-rna-velocity" id="toc-ordering-trajectory-with-rna-velocity" class="nav-link" data-scroll-target="#ordering-trajectory-with-rna-velocity"><span class="header-section-number">13.3</span> Ordering trajectory with RNA velocity</a></li>
-  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info"><span class="header-section-number">13.4</span> Session info</a></li>
-  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/js2264/scRNAseq_Physalia_2024/edit/main/content/day4/Lab7_pseudotime.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/js2264/scRNAseq_Physalia_2024/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+  <li><a href="#ordering-trajectory-with-rna-velocity" id="toc-ordering-trajectory-with-rna-velocity" class="nav-link" data-scroll-target="#ordering-trajectory-with-rna-velocity"><span class="header-section-number">15.3</span> Ordering trajectory with RNA velocity</a></li>
+  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info"><span class="header-section-number">15.4</span> Session info</a></li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/js2264/scRNAseq_Physalia_2024/edit/main/content/day4/Lab8_pseudotime.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/js2264/scRNAseq_Physalia_2024/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">
-<span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span>
+<span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Lab 8: Pseudotime analyses</span>
 </h1>
 </div>
 
@@ -380,10 +380,10 @@ Aims
 </ul>
 </div>
 </div>
-<section id="process-testis-data-in-r" class="level2" data-number="13.1"><h2 data-number="13.1" class="anchored" data-anchor-id="process-testis-data-in-r">
-<span class="header-section-number">13.1</span> Process testis data in R</h2>
-<section id="import-testis-data-from-gse112013-and-pre-process-it" class="level3" data-number="13.1.1"><h3 data-number="13.1.1" class="anchored" data-anchor-id="import-testis-data-from-gse112013-and-pre-process-it">
-<span class="header-section-number">13.1.1</span> Import testis data from GSE112013 and pre-process it</h3>
+<section id="process-testis-data-in-r" class="level2" data-number="15.1"><h2 data-number="15.1" class="anchored" data-anchor-id="process-testis-data-in-r">
+<span class="header-section-number">15.1</span> Process testis data in R</h2>
+<section id="import-testis-data-from-gse112013-and-pre-process-it" class="level3" data-number="15.1.1"><h3 data-number="15.1.1" class="anchored" data-anchor-id="import-testis-data-from-gse112013-and-pre-process-it">
+<span class="header-section-number">15.1.1</span> Import testis data from GSE112013 and pre-process it</h3>
 <p>We will work on a <code>testis</code> dataset, from the “The adult human testis transcriptional cell atlas” study (Guo et al., 2018). This dataset contains single-cell RNAseq data from human testis. It is available on the GEO database under the accession number <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE112013">GSE112013</a>.</p>
 <p>The pre-processing of the testis dataset has already been done for you. We have applied the different analysis steps we have learned over the past three days to the count matrix <code>GSE112013_Combined_UMI_table.txt.gz</code>. See the code below for the details of pre-processing steps.</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
@@ -519,8 +519,8 @@ Aims
 </div>
 </div>
 </div>
-</section><section id="annotate-cells-using-hpa-resources" class="level3" data-number="13.1.2"><h3 data-number="13.1.2" class="anchored" data-anchor-id="annotate-cells-using-hpa-resources">
-<span class="header-section-number">13.1.2</span> Annotate cells using HPA resources</h3>
+</section><section id="annotate-cells-using-hpa-resources" class="level3" data-number="15.1.2"><h3 data-number="15.1.2" class="anchored" data-anchor-id="annotate-cells-using-hpa-resources">
+<span class="header-section-number">15.1.2</span> Annotate cells using HPA resources</h3>
 <p>The <a href="https://www.proteinatlas.org">Human Protein Atlas (HPA)</a> is a valuable resource for cell type annotations. It provides single-cell RNAseq data for a large number of cell types.</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -787,7 +787,7 @@ Answer
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<p><img src="Lab7_pseudotime_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="Lab8_pseudotime_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -795,8 +795,8 @@ Answer
 </div>
 </div>
 </div>
-</section><section id="filter-the-testis-dataset-to-only-germinal-cells." class="level3" data-number="13.1.3"><h3 data-number="13.1.3" class="anchored" data-anchor-id="filter-the-testis-dataset-to-only-germinal-cells.">
-<span class="header-section-number">13.1.3</span> Filter the testis dataset to only germinal cells.</h3>
+</section><section id="filter-the-testis-dataset-to-only-germinal-cells." class="level3" data-number="15.1.3"><h3 data-number="15.1.3" class="anchored" data-anchor-id="filter-the-testis-dataset-to-only-germinal-cells.">
+<span class="header-section-number">15.1.3</span> Filter the testis dataset to only germinal cells.</h3>
 <p>In this notebook, we will focus on germinal cells only.</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -837,12 +837,12 @@ Answer
 </div>
 </div>
 </div>
-</section></section><section id="trajectory-inference-ti-in-scrnaseq" class="level2" data-number="13.2"><h2 data-number="13.2" class="anchored" data-anchor-id="trajectory-inference-ti-in-scrnaseq">
-<span class="header-section-number">13.2</span> Trajectory inference (TI) in scRNAseq</h2>
+</section></section><section id="trajectory-inference-ti-in-scrnaseq" class="level2" data-number="15.2"><h2 data-number="15.2" class="anchored" data-anchor-id="trajectory-inference-ti-in-scrnaseq">
+<span class="header-section-number">15.2</span> Trajectory inference (TI) in scRNAseq</h2>
 <p>An important question in scRNAseq field of research is: how to identify a cell trajectory from high-dimensional expression data and map individual cells onto it? A large number of methods have currently emerged, each one with their own specificities, assumptions, and strengths. A nice breakdown (from 2019, so already very outdated!) is available from <code>Saelens et al., Nat. Biotech. 2018</code> (doi: 10.1038/s41587-019-0071-9):</p>
 <p><img src=".img/2021-06-01-11-29-36.png" class="img-fluid"></p>
-<section id="trajectory" class="level3" data-number="13.2.1"><h3 data-number="13.2.1" class="anchored" data-anchor-id="trajectory">
-<span class="header-section-number">13.2.1</span> Trajectory</h3>
+<section id="trajectory" class="level3" data-number="15.2.1"><h3 data-number="15.2.1" class="anchored" data-anchor-id="trajectory">
+<span class="header-section-number">15.2.1</span> Trajectory</h3>
 <p><code>Slingshot</code> is perhaps one of the most widely used algorithms for users who want to focus on <code>R</code>-based approaches.</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -892,8 +892,8 @@ Answer
 </div>
 </div>
 </div>
-</section><section id="pseudotime" class="level3" data-number="13.2.2"><h3 data-number="13.2.2" class="anchored" data-anchor-id="pseudotime">
-<span class="header-section-number">13.2.2</span> Pseudotime</h3>
+</section><section id="pseudotime" class="level3" data-number="15.2.2"><h3 data-number="15.2.2" class="anchored" data-anchor-id="pseudotime">
+<span class="header-section-number">15.2.2</span> Pseudotime</h3>
 <p><code>slingshot</code> automatically deduces a pseudotime for each cell, based on the inferred lineage. It can be useful to visualize the trajectory of cells in a 2D space, and to order cells along the trajectory.</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1048,7 +1048,7 @@ Answer
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<p><img src="Lab7_pseudotime_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<p><img src="Lab8_pseudotime_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1096,7 +1096,7 @@ Answer
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span>, vjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
-<p><img src="Lab7_pseudotime_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="Lab8_pseudotime_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1113,8 +1113,8 @@ Answer
 </div>
 </div>
 </div>
-</section><section id="bonus-daunting-snippet-but-that-makes-a-cool-figure-for-a-paper-modeling-pseudotime-dependent-gene-expression" class="level3" data-number="13.2.3"><h3 data-number="13.2.3" class="anchored" data-anchor-id="bonus-daunting-snippet-but-that-makes-a-cool-figure-for-a-paper-modeling-pseudotime-dependent-gene-expression">
-<span class="header-section-number">13.2.3</span> BONUS: Daunting snippet but that makes a cool figure for a paper: modeling pseudotime-dependent gene expression</h3>
+</section><section id="bonus-daunting-snippet-but-that-makes-a-cool-figure-for-a-paper-modeling-pseudotime-dependent-gene-expression" class="level3" data-number="15.2.3"><h3 data-number="15.2.3" class="anchored" data-anchor-id="bonus-daunting-snippet-but-that-makes-a-cool-figure-for-a-paper-modeling-pseudotime-dependent-gene-expression">
+<span class="header-section-number">15.2.3</span> BONUS: Daunting snippet but that makes a cool figure for a paper: modeling pseudotime-dependent gene expression</h3>
 <p>Using pseudotime / cell, one can model gene expression along the differentiation process. This alleviates the need to study gene expression <strong>per cell</strong>, and allows one to focus on process-related effects (e.g.&nbsp;gene expression during a developmental trajectory).</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1178,7 +1178,7 @@ Answer
 ℹ Please use `linewidth` instead.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="Lab7_pseudotime_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<p><img src="Lab8_pseudotime_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -1186,8 +1186,8 @@ Answer
 </div>
 </div>
 </div>
-</section></section><section id="ordering-trajectory-with-rna-velocity" class="level2" data-number="13.3"><h2 data-number="13.3" class="anchored" data-anchor-id="ordering-trajectory-with-rna-velocity">
-<span class="header-section-number">13.3</span> Ordering trajectory with RNA velocity</h2>
+</section></section><section id="ordering-trajectory-with-rna-velocity" class="level2" data-number="15.3"><h2 data-number="15.3" class="anchored" data-anchor-id="ordering-trajectory-with-rna-velocity">
+<span class="header-section-number">15.3</span> Ordering trajectory with RNA velocity</h2>
 <p>As we saw earlier, TI does not necessarily know which direction is right for a given trajectory. This orientation can be sometimes refined using RNA velocity. Let’s see whether RNA velocity helps orientating our spermatocyte differentiation lineage trajectory here.</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1276,8 +1276,8 @@ Answer
 <span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-</section><section id="session-info" class="level2" data-number="13.4"><h2 data-number="13.4" class="anchored" data-anchor-id="session-info">
-<span class="header-section-number">13.4</span> Session info</h2>
+</section><section id="session-info" class="level2" data-number="15.4"><h2 data-number="15.4" class="anchored" data-anchor-id="session-info">
+<span class="header-section-number">15.4</span> Session info</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -1290,7 +1290,7 @@ Answer
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       Europe/Paris
- date     2024-10-31
+ date     2024-11-03
  pandoc   2.19.2 @ /opt/homebrew/bin/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -1651,13 +1651,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="../../content/day4/Lecture6_pseudotime.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span>
+      <a href="../../content/day4/Lecture7_pseudotime.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 7 - Trajectories and pseudotimes</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../content/day4/Lecture7_ATAC.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Lecture 6 - Advances in single-cell genomics: the epigenome</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../content/day5/Lecture8_spatial-transcriptomics.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Lecture 8 - Advances in single-cell genomics: spatial transcriptomics</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

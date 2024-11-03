@@ -4,7 +4,7 @@
 
 ## Notes
 
-The estimated time for this lab is around 1h30.
+The estimated time for this lab is around 1h20.
 
 :::
 
@@ -51,10 +51,52 @@ library(SingleCellExperiment)
 
 :::
 
+### Create a `SingleCellExperiment` object from scratch
+
+In the previous lab, we have been working with `airway` object (a `SummarizedExperiment` object) and `sce`, a `SingleCellExperiment` object.
+We will now create a toy `SingleCellExperiment` object from scratch, using the `SingleCellExperiment` constructor.
+
+To create a `SingleCellExperiment` object, we need to provide the following:
+
+- `colData`: a data frame (or tibble) with columns corresponding to cell metadata.
+- `rowData`: a data frame (or tibble) with columns corresponding to gene metadata.
+- `assays`: a list of matrices, each matrix corresponding to a different assay. The first matrix is typically the counts matrix.
+
+```{r eval=TRUE, filename = "R"}
+cd <- tibble(idx = paste0('cell', 1:100))  ## `cd` stands for colData
+cd
+
+rd <- tibble(
+    gene_name = paste0('gene', 1:10),
+    gene_type = factor(rep(c('protein_coding', 'non_coding'), each = 5))
+) ## `rd` stands for rowData
+rd 
+
+cnts <- matrix(rpois(1000, 5), ncol = 100) ## `cnts` stands for counts
+
+dim(cd)
+dim(rd)
+dim(cnts)
+
+nrow(cd) == ncol(cnts)
+nrow(rd) == nrow(cnts)
+
+toy_sce <- SingleCellExperiment(
+    colData = cd, 
+    rowData = rd, 
+    assays = list('counts' = cnts)
+)
+toy_sce
+colData(toy_sce)
+rowData(toy_sce)
+assays(toy_sce)
+assays(toy_sce)[["counts"]][1:10, 1:10]
+```
+
 
 ### Read in Pancreas counts matrix.
 
-For this tutorial, we will be analyzing a human pancreas scRNAseq dataset. 
+We will now analyze a real human pancreas scRNAseq dataset. 
 It is freely available from [GEO: link](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE114802). 
 We start by downloading the cell, features and counts matrix. 
 
@@ -74,24 +116,40 @@ download.file('https://ftp.ncbi.nlm.nih.gov/geo/series/GSE114nnn/GSE114802/suppl
 
 :::
 
+In this dataset, the barcodes file contains the cell barcodes, the genes file contains the gene names, and the counts file contains the counts matrix.
+We can import the data into R using the `read_tsv()` and `read_csv()` functions (already available in the loaded `tidyverse` package).
+
+For example, to read the barcodes file, we can use the following command:
+
+```{r eval=TRUE, filename = "R"}
+cells <- read_tsv('~/Share/GSE114802_org4_barcodes.tsv.gz', col_names = FALSE)
+head(cells)
+```
+
 
 ::: {.callout-question .icon .callout-note}
 
-Read the barcodes, genes and counts files into R.
+Also read the genes and counts files into R.
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
 ```{r eval=TRUE, filename = "R"}
-cells <- read_tsv('~/Share/GSE114802_org4_barcodes.tsv.gz', col_names = FALSE)
 genes <- read_tsv('~/Share/GSE114802_org4_genes.tsv.gz', col_names = FALSE)
+genes
+
 counts <- read_csv('~/Share/GSE114802_org4_counts.csv.gz', col_names = TRUE)
-counts <- counts[, -1]
-counts <- as(counts, 'matrix')
-counts <- as(counts, 'dgCMatrix')
-rownames(counts) <- genes$X1
+counts[1:10, 1:6]
 ```
 
 :::
+
+Note how the first column of the counts dataframe is the gene names. We will need to strip this column, and turn the data frame into a matrix.
+
+```{r eval=TRUE, filename = "R"}
+counts <- counts[, -1]
+counts <- as(counts, 'matrix')
+counts[1:10, 1:6]
+```
 
 :::
 
@@ -134,7 +192,7 @@ reducedDims(sce)
 :::
 
 :::
-
+<!-- 
 ::: {.callout-question .icon .callout-note}
 
 How much memory does the `SingleCellExperiment` object take up? (use `object.size()` to get the size of an object...). 
@@ -164,7 +222,7 @@ sum(counts > 0) / (nrow(sce)*ncol(sce))
 
 :::
 
-:::
+::: -->
 
 
 ## Basic QCs 
@@ -228,11 +286,20 @@ plot(
 
 :::
 
+Several QCs can be automatically computed using `quickPerCellQC()`. 
+
+```{r eval=TRUE, filename = "R"}
+toy_sce <- scuttle::quickPerCellQC(toy_sce)
+colData(toy_sce)
+
+table(toy_sce$low_lib_size)
+table(toy_sce$low_n_features)
+```
+
+
 ::: {.callout-question .icon .callout-note}
 
-Several QCs can be automatically computed using `quickPerCellQC()`. Try it out and check the results.
-
-What are the `total` and `detected` columns?
+Run `quickPerCellQC()` on the `SingleCellExperiment` object. Inspect the new `colData` of the object.
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
@@ -252,6 +319,16 @@ colData(sce)
 
 For typical scRNA-seq experiments, a `SingleCellExperiment` can have multiple assays, corresponding to different metrics. The most basic one is `counts`.  
 Different assays store different 'transformations' of the `counts`(e.g. `logcounts).
+
+For example, one can compute mean-centered counts and store it in a new slot.
+
+```{r eval=TRUE, filename = "R"}
+mean_centered_counts <- scale(counts(toy_sce), center = TRUE, scale = FALSE)
+assay(toy_sce, 'mean_centered') <- mean_centered_counts
+assays(toy_sce)
+assay(toy_sce, 'mean_centered')[1:10, 1:10]
+mean(assay(toy_sce, 'mean_centered'))
+```
 
 ::: {.callout-question .icon .callout-note}
 
@@ -274,16 +351,25 @@ Embeddings allow for a representation of large-scale data (N cells x M genes) in
 Typical embeddings can be PCA, t-SNE, UMAP, etc... 
 Many embeddings can be computed using `run...()` functions from Bioconductor packages (e.g. `scran`, `scater`, ...).
 
-::: {.callout-question .icon .callout-note}
-
-
-Try to compute PCA, t-SNE and UMAP embeddings of the dataset using `runPCA()`, `runTSNE()` and `runUMAP()` from `scater` package.
-
-::: {.callout-answer .icon .callout-note collapse=true}
+For example, one can compute PCA and store it in a new slot.
 
 ```{r eval=TRUE, filename = "R"}
 library(scater)
 
+logcounts(toy_sce) <- log10(counts(toy_sce) + 1)
+toy_sce <- scater::runPCA(toy_sce)
+reducedDims(toy_sce)
+reducedDim(toy_sce, 'PCA')[1:10, ]
+plotReducedDim(toy_sce, 'PCA')
+```
+
+::: {.callout-question .icon .callout-note}
+
+Try to compute PCA, t-SNE and UMAP embeddings of the pancreas dataset using `runPCA()`, `runTSNE()` and `runUMAP()` from `scater` package.
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r eval=TRUE, filename = "R"}
 sce <- scater::runPCA(sce)
 plotReducedDim(sce, "PCA")
 
@@ -299,7 +385,7 @@ plotReducedDim(sce, "UMAP", colour_by = 'detected')
 
 :::
 
-
+<!-- 
 ### Multiple modalities
 
 Alternative 'modalities' can be stored in the same `SingleCellExperiment` object (e.g. if you perform paired single-cell RNA-seq and ATAC-seq). 
@@ -320,11 +406,19 @@ swapAltExp(sce, "ATAC_counts", saved = "RNA_counts")
 
 :::
 
-Note that features can be different between different `altExps`.
+Note that features can be different between different `altExps`. -->
 
 ## Filtering cells and features
 
 ### Pre-filtering
+
+Filtering operations are often performed on the `SingleCellExperiment` object, for example to remove low-quality cells (columns) or genes (rows).
+
+To do this, one can use standard R syntax to subset the `SingleCellExperiment` object.
+
+```{r eval=TRUE, filename = "R"}
+toy_sce_filtered <- toy_sce[rowData(toy_sce)$gene_type == 'protein_coding', toy_sce$sum > 50]
+```
 
 ::: {.callout-question .icon .callout-note}
 
@@ -351,12 +445,6 @@ This has the advantage that we do not need to keep track of inidividual variable
 
 For each cell, we can calculate the percentage of counts mapping on mitochondrial genes and store it in a column `percent_mito` in our `colData()`.
 
-::: {.callout-question .icon .callout-note}
-
-Find mitochondrial genes, compute the % of total counts associated with these genes, and store it in `colData`
-
-::: {.callout-answer .icon .callout-note collapse=true}
-
 ```{r eval=TRUE, filename = "R"}
 rowData(sce_filtered)
 mito_genes <- rownames(sce_filtered)[grep(pattern = "^MT-", x = rowData(sce_filtered)$X2)]
@@ -366,10 +454,6 @@ hist(percent_mito*100, main = '% of total counts over mitochondrial genes', col 
 colData(sce_filtered)$percent_mito <- percent_mito
 table(colData(sce_filtered)$percent_mito > 0.1)
 ```
-
-:::
-
-:::
 
 ::: {.callout-question .icon .callout-note}
 
@@ -396,13 +480,7 @@ Another metric we use is the number of house keeping genes expressed in a cell.
 These genes reflect commomn processes active in a cell and hence are a good global quality measure. 
 They are also abundant and are usually steadliy expressed in cells, thus less sensitive to the high dropout.
 
-::: {.callout-question .icon .callout-note}
-
-Load the list of housekeeping genes (from `~/Share/tirosh_house_keeping.txt`), match them to the genes in the `rowData` of the `SingleCellExperiment` object (using `match` and `rownames`), remove `NA`s (genes not found in the `rowData`), and store the list of housekeeping genes in a new variable.
-
-Then, calculate the number of expressed housekeeping genes per cell (genes with a count > 0) and store the number of expressed housekeeping genes per cell in `colData`.
-
-::: {.callout-answer .icon .callout-note collapse=true}
+We first load the list of housekeeping genes (from `~/Share/tirosh_house_keeping.txt`), match them to the genes in the `rowData` of the `SingleCellExperiment` object (using `match` and `rownames`), remove `NA`s (genes not found in the `rowData`), and store the list of housekeeping genes in a new variable.
 
 ```{r eval=TRUE, filename = "R"}
 # Load the list of housekeeping genes
@@ -411,7 +489,15 @@ hkgenes <- as.vector(hkgenes$V1)
 hkgenes <- rownames(sce_filtered)[match(hkgenes, rowData(sce_filtered)$X2)]
 hkgenes <- hkgenes[!is.na(hkgenes)]
 hkgenes
+```
 
+::: {.callout-question .icon .callout-note}
+
+Calculate the number of expressed housekeeping genes per cell (genes with a count > 0) and store the number of expressed housekeeping genes per cell in `colData`.
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r eval=TRUE, filename = "R"}
 colData(sce_filtered)$n_expressed_hkgenes <- Matrix::colSums(counts(sce_filtered)[hkgenes, ] > 0)
 table(colData(sce_filtered)$n_expressed_hkgenes)
 ```

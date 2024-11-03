@@ -40,10 +40,10 @@ book:
         - content/day3/Lab6_batch_correction.qmd
     - part: "Day 4"
       chapters:
-        - content/day4/Lecture6_pseudotime.qmd
-        - content/day4/Lab7_pseudotime.qmd
-        - content/day4/Lecture7_ATAC.qmd
-        - content/day4/Lab8_atac-seq.qmd
+        - content/day4/Lecture6_ATAC.qmd
+        - content/day4/Lab7_atac-seq.qmd
+        - content/day4/Lecture7_pseudotime.qmd
+        - content/day4/Lab8_pseudotime.qmd
     - part: "Day 5"
       chapters:
         - content/day5/Lecture8_spatial-transcriptomics.qmd

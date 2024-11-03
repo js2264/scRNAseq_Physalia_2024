@@ -7,9 +7,9 @@ Classes are from:
 - 8 am to 2 pm NY time.
 - 5 am to 11 am SF time.
 
-## Monday – Classes from 14:00 to 20:00 (Paris time) {-}
+## Monday - Classes from 14:00 to 20:00 (Paris time) {-}
 
-### Lecture 1 – Introduction to scRNA-Seq analysis [Orr]  {-}
+### Lecture 1 - Introduction to scRNA-Seq analysis [Jacques]  {-}
 
   - General introduction: cell atlas overviews
   - Comparison of bulk and single cell RNA-Seq
@@ -23,7 +23,7 @@ Classes are from:
   - Sequencing data: alignment and quality control
   - IGV: Looking at cool things in alignment like where reads are, mutations, splicing
 
-### Lab 1 – Familiarizing yourself with the course AWS instance [Jacques]  {-}
+### Lab 1 - Familiarizing yourself with the course AWS instance [Jacques]  {-}
 
   - Using RStudio
   - Logging in AWS
@@ -31,33 +31,33 @@ Classes are from:
   - Raw file formats
   - Get data from 10x website, single cell portal, from GEO (fastqs, counts)
 
-### Lab 2 – From sequencing reads to expression matrices [Orr]  {-}
+### Lab 2 - From sequencing reads to expression matrices [Fabricio]  {-}
 
   - Mapping sequencing data with Cellranger
   - Quality Control reports (CellRanger, dropEst, fastqc)
 
-## Tuesday – Classes from 14:00 to 20:00 (Paris time) {-}
+## Tuesday - Classes from 14:00 to 20:00 (Paris time) {-}
 
-### Lecture 3 - Quality control for scRNA-Seq data [Orr]  {-}
+### Flash talks [Everybody]  {-}
+
+### Lecture 3 - Quality control for scRNA-Seq data [Jacques]  {-}
   - What CellRanger does for quality filtering
   - Normalisation methods 
   - Doublets, empty droplets, DropletUtils
   - Barcode swapping
   - Regression with technical covariates
 
-### Lab 3 - Introduction to R/Bioconductor [Jacques]  {-}
+### Lab 3 - Introduction to R/Bioconductor [Fabricio]  {-}
   - Installing packages with CRAN and Bioconductor
   - Data types, data manipulation, slicing
   - I/O for scRNAseq analysis in R
 
-### Lab 4 – scRNA-Seq data wrangling [Orr]   {-}
+### Lab 4 - scRNA-Seq data wrangling [Fabricio]   {-}
   - Data structure
   - Data filtering
   - Exploratory data analysis
 
-### Flash talks [Everybody]  {-}
-
-## Wednesday – Classes from 14:00 to 20:00 (Paris time) {-}
+## Wednesday - Classes from 14:00 to 20:00 (Paris time) {-}
 
 ### Lecture 4 - Identifying cell populations [Jacques]  {-}
   - Feature selection
@@ -66,7 +66,7 @@ Classes are from:
   - Assigning cluster identity
   - Differential expression tests
 
-### Lab 5 – Identifying Cell Populations: dimensionality reduction, clustering and annotation [Jacques]  {-}
+### Lab 5 - Identifying Cell Populations: dimensionality reduction, clustering and annotation [Jacques]  {-}
   - Feature selection
   - Dimensional reduction 
   - Graph-based clustering
@@ -82,25 +82,25 @@ Classes are from:
   - Comparison of batch correction methods
   - Choosing the optimal batch correction approach
 
-## Thursday – Classes from 14:00 to 20:00 (Paris time) {-}
+## Thursday - Classes from 14:00 to 20:00 (Paris time) {-}
 
-### Lecture 6 - Trajectories and pseudotimes [Jacques]  {-}
+### Lecture 6 - Advances in single-cell genomics: the epigenome [Orr]  {-}
+
+### Lab 7 - Single-cell ATAC-Seq analysis [Orr]  {-}
+
+### Lecture 7 - Trajectories and pseudotimes [Orr]  {-}
   - Trajectory inference
   - Popular tools and packages for trajectory analysis (https://github.com/dynverse/dynmethods#list-of-included-methods)
   - Pseudotime inference
   - RNA velocity 
   - Differential expression through pseudotime
 
-### Lab 7 - Inferring differentiation trajectories and pseudotime [Jacques]  {-}
+### Lab 8 - Inferring differentiation trajectories and pseudotime [Fabricio]  {-}
   - Infering trajectory in sperm cell lineage
   - Orientating a trajectory with RNA veloctiy
   - DE analysis along a trajectory
 
-### Lecture 7 - Advances in single-cell genomics: the epigenome [Orr]  {-}
-
-### Lab 8 - Single-cell ATAC-Seq analysis [Jacques]  {-}
-
-## Friday – Classes from 14:00 to 20:00 (Paris time) {-}
+## Friday - Classes from 14:00 to 20:00 (Paris time) {-}
 
 ### Lecture 8 - Advances in single-cell genomics: spatial transcriptomics [Orr]  {-}
 
