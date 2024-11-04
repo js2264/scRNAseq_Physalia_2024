@@ -2,7 +2,7 @@ project:
   type: book
   output-dir: docs
 
-IP: 35.87.99.161
+IP: 54.213.243.32
 
 book:
   title: "Single-cell RNAseq analysis with R/Bioconductor"
