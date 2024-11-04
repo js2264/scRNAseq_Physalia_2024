@@ -1,5 +1,5 @@
 ---
-slides: "Lecture7_ATAC.pdf"
+slides: "Lecture6_ATAC.pdf"
 ---
 
 # Lecture 6 - Advances in single-cell genomics: the epigenome
