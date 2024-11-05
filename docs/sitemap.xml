@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/prerequisites.html</loc>
+    <lastmod>2024-11-05T12:23:10.682Z</lastmod>
+  </url>
+  <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/day4/Lecture6_ATAC.html</loc>
-    <lastmod>2024-11-04T16:06:31.465Z</lastmod>
+    <lastmod>2024-11-04T21:25:46.689Z</lastmod>
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/day4/Lab7_atac-seq.html</loc>
-    <lastmod>2024-11-04T16:07:46.114Z</lastmod>
+    <lastmod>2024-11-04T21:25:46.716Z</lastmod>
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/day4/Lecture7_pseudotime.html</loc>
-    <lastmod>2024-11-04T16:04:40.446Z</lastmod>
+    <lastmod>2024-11-04T21:25:46.719Z</lastmod>
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/day4/Lab8_pseudotime.html</loc>
-    <lastmod>2024-11-04T16:04:40.478Z</lastmod>
+    <lastmod>2024-11-04T21:25:46.751Z</lastmod>
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/day5/Lecture8_spatial-transcriptomics.html</loc>
-    <lastmod>2024-11-04T16:04:40.481Z</lastmod>
+    <lastmod>2024-11-04T21:25:46.754Z</lastmod>
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/extra.html</loc>
-    <lastmod>2024-11-04T16:04:40.485Z</lastmod>
+    <lastmod>2024-11-04T21:25:46.757Z</lastmod>
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/index.html</loc>
-    <lastmod>2024-11-04T16:08:56.821Z</lastmod>
+    <lastmod>2024-11-05T12:22:17.070Z</lastmod>
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/day3/Lab6_batch_correction.html</loc>
-    <lastmod>2024-11-04T16:07:11.947Z</lastmod>
-  </url>
-  <url>
-    <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/program.html</loc>
-    <lastmod>2024-11-04T16:08:28.501Z</lastmod>
+    <lastmod>2024-11-05T12:22:15.955Z</lastmod>
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/Rstudio.html</loc>
-    <lastmod>2024-11-04T16:08:55.792Z</lastmod>
+    <lastmod>2024-11-05T12:23:08.095Z</lastmod>
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/day1/Lab1_Intro.html</loc>
-    <lastmod>2024-11-04T16:09:04.677Z</lastmod>
+    <lastmod>2024-11-05T12:23:13.014Z</lastmod>
   </url>
 </urlset>
