@@ -228,7 +228,7 @@
     "href": "content/Rstudio.html",
     "title": "RStudio",
     "section": "",
-    "text": "Rstudio offers a graphical interface to facilitate the interaction between a user and an underlying programming language (this is sometimes called IDE, or integrated development environment). It can be very useful when a user is not necessarily proficent with command line-based computing. However, such graphical interfaces are not always able to connect to services such as AWS.\nSince most of the preliminary analysis we do is on AWS, we’d like to be able to use Rtudio directly from there. To do that, simply go to the following address:\n\n\nhttp://54.201.107.53:8787\n\n\nDon’t forget, you can run a bash terminal from within RStudio! This may come handy if you want to process some data with cellranger, for example. To do this, simply click on the terminal button next on the bottom left panel. You should now be in your own ${home} directory (~)."
+    "text": "Rstudio offers a graphical interface to facilitate the interaction between a user and an underlying programming language (this is sometimes called IDE, or integrated development environment). It can be very useful when a user is not necessarily proficent with command line-based computing. However, such graphical interfaces are not always able to connect to services such as AWS.\nSince most of the preliminary analysis we do is on AWS, we’d like to be able to use Rtudio directly from there. To do that, simply go to the following address:\n\n\nhttp://54.191.190.243:8787\n\n\nDon’t forget, you can run a bash terminal from within RStudio! This may come handy if you want to process some data with cellranger, for example. To do this, simply click on the terminal button next on the bottom left panel. You should now be in your own ${home} directory (~)."
   },
   {
     "objectID": "content/day1/Lab1_Intro.html#connect-to-rstudio-server",
@@ -264,5 +264,40 @@
     "title": "\n3  Lab 1: Familiarizing yourself with the course AWS instance\n",
     "section": "\n3.5 Bonus",
     "text": "3.5 Bonus\nFor those of you who are already familiar with the basics, you can fast-forward through this lab and start working on scRNAseq data directly. The script in bin/prepare_Ernst.R is a template to process a publicly available scRNAseq dataset. You can start exploring it to see if you understsand the different chunks of code and their importance. All the content from this template will eventually be covered in the next labs."
+  },
+  {
+    "objectID": "content/program.html#monday---classes-from-1400-to-2000-paris-time",
+    "href": "content/program.html#monday---classes-from-1400-to-2000-paris-time",
+    "title": "Program",
+    "section": "Monday - Classes from 14:00 to 20:00 (Paris time)",
+    "text": "Monday - Classes from 14:00 to 20:00 (Paris time)\n\nLecture 1 - Introduction to scRNA-Seq analysis [Jacques]\n\nGeneral introduction: cell atlas overviews\nComparison of bulk and single cell RNA-Seq\nOverview of available scRNA-seq technologies (10x) and experimental protocols\n\n\n\nLecture 2 - From sequencing reads to expression matrices [Jacques]\n\nscRNA-Seq processing workflow starting with choice of sequencer (NextSeq, HiSeq, MiSeq) / barcode swapping and bcl files\nOverview of Popular tools and algorithms\nCommon single-cell analyses and interpretation\nSequencing data: alignment and quality control\nIGV: Looking at cool things in alignment like where reads are, mutations, splicing\n\n\n\nLab 1 - Familiarizing yourself with the course AWS instance [Jacques]\n\nUsing RStudio\nLogging in AWS\nShell and Unix commands to navigate directories, create folders, open files\nRaw file formats\nGet data from 10x website, single cell portal, from GEO (fastqs, counts)\n\n\n\nLab 2 - From sequencing reads to expression matrices [Fabricio]\n\nMapping sequencing data with Cellranger\nQuality Control reports (CellRanger, dropEst, fastqc)"
+  },
+  {
+    "objectID": "content/program.html#tuesday---classes-from-1400-to-2000-paris-time",
+    "href": "content/program.html#tuesday---classes-from-1400-to-2000-paris-time",
+    "title": "Program",
+    "section": "Tuesday - Classes from 14:00 to 20:00 (Paris time)",
+    "text": "Tuesday - Classes from 14:00 to 20:00 (Paris time)\n\nFlash talks [Everybody]\n\n\nLecture 3 - Quality control for scRNA-Seq data [Jacques]\n\nWhat CellRanger does for quality filtering\nNormalisation methods\nDoublets, empty droplets, DropletUtils\nBarcode swapping\nRegression with technical covariates\n\n\n\nLab 3 - Introduction to R/Bioconductor [Fabricio]\n\nInstalling packages with CRAN and Bioconductor\nData types, data manipulation, slicing\nI/O for scRNAseq analysis in R\n\n\n\nLab 4 - scRNA-Seq data wrangling [Fabricio]\n\nData structure\nData filtering\nExploratory data analysis"
+  },
+  {
+    "objectID": "content/program.html#wednesday---classes-from-1400-to-2000-paris-time",
+    "href": "content/program.html#wednesday---classes-from-1400-to-2000-paris-time",
+    "title": "Program",
+    "section": "Wednesday - Classes from 14:00 to 20:00 (Paris time)",
+    "text": "Wednesday - Classes from 14:00 to 20:00 (Paris time)\n\nLecture 4 - Identifying cell populations [Jacques]\n\nFeature selection\nDimensionality reduction\nGraph-based clustering and other cluster methods\nAssigning cluster identity\nDifferential expression tests\n\n\n\nLab 5 - Identifying Cell Populations: dimensionality reduction, clustering and annotation [Jacques]\n\nFeature selection\nDimensional reduction\nGraph-based clustering\nMarker gene detection\nCell type annotation\nData visualization\n\n\n\nLecture 5 - Data integration and batch effect correction [Orr]\n\nBatch correction methods (regress out batch, scaling within batch, Seurat v3, MNN, Liger, Harmony, scvi, scgen)\nEvaluation methods for batch correction (ARI, average silhouette width, kBET…)\n\n\n\nLab 6 - Data integration and batch effect correction [Orr]\n\nComparison of batch correction methods\nChoosing the optimal batch correction approach"
+  },
+  {
+    "objectID": "content/program.html#thursday---classes-from-1400-to-2000-paris-time",
+    "href": "content/program.html#thursday---classes-from-1400-to-2000-paris-time",
+    "title": "Program",
+    "section": "Thursday - Classes from 14:00 to 20:00 (Paris time)",
+    "text": "Thursday - Classes from 14:00 to 20:00 (Paris time)\n\nLecture 6 - Advances in single-cell genomics: the epigenome [Orr]\n\n\nLab 7 - Single-cell ATAC-Seq analysis [Orr]\n\n\nLecture 7 - Trajectories and pseudotimes [Orr]\n\nTrajectory inference\nPopular tools and packages for trajectory analysis (https://github.com/dynverse/dynmethods#list-of-included-methods)\nPseudotime inference\nRNA velocity\nDifferential expression through pseudotime\n\n\n\nLab 8 - Inferring differentiation trajectories and pseudotime [Fabricio]\n\nInfering trajectory in sperm cell lineage\nOrientating a trajectory with RNA veloctiy\nDE analysis along a trajectory"
+  },
+  {
+    "objectID": "content/program.html#friday---classes-from-1400-to-2000-paris-time",
+    "href": "content/program.html#friday---classes-from-1400-to-2000-paris-time",
+    "title": "Program",
+    "section": "Friday - Classes from 14:00 to 20:00 (Paris time)",
+    "text": "Friday - Classes from 14:00 to 20:00 (Paris time)\n\nLecture 8 - Advances in single-cell genomics: spatial transcriptomics [Orr]\nFriday will then be divided in two parts:\n\nMorning & afternoon (1h + 1h30): Group projects: analysing scRNA-seq data by yourself, from A to Z\nAfternoon (1h): Group presentations (10’ each group, max 5 slides: what/why/where/when/how, conclusions)\n\nHappy hour time!!"
   }
 ]

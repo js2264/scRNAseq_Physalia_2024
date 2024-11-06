@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/prerequisites.html</loc>
-    <lastmod>2024-11-05T12:23:10.682Z</lastmod>
+    <lastmod>2024-11-06T12:54:19.113Z</lastmod>
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/day4/Lecture6_ATAC.html</loc>
@@ -30,7 +30,7 @@
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/index.html</loc>
-    <lastmod>2024-11-05T12:22:17.070Z</lastmod>
+    <lastmod>2024-11-06T12:54:13.696Z</lastmod>
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/day3/Lab6_batch_correction.html</loc>
@@ -38,10 +38,14 @@
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/Rstudio.html</loc>
-    <lastmod>2024-11-05T12:23:08.095Z</lastmod>
+    <lastmod>2024-11-06T12:54:17.463Z</lastmod>
   </url>
   <url>
     <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/day1/Lab1_Intro.html</loc>
     <lastmod>2024-11-05T12:23:13.014Z</lastmod>
+  </url>
+  <url>
+    <loc>https://js2264.github.io/scRNAseq_Physalia_2024/content/program.html</loc>
+    <lastmod>2024-11-06T12:54:16.172Z</lastmod>
   </url>
 </urlset>
