@@ -138,39 +138,30 @@ VlnPlot(smartseq2, "nFeature_RNA")
 
 :::
 
-Now we will normalize the data and identify variable genes. The procedure is the same for all datasets.
-
+Now we will subsample each dataset to only have 500 cells. This is to speed up subsequent analyses. Often when we are setting up our analysis, we work with a subset of the data to make iteration across analysis decisions faster, and once we have finalized how we want to do the analysis, we work with the full dataset. 
 
 ::: {.callout-question .icon .callout-note}
 
-Normalize the data with `LogNormalize` method, and identify the 2000 most variable genes for each dataset, using the `vst` approach.
+- Within metadata dataframe, save what technology each dataset was generated with.
+- Randomly subsample each full dataset to 500 cells.
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
 ```{r eval = TRUE, prepare_seurat2, filename = "R"}
-celseq <- NormalizeData(celseq, normalization.method = "LogNormalize", scale.factor = 10000)
-celseq <- FindVariableFeatures(celseq, selection.method = "vst", nfeatures = 2000)
-celseq <- ScaleData(celseq)
 celseq[["tech"]] <- "celseq"
-celseq
-
-celseq2 <- NormalizeData(celseq2, normalization.method = "LogNormalize", scale.factor = 10000)
-celseq2 <- FindVariableFeatures(celseq2, selection.method = "vst", nfeatures = 2000)
-celseq2 <- ScaleData(celseq2)
 celseq2[["tech"]] <- "celseq2"
-celseq2
-
-fluidigmc1 <- NormalizeData(fluidigmc1, normalization.method = "LogNormalize", scale.factor = 10000)
-fluidigmc1 <- FindVariableFeatures(fluidigmc1, selection.method = "vst", nfeatures = 2000)
-fluidigmc1 <- ScaleData(fluidigmc1)
 fluidigmc1[["tech"]] <- "fluidigmc1"
-fluidigmc1
-
-smartseq2 <- NormalizeData(smartseq2, normalization.method = "LogNormalize", scale.factor = 10000)
-smartseq2 <- FindVariableFeatures(smartseq2, selection.method = "vst", nfeatures = 2000)
-smartseq2 <- ScaleData(smartseq2)
 smartseq2[["tech"]] <- "smartseq2"
-smartseq2
+Idents(celseq) <- "tech"
+Idents(celseq2) <- "tech"
+Idents(fluidigmc1) <- "tech"
+Idents(smartseq2) <- "tech"
+
+# This code sub-samples the data in order to speed up calculations and not use too much memory.
+celseq <- subset(celseq, downsample = 500, seed = 1)
+celseq2 <- subset(celseq2, downsample = 500, seed = 1)
+fluidigmc1 <- subset(fluidigmc1, downsample = 500, seed = 1)
+smartseq2 <- subset(smartseq2, downsample = 500, seed = 1)
 ```
 
 :::
@@ -192,7 +183,8 @@ Merge the datasets into a single Seurat object.
 # Cell names will now have the format tech_cellID (smartseq2_cell1...)
 add.cell.ids <- c("celseq", "celseq2", "fluidigmc1", "smartseq2")
 gcdata <- merge(x = celseq, y = list(celseq2, fluidigmc1, smartseq2), add.cell.ids = add.cell.ids, merge.data = FALSE)
-Idents(gcdata) <- "tech"  # use identity based on sample identity
+
+# Examine gcdata. Notice that there are now 4 counts layers, one layer for each technology.
 gcdata
 VlnPlot(gcdata, "nFeature_RNA", group.by = "tech")
 ```
@@ -201,26 +193,19 @@ VlnPlot(gcdata, "nFeature_RNA", group.by = "tech")
 
 :::
 
-After merging, we will perform again the normalization, variable gene selection, and scaling.
+After merging, we normalize the data with `LogNormalize` method, and identify the 2000 most variable genes for each dataset, using the `vst` approach. Then we scale the data using `ScaleData`.
 
 ::: {.callout-question .icon .callout-note}
 
-What is the difference between `SelectIntegrationFeatures` and `FindVariableFeatures` in Seurat?
+What is the difference between `SelectIntegrationFeatures` and `FindVariableFeatures` in Seurat? Take a look at the documentation for both functions.
 
-Run `NormalizeData`, `SelectIntegrationFeatures`, and `ScaleData` on the merged dataset. 
+Run `NormalizeData`, `FindVariableFeatures`, and `ScaleData` on the merged dataset. 
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
 ```{r eval = TRUE, no_batch_correction2, filename = "R"}
 gcdata <- NormalizeData(gcdata, normalization.method = "LogNormalize", scale.factor = 10000)
-var.genes <- SelectIntegrationFeatures(
-  list(celseq, celseq2, fluidigmc1, smartseq2), 
-  nfeatures = 2000, 
-  verbose = TRUE, 
-  fvf.nfeatures = 2000, 
-  selection.method = "vst"
-)
-VariableFeatures(gcdata) <- var.genes
+gcdata <- FindVariableFeatures(gcdata, nfeatures = 2000, verbose = TRUE, selection.method = "vst")
 gcdata <- ScaleData(gcdata, features = VariableFeatures(gcdata))
 ```
 
@@ -308,56 +293,46 @@ Why would we implement such a requirement?
 
 ::: {.callout-question .icon .callout-note}
 
-The integration workflow in Seurat requires the identification of variable genes that are variable across most samples. Use the `FindIntegrationAnchors` function to identify anchors on the 4 pancreatic islet datasets, commonly shared variable genes across samples, and integrate samples.
+The integration workflow in Seurat requires the identification of variable genes that are variable across most samples. Use the `IntegrateLayers` function, with the CCAIntegration method, to identify anchors on the 4 pancreatic islet datasets, commonly shared variable genes across samples, and integrate samples.
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
 ```{r eval = TRUE, batchcorrect_Seurat, filename = "R"}
-ob.list <- list(celseq, celseq2, fluidigmc1, smartseq2)
-gcdata.anchors <- FindIntegrationAnchors(object.list = ob.list, anchor.features = 2000, dims = 1:30)
-gcdata <- IntegrateData(anchorset = gcdata.anchors, dims = 1:30)
-DefaultAssay(gcdata) <- "integrated"
+gcdata <- IntegrateLayers(object = gcdata, method = CCAIntegration, orig.reduction = "pca", new.reduction = "integrated.cca", verbose = FALSE)
 ```
 
 :::
 
 :::
 
-Now that the integration anchors have been used to integrate multiple datasets, we will perform the same analysis as before.
+Now that the integration anchors have been used to integrate multiple datasets, we will perform the same clustering analysis as before.
 
 ::: {.callout-question .icon .callout-note}
 
-- Normalize the integrated data with `LogNormalize` method.
-- Identify the 2000 most variable genes for the integrated dataset, using the `vst` approach.
-- Scale the data.
-- Perform PCA on data including only the variable genes.
+- Perform analysis in the new integrated.cca dimensional reduction space.
 - Cluster the cells.
 - Perform UMAP embedding and visualize clustering results in 2D.
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
 ```{r eval = TRUE, batchcorrect_Seurat2, filename = "R"}
-# Run the standard workflow for visualization and clustering.
-gcdata <- ScaleData(gcdata, do.center = TRUE, do.scale = FALSE)
-gcdata <- FindVariableFeatures(gcdata)
-gcdata <- RunPCA(gcdata, npcs = 40, ndims.print = 1:5, nfeatures.print = 5)
-DimPlot(gcdata, dims = c(1, 2), reduction = "pca", split.by = "tech")
+# Re-join the four layers after integration.
+gcdata[["RNA"]] <- JoinLayers(gcdata[["RNA"]])
 
 # Clustering
-gcdata <- FindNeighbors(gcdata, reduction = "pca", dims = 1:20, k.param = 20)
+gcdata <- FindNeighbors(gcdata, reduction = "integrated.cca", dims = 1:20, k.param = 20)
 gcdata <- FindClusters(gcdata, resolution = 0.8, algorithm = 1, random.seed = 100)
 
 # UMAP
-gcdata <- RunUMAP(gcdata, dims = 1:30, reduction = "pca", n.neighbors = 15, min.dist = 0.5, spread = 1, metric = "euclidean", seed.use = 1)  
-
-# After data integration, use the original expression data in all visualization and DE tests.
-# The integrated data must not be used in DE tests as it violates assumptions of independence in DE tests!
-DefaultAssay(gcdata) <- "RNA"  
+gcdata <- RunUMAP(gcdata, dims = 1:30, reduction = "integrated.cca", n.neighbors = 15, min.dist = 0.5, spread = 1, metric = "euclidean", seed.use = 1)
 
 # Visualize the Louvain clustering and the batches on the UMAP. 
 p1 <- DimPlot(gcdata, reduction = "umap", group.by = "seurat_clusters")
 p2 <- DimPlot(gcdata, reduction = "umap", group.by = "tech")
 p1 + p2
+
+# Individually Visualize each technology dataset.
+DimPlot(gcdata, reduction = "umap", split.by = "tech")
 ```
 
 :::
@@ -374,10 +349,9 @@ adj.rand.index(as.numeric(ari$tech), as.numeric(ari$seurat_clusters))
 
 ### Differential gene expression and visualization
 
-We can also identify conserved marker genes across the batches. Differential gene expression is done across each batch, and the p-values are combined. (requires `metap` package installation).
+We can also identify conserved marker genes across the batches. Differential gene expression is done across each batch, and the p-values are combined. (requires `metap` package installation). Note that we use the original expression data in all visualization and DE tests. We should never use values from the integrated data in DE tests, as they violate assumptions of independence among samples that are required for DE tests!
 
 ```{r eval = TRUE, batchcorrect_Seurat3b, filename = "R"}
-gcdata <- JoinLayers(gcdata)
 markers <- FindConservedMarkers(gcdata, ident.1 = 0, grouping.var = "tech", assay = "RNA", print.bar = TRUE)
 head(markers)
 ```
@@ -406,7 +380,7 @@ FeaturePlot(gcdata, genes, ncol = 4)
 
 ## Batch correction: integrative non-negative matrix factorization (NMF)
 
-Here we use integrative non-negative matrix factorization to see to what extent it can remove potential batch effects.
+Here we use integrative non-negative matrix factorization (NMF/LIGER) to see to what extent it can remove potential batch effects.
 
 The important parameters in the batch correction are the number of factors (k), the penalty parameter (lambda), and the clustering resolution. The number of factors sets the number of factors (consisting of shared and dataset-specific factors) used in factorizing the matrix. The penalty parameter sets the balance between factors shared across the batches and factors specific to the individual batches. The default setting of lambda=5.0 is usually used by the Macosko lab. Resolution=1.0 is used in the Louvain clustering of the shared neighbor factors that have been quantile normalized.
 
@@ -420,8 +394,9 @@ data.liger <- createLiger(sapply(ob.list, function(data) LayerData(data[['RNA']]
 # Normalize gene expression for each batch.
 data.liger <- rliger::normalize(data.liger)
 
-# Find variable genes for LIGER analysis.
-data.liger <- selectGenes(data.liger, var.thresh = 0.1, do.plot = FALSE)
+# Find variable genes for LIGER analysis. Identify variable genes that are variable across most samples.
+var.genes <- SelectIntegrationFeatures(ob.list, nfeatures = 2000, verbose = TRUE, fvf.nfeatures = 2000, selection.method = "vst")
+data.liger@varFeatures <- var.genes
 print(length(varFeatures(data.liger)))
 ```
 
@@ -436,7 +411,7 @@ Why does LIGER not center the data?
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
-```{r eval = TRUE, batchcorrect_liger2, filename = "R"}
+```{r eval = FALSE, batchcorrect_liger2, filename = "R"}
 data.liger <- scaleNotCenter(data.liger)
 ```
 
@@ -452,15 +427,15 @@ Use the `runIntegration` function to perform the integrative non-negative matrix
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
-```{r eval = TRUE, batchcorrect_liger3, filename = "R"}
-data.liger <- runIntegration(data.liger) 
+```{r eval = FALSE, batchcorrect_liger3, filename = "R"}
+data.liger <- runIntegration(data.liger, k = 30)
 ```
 
 :::
 
 What do matrices H, V, and W represent, and what are their dimensions?
 
-```{r eval = TRUE, batchcorrect_liger4, filename = "R"}
+```{r eval = FALSE, batchcorrect_liger4, filename = "R"}
 dim(getMatrix(data.liger, "H")$celseq)
 dim(getMatrix(data.liger, "V")$celseq)
 dim(getMatrix(data.liger, "W"))
@@ -469,7 +444,7 @@ dim(getMatrix(data.liger, "W"))
 :::
 
 
-Next, do clustering of cells in shared nearest factor space.
+Next, do normalization and clustering of cells in shared nearest factor space.
 
 ::: {.callout-question .icon .callout-note}
 
@@ -477,8 +452,8 @@ Do quantile normalization, cluster quantile normalized data
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
-```{r eval = TRUE, batchcorrect_liger5, filename = "R"}
-data.liger <- quantileNorm(data.liger, resolution = 1) 
+```{r eval = FALSE, batchcorrect_liger5, filename = "R"}
+data.liger <- quantileNorm(data.liger, resolution = 1)
 data.liger <- runCluster(data.liger)
 ```
 
@@ -488,7 +463,7 @@ What are the dimensions of H.norm. What does this represent?
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
-```{r eval = TRUE, batchcorrect_liger6, filename = "R"}
+```{r eval = FALSE, batchcorrect_liger6, filename = "R"}
 dim(getMatrix(data.liger, "H.norm"))
 ```
 
@@ -506,19 +481,22 @@ Run UMAP on the quantile normalized data and visualize the clusters.
 
 ::: {.callout-answer .icon .callout-note collapse=true}
 
-```{r eval = TRUE, batchcorrect_liger6b, filename = "R"}
+```{r eval = FALSE, batchcorrect_liger6b, filename = "R"}
 data.liger <- runUMAP(data.liger, n_neighbors = 15, min_dist = 0.5)
 p <- plotByDatasetAndCluster(data.liger) 
 p
+
+clusterUmapList <- plotClusterDimRed(data.liger, splitBy = "dataset", title = names(data.liger))
+plot_grid(plotlist = c(clusterUmapList), align = "hv")
 ```
 
 :::
 
 :::
 
-Here is the end of the LIGER analysis: 
+Finally, let's look at the adjusted rand index between the clusters and technology, and also the genes that load the factors used in data integration. 
 
-```{r eval = TRUE, batchcorrect_liger7}
+```{r eval = FALSE, batchcorrect_liger7}
 # Let's look to see how the adjusted rand index changed compared to using no batch correction.
 tech <- cellMeta(data.liger)$dataset
 clusters <- cellMeta(data.liger)$leiden_cluster
@@ -526,14 +504,14 @@ ari <- data.frame("tech" = tech, "clusters" = clusters)
 ari$tech <- plyr::mapvalues(ari$tech, from = c("celseq", "celseq2", "fluidigmc1", "smartseq2"), to = c(0, 1, 2, 3))
 adj.rand.index(as.numeric(ari$tech), as.numeric(ari$clusters))
 
-# Look at factor loadings for each cell using plotFactors. 
-plotFactorDimRed(data.liger, factors = 1:5)
-
 # Identify shared and batch-specific marker genes from liger factorization.
 # Use the getFactorMarkers function and choose 2 datasets.
-# Then plot some genes of interest using plotGene.
-markers <- getFactorMarkers(data.liger, dataset1 = "celseq2", dataset2 = "smartseq2", num.genes = 10)
+# Then plot some genes of interest using plotGene functions.
+markers <- getFactorMarkers(data.liger, dataset1 = "celseq2", dataset2 = "smartseq2")
 plotGeneDimRed(data.liger, features = "INS")
+
+# Look at factor loadings in factor 9, celseq2 vs smartseq2.
+plotGeneLoadings(data.liger, markerTable = markers, useFactor = 9)
 ```
 
 ## Additional exploration
@@ -548,7 +526,7 @@ Within your RStudio session, install [k-nearest neighbour batch effect test](htt
 
 ## Acknowledgements
 
-This document builds off a tutorial from the [Seurat website](https://www.dropbox.com/s/aji4ielg8gc70vj/multiple_pancreas_workflow.R?dl=1) and a tutorial from the [LIGER website](http://htmlpreview.github.io/?https://github.com/welch-lab/liger/blob/master/vignettes/Integrating_multi_scRNA_data.html).
+This document builds off a tutorial from the [Seurat website](https://www.dropbox.com/s/aji4ielg8gc70vj/multiple_pancreas_workflow.R?dl=1) and a tutorial from the [LIGER website](https://welch-lab.github.io/liger/articles/Integrating_multi_scRNA_data.html).
 
 ## Session info 
 

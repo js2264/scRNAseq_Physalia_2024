@@ -325,6 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
   <li><a href="#compute-gene-activity-scores" id="toc-compute-gene-activity-scores" class="nav-link" data-scroll-target="#compute-gene-activity-scores"><span class="header-section-number">13.2</span> Compute gene activity scores</a></li>
   <li><a href="#find-peaks-differentially-accessible-across-clusters" id="toc-find-peaks-differentially-accessible-across-clusters" class="nav-link" data-scroll-target="#find-peaks-differentially-accessible-across-clusters"><span class="header-section-number">13.3</span> Find peaks differentially accessible across clusters</a></li>
+  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info"><span class="header-section-number">13.4</span> Session info</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/js2264/scRNAseq_Physalia_2024/edit/main/content/day4/Lab7_atac-seq.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/js2264/scRNAseq_Physalia_2024/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -701,7 +702,8 @@ Replacement repositories:
 <pre><code>Warning: package(s) not installed when version(s) same as or greater than current; use `force = TRUE` to re-install: 'EnsDb.Hsapiens.v75'</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Old packages: 'boot', 'foreign', 'fs', 'MASS', 'nlme', 'pak', 'progressr', 'R.oo', 'Rcpp', 'rliger', 'spatstat.utils', 'survival', 'tinytex', 'xfun'</code></pre>
+<pre><code>Old packages: 'boot', 'curl', 'foreign', 'fs', 'httr2', 'MASS', 'mvtnorm', 'nlme', 'pak', 'progressr', 'R.oo', 'Rcpp', 'rliger', 'rmarkdown', 'spatstat.univar', 'spatstat.utils', 'survival',
+  'tinytex', 'waldo', 'xfun'</code></pre>
 </div>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">annotations</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stuartlab.org/signac/reference/GetGRangesFromEnsDb.html">GetGRangesFromEnsDb</a></span><span class="op">(</span>ensdb <span class="op">=</span> <span class="fu">EnsDb.Hsapiens.v75</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/EnsDb.Hsapiens.v75/man/package.html">EnsDb.Hsapiens.v75</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -1216,16 +1218,16 @@ To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to
 This message will be shown once per session</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>16:17:56 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre><code>23:26:55 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>16:17:56 Read 8231 rows and found 29 numeric columns</code></pre>
+<pre><code>23:26:55 Read 8231 rows and found 29 numeric columns</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>16:17:56 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>23:26:55 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>16:17:56 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre><code>23:26:55 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
@@ -1235,13 +1237,13 @@ This message will be shown once per session</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>**************************************************|
-16:17:57 Writing NN index file to temp file /var/folders/dg/mbw146s905lgqgswn6w4ghk80000gn/T//Rtmpk6RpxF/filece145462ba11
-16:17:57 Searching Annoy index using 1 thread, search_k = 3000
-16:17:59 Annoy recall = 100%
-16:18:00 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-16:18:02 Initializing from normalized Laplacian + noise (using RSpectra)
-16:18:02 Commencing optimization for 500 epochs, with 316686 positive edges
-16:18:10 Optimization finished</code></pre>
+23:26:55 Writing NN index file to temp file /var/folders/dg/mbw146s905lgqgswn6w4ghk80000gn/T//Rtmp1eF4yc/file9ef7ad6087
+23:26:55 Searching Annoy index using 1 thread, search_k = 3000
+23:26:57 Annoy recall = 100%
+23:26:58 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+23:27:00 Initializing from normalized Laplacian + noise (using RSpectra)
+23:27:00 Commencing optimization for 500 epochs, with 316686 positive edges
+23:27:08 Optimization finished</code></pre>
 </div>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## - Cluster cells</span></span>
 <span><span class="va">PBMC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindNeighbors.html">FindNeighbors</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">PBMC</span>, reduction <span class="op">=</span> <span class="st">'lsi'</span>, dims <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1294,75 +1296,15 @@ Computing SNN</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Non-unique features (rownames) present in the input matrix, making unique</code></pre>
 </div>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># - Normalize the new RNA assay, this time with `SCTransform`</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">'future.globals.maxSize'</span> <span class="op">=</span> <span class="fl">2e9</span><span class="op">)</span></span>
-<span><span class="va">PBMC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SCTransform.html">SCTransform</a></span><span class="op">(</span></span>
-<span>  object <span class="op">=</span> <span class="va">PBMC</span>,</span>
-<span>  assay <span class="op">=</span> <span class="st">'RNA'</span>,</span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Running SCTransform on assay: RNA</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>vst.flavor='v2' set. Using model with fixed slope and excluding poisson genes.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Calculating cell attributes from input UMI matrix: log_umi</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Variance stabilizing transformation of count matrix of size 19682 by 8231</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Model formula is y ~ log_umi</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Get Negative Binomial regression parameters per gene</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Using 2000 genes, 5000 cells</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in size + sum(size_args, na.rm = FALSE): NAs produced by integer overflow</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in size + sum(size_args, na.rm = FALSE): NAs produced by integer overflow
-Warning in size + sum(size_args, na.rm = FALSE): NAs produced by integer overflow
-Warning in size + sum(size_args, na.rm = FALSE): NAs produced by integer overflow</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Found 11 outliers - those will be ignored in fitting/regularization step</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Second step: Get residuals using fitted parameters for 19682 genes</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Computing corrected count matrix for 19682 genes</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Calculating gene attributes</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Wall clock passed: Time difference of 33.542 secs</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Determine variable features</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Centering data matrix</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Place corrected count matrix in counts slot</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Set default assay to SCT</code></pre>
-</div>
-<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">PBMC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># - Normalize the new RNA assay.</span></span>
+<span><span class="va">PBMC</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">PBMC</span>, assay <span class="op">=</span> <span class="st">'RNA'</span>, normalization.method <span class="op">=</span> <span class="st">'LogNormalize'</span>, scale.factor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">PBMC</span><span class="op">$</span><span class="va">nCount_RNA</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">PBMC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>An object of class Seurat 
-126904 features across 8231 samples within 3 assays 
-Active assay: SCT (19682 features, 3000 variable features)
- 3 layers present: counts, data, scale.data
- 2 other assays present: ATAC, RNA
+107222 features across 8231 samples within 2 assays 
+Active assay: ATAC (87212 features, 43610 variable features)
+ 2 layers present: counts, data
+ 1 other assay present: RNA
  2 dimensional reductions calculated: lsi, umap</code></pre>
 </div>
 </div>
@@ -1395,7 +1337,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span></span>
 <span>  object <span class="op">=</span> <span class="va">PBMC</span>,</span>
 <span>  features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">'MS4A1'</span>, <span class="co"># B-cell</span></span>
@@ -1403,13 +1345,13 @@ Answer
 <span>    <span class="st">'NKG7'</span>, <span class="co"># NK cell</span></span>
 <span>    <span class="st">'TREM1'</span> <span class="co"># Monocytes</span></span>
 <span>  <span class="op">)</span>, </span>
-<span>  assay <span class="op">=</span> <span class="st">"SCT"</span></span>
+<span>  assay <span class="op">=</span> <span class="st">"RNA"</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <p><img src="Lab7_atac-seq_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">PBMC</span><span class="op">$</span><span class="va">annotation</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">PBMC</span><span class="op">$</span><span class="va">annotation</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">PBMC</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span>, <span class="fl">9</span>, <span class="fl">12</span><span class="op">)</span> <span class="op">~</span> <span class="st">"Monocytes"</span>, </span>
 <span>  <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">PBMC</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">7</span>, <span class="fl">10</span><span class="op">)</span> <span class="op">~</span> <span class="st">"T-cells"</span>, </span>
 <span>  <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">PBMC</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span><span class="op">)</span> <span class="op">~</span> <span class="st">"NK-cells"</span>, </span>
@@ -1434,41 +1376,248 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">PBMC</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">PBMC</span><span class="op">$</span><span class="va">annotation</span></span>
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">PBMC</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">PBMC</span><span class="op">$</span><span class="va">annotation</span></span>
 <span><span class="va">da_peaks</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindMarkers.html">FindMarkers</a></span><span class="op">(</span></span>
 <span>  object <span class="op">=</span> <span class="va">PBMC</span>,</span>
 <span>  ident.1 <span class="op">=</span> <span class="st">"Monocytes"</span>,</span>
 <span>  ident.2 <span class="op">=</span> <span class="st">"B-cells"</span>,</span>
 <span>  test.use <span class="op">=</span> <span class="st">'LR'</span>,</span>
 <span>  latent.vars <span class="op">=</span> <span class="st">'nCount_ATAC'</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The following arguments are not used: norm.method</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code></pre>
-</div>
-<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span></span>
 <span>  object <span class="op">=</span> <span class="va">PBMC</span>,</span>
 <span>  features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">da_peaks</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
 <span>  pt.size <span class="op">=</span> <span class="fl">0.1</span>,</span>
 <span>  idents <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Monocytes"</span>,<span class="st">"B-cells"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Lab7_atac-seq_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section><section id="session-info" class="level2" data-number="13.4"><h2 data-number="13.4" class="anchored" data-anchor-id="session-info">
+<span class="header-section-number">13.4</span> Session info</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ setting  value
+ version  R version 4.4.1 (2024-06-14)
+ os       macOS Sonoma 14.6.1
+ system   aarch64, darwin20
+ ui       X11
+ language (EN)
+ collate  en_US.UTF-8
+ ctype    en_US.UTF-8
+ tz       Europe/Paris
+ date     2024-11-07
+ pandoc   2.19.2 @ /opt/homebrew/bin/ (via rmarkdown)
+
+─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+ package              * version   date (UTC) lib source
+ abind                  1.4-8     2024-09-12 [1] CRAN (R 4.4.1)
+ AnnotationDbi          1.66.0    2024-06-16 [1] Bioconduc~
+ AnnotationFilter       1.28.0    2024-04-30 [1] Bioconduc~
+ backports              1.5.0     2024-05-23 [1] CRAN (R 4.4.0)
+ base64enc              0.1-3     2015-07-28 [1] CRAN (R 4.4.0)
+ beachmat               2.20.0    2024-05-06 [1] Bioconduc~
+ beeswarm               0.4.0     2021-06-01 [1] CRAN (R 4.4.0)
+ Biobase                2.64.0    2024-04-30 [1] Bioconduc~
+ BiocGenerics         * 0.50.0    2024-04-30 [1] Bioconduc~
+ BiocIO                 1.14.0    2024-04-30 [1] Bioconduc~
+ BiocManager            1.30.25   2024-08-28 [1] CRAN (R 4.4.1)
+ BiocParallel           1.38.0    2024-04-30 [1] Bioconduc~
+ Biostrings             2.72.1    2024-06-02 [1] Bioconduc~
+ biovizBase             1.52.0    2024-04-30 [1] Bioconduc~
+ bit                    4.5.0     2024-09-20 [1] CRAN (R 4.4.1)
+ bit64                  4.5.2     2024-09-22 [1] CRAN (R 4.4.1)
+ bitops                 1.0-9     2024-10-03 [1] CRAN (R 4.4.1)
+ blob                   1.2.4     2023-03-17 [1] CRAN (R 4.4.0)
+ BSgenome               1.72.0    2024-04-30 [1] Bioconduc~
+ cachem                 1.1.0     2024-05-16 [1] CRAN (R 4.4.0)
+ checkmate              2.3.2     2024-07-29 [1] CRAN (R 4.4.0)
+ cli                    3.6.3     2024-06-21 [1] CRAN (R 4.4.0)
+ cluster                2.1.6     2023-12-01 [1] CRAN (R 4.4.1)
+ codetools              0.2-20    2024-03-31 [1] CRAN (R 4.4.1)
+ colorspace             2.1-1     2024-07-26 [1] CRAN (R 4.4.0)
+ cowplot                1.1.3     2024-01-22 [1] CRAN (R 4.4.0)
+ crayon                 1.5.3     2024-06-20 [1] CRAN (R 4.4.0)
+ curl                   5.2.3     2024-09-20 [1] CRAN (R 4.4.1)
+ data.table             1.16.2    2024-10-10 [1] CRAN (R 4.4.1)
+ DBI                    1.2.3     2024-06-02 [1] CRAN (R 4.4.0)
+ DelayedArray           0.30.1    2024-05-30 [1] Bioconduc~
+ DelayedMatrixStats     1.26.0    2024-04-30 [1] Bioconduc~
+ deldir                 2.0-4     2024-02-28 [1] CRAN (R 4.4.0)
+ devtools               2.4.5     2022-10-11 [1] CRAN (R 4.4.0)
+ dichromat              2.0-0.1   2022-05-02 [1] CRAN (R 4.4.0)
+ digest                 0.6.37    2024-08-19 [1] CRAN (R 4.4.1)
+ dotCall64              1.2       2024-10-04 [1] CRAN (R 4.4.1)
+ dplyr                  1.1.4     2023-11-17 [1] CRAN (R 4.4.0)
+ dqrng                  0.4.1     2024-05-28 [1] CRAN (R 4.4.0)
+ DropletUtils           1.24.0    2024-04-30 [1] Bioconduc~
+ edgeR                  4.2.2     2024-10-13 [1] Bioconduc~
+ ellipsis               0.3.2     2021-04-29 [1] CRAN (R 4.4.0)
+ EnsDb.Hsapiens.v75     2.99.0    2024-10-30 [1] Bioconductor
+ ensembldb              2.28.1    2024-08-21 [1] Bioconduc~
+ evaluate               1.0.1     2024-10-10 [1] CRAN (R 4.4.1)
+ fansi                  1.0.6     2023-12-08 [1] CRAN (R 4.4.0)
+ farver                 2.1.2     2024-05-13 [1] CRAN (R 4.4.0)
+ fastDummies            1.7.4     2024-08-16 [1] CRAN (R 4.4.0)
+ fastmap                1.2.0     2024-05-15 [1] CRAN (R 4.4.0)
+ fastmatch              1.1-4     2023-08-18 [1] CRAN (R 4.4.0)
+ fitdistrplus           1.2-1     2024-07-12 [1] CRAN (R 4.4.0)
+ foreign                0.8-86    2023-11-28 [1] CRAN (R 4.4.1)
+ Formula                1.2-5     2023-02-24 [1] CRAN (R 4.4.0)
+ fs                     1.6.4     2024-04-25 [1] CRAN (R 4.4.0)
+ future                 1.34.0    2024-07-29 [1] CRAN (R 4.4.0)
+ future.apply           1.11.3    2024-10-27 [1] CRAN (R 4.4.1)
+ generics               0.1.3     2022-07-05 [1] CRAN (R 4.4.0)
+ GenomeInfoDb         * 1.40.1    2024-06-16 [1] Bioconduc~
+ GenomeInfoDbData       1.2.12    2024-10-29 [1] Bioconductor
+ GenomicAlignments      1.40.0    2024-04-30 [1] Bioconduc~
+ GenomicFeatures        1.56.0    2024-04-30 [1] Bioconduc~
+ GenomicRanges        * 1.56.2    2024-10-09 [1] Bioconduc~
+ ggbeeswarm             0.7.2     2023-04-29 [1] CRAN (R 4.4.0)
+ ggplot2                3.5.1     2024-04-23 [1] CRAN (R 4.4.0)
+ ggrastr                1.0.2     2023-06-01 [1] CRAN (R 4.4.0)
+ ggrepel                0.9.6     2024-09-07 [1] CRAN (R 4.4.1)
+ ggridges               0.5.6     2024-01-23 [1] CRAN (R 4.4.0)
+ globals                0.16.3    2024-03-08 [1] CRAN (R 4.4.0)
+ glue                   1.8.0     2024-09-30 [1] CRAN (R 4.4.1)
+ goftest                1.2-3     2021-10-07 [1] CRAN (R 4.4.0)
+ gridExtra              2.3       2017-09-09 [1] CRAN (R 4.4.0)
+ gtable                 0.3.6     2024-10-25 [1] CRAN (R 4.4.1)
+ HDF5Array              1.32.1    2024-08-11 [1] Bioconduc~
+ hdf5r                  1.3.11    2024-07-07 [1] CRAN (R 4.4.0)
+ Hmisc                  5.2-0     2024-10-28 [1] CRAN (R 4.4.1)
+ htmlTable              2.4.3     2024-07-21 [1] CRAN (R 4.4.0)
+ htmltools              0.5.8.1   2024-04-04 [1] CRAN (R 4.4.0)
+ htmlwidgets            1.6.4     2023-12-06 [1] CRAN (R 4.4.0)
+ httpuv                 1.6.15    2024-03-26 [1] CRAN (R 4.4.0)
+ httr                   1.4.7     2023-08-15 [1] CRAN (R 4.4.0)
+ ica                    1.0-3     2022-07-08 [1] CRAN (R 4.4.0)
+ igraph                 2.1.1     2024-10-19 [1] CRAN (R 4.4.1)
+ IRanges              * 2.38.1    2024-07-03 [1] Bioconduc~
+ irlba                  2.3.5.1   2022-10-03 [1] CRAN (R 4.4.0)
+ jsonlite               1.8.9     2024-09-20 [1] CRAN (R 4.4.1)
+ KEGGREST               1.44.1    2024-06-19 [1] Bioconduc~
+ KernSmooth             2.23-24   2024-05-17 [1] CRAN (R 4.4.1)
+ knitr                  1.48      2024-07-07 [1] CRAN (R 4.4.0)
+ labeling               0.4.3     2023-08-29 [1] CRAN (R 4.4.0)
+ later                  1.3.2     2023-12-06 [1] CRAN (R 4.4.0)
+ lattice                0.22-6    2024-03-20 [1] CRAN (R 4.4.1)
+ lazyeval               0.2.2     2019-03-15 [1] CRAN (R 4.4.0)
+ leiden                 0.4.3.1   2023-11-17 [1] CRAN (R 4.4.0)
+ lifecycle              1.0.4     2023-11-07 [1] CRAN (R 4.4.0)
+ limma                  3.60.6    2024-10-02 [1] Bioconduc~
+ listenv                0.9.1     2024-01-29 [1] CRAN (R 4.4.0)
+ lmtest                 0.9-40    2022-03-21 [1] CRAN (R 4.4.0)
+ locfit                 1.5-9.10  2024-06-24 [1] CRAN (R 4.4.0)
+ magrittr               2.0.3     2022-03-30 [1] CRAN (R 4.4.0)
+ MASS                   7.3-60.2  2024-04-26 [1] CRAN (R 4.4.1)
+ Matrix                 1.7-1     2024-10-18 [1] CRAN (R 4.4.1)
+ MatrixGenerics         1.16.0    2024-04-30 [1] Bioconduc~
+ matrixStats            1.4.1     2024-09-08 [1] CRAN (R 4.4.1)
+ memoise                2.0.1     2021-11-26 [1] CRAN (R 4.4.0)
+ mime                   0.12      2021-09-28 [1] CRAN (R 4.4.0)
+ miniUI                 0.1.1.1   2018-05-18 [1] CRAN (R 4.4.0)
+ munsell                0.5.1     2024-04-01 [1] CRAN (R 4.4.0)
+ nlme                   3.1-164   2023-11-27 [1] CRAN (R 4.4.1)
+ nnet                   7.3-19    2023-05-03 [1] CRAN (R 4.4.1)
+ parallelly             1.38.0    2024-07-27 [1] CRAN (R 4.4.0)
+ patchwork              1.3.0     2024-09-16 [1] CRAN (R 4.4.1)
+ pbapply                1.7-2     2023-06-27 [1] CRAN (R 4.4.0)
+ pillar                 1.9.0     2023-03-22 [1] CRAN (R 4.4.0)
+ pkgbuild               1.4.5     2024-10-28 [1] CRAN (R 4.4.1)
+ pkgconfig              2.0.3     2019-09-22 [1] CRAN (R 4.4.0)
+ pkgload                1.4.0     2024-06-28 [1] CRAN (R 4.4.0)
+ plotly                 4.10.4    2024-01-13 [1] CRAN (R 4.4.0)
+ plyr                   1.8.9     2023-10-02 [1] CRAN (R 4.4.0)
+ png                    0.1-8     2022-11-29 [1] CRAN (R 4.4.0)
+ polyclip               1.10-7    2024-07-23 [1] CRAN (R 4.4.0)
+ profvis                0.4.0     2024-09-20 [1] CRAN (R 4.4.1)
+ progressr              0.14.0    2023-08-10 [1] CRAN (R 4.4.0)
+ promises               1.3.0     2024-04-05 [1] CRAN (R 4.4.0)
+ ProtGenerics           1.36.0    2024-04-30 [1] Bioconduc~
+ purrr                  1.0.2     2023-08-10 [1] CRAN (R 4.4.0)
+ R.methodsS3            1.8.2     2022-06-13 [1] CRAN (R 4.4.0)
+ R.oo                   1.26.0    2024-01-24 [1] CRAN (R 4.4.0)
+ R.utils                2.12.3    2023-11-18 [1] CRAN (R 4.4.0)
+ R6                     2.5.1     2021-08-19 [1] CRAN (R 4.4.0)
+ RANN                   2.6.2     2024-08-25 [1] CRAN (R 4.4.1)
+ RColorBrewer           1.1-3     2022-04-03 [1] CRAN (R 4.4.0)
+ Rcpp                   1.0.13    2024-07-17 [1] CRAN (R 4.4.0)
+ RcppAnnoy              0.0.22    2024-01-23 [1] CRAN (R 4.4.0)
+ RcppHNSW               0.6.0     2024-02-04 [1] CRAN (R 4.4.0)
+ RcppRoll               0.3.1     2024-07-07 [1] CRAN (R 4.4.0)
+ RCurl                  1.98-1.16 2024-07-11 [1] CRAN (R 4.4.0)
+ remotes                2.5.0     2024-03-17 [1] CRAN (R 4.4.0)
+ reshape2               1.4.4     2020-04-09 [1] CRAN (R 4.4.0)
+ restfulr               0.0.15    2022-06-16 [1] CRAN (R 4.4.0)
+ reticulate             1.39.0    2024-09-05 [1] CRAN (R 4.4.1)
+ rhdf5                  2.48.0    2024-04-30 [1] Bioconduc~
+ rhdf5filters           1.16.0    2024-04-30 [1] Bioconduc~
+ Rhdf5lib               1.26.0    2024-04-30 [1] Bioconduc~
+ rjson                  0.2.23    2024-09-16 [1] CRAN (R 4.4.1)
+ rlang                  1.1.4     2024-06-04 [1] CRAN (R 4.4.0)
+ rmarkdown              2.28      2024-08-17 [1] CRAN (R 4.4.0)
+ ROCR                   1.0-11    2020-05-02 [1] CRAN (R 4.4.0)
+ rpart                  4.1.23    2023-12-05 [1] CRAN (R 4.4.1)
+ Rsamtools              2.20.0    2024-04-30 [1] Bioconduc~
+ RSpectra               0.16-2    2024-07-18 [1] CRAN (R 4.4.0)
+ RSQLite                2.3.7     2024-05-27 [1] CRAN (R 4.4.0)
+ rstudioapi             0.17.1    2024-10-22 [1] CRAN (R 4.4.1)
+ rtracklayer          * 1.64.0    2024-05-06 [1] Bioconduc~
+ Rtsne                  0.17      2023-12-07 [1] CRAN (R 4.4.0)
+ S4Arrays               1.4.1     2024-05-30 [1] Bioconduc~
+ S4Vectors            * 0.42.1    2024-07-03 [1] Bioconduc~
+ scales                 1.3.0     2023-11-28 [1] CRAN (R 4.4.0)
+ scattermore            1.2       2023-06-12 [1] CRAN (R 4.4.0)
+ sctransform            0.4.1     2023-10-19 [1] CRAN (R 4.4.0)
+ scuttle                1.14.0    2024-04-30 [1] Bioconduc~
+ sessioninfo            1.2.2     2021-12-06 [1] CRAN (R 4.4.0)
+ Seurat               * 5.1.0     2024-05-10 [1] CRAN (R 4.4.0)
+ SeuratObject         * 5.0.2     2024-05-08 [1] CRAN (R 4.4.0)
+ shiny                  1.9.1     2024-08-01 [1] CRAN (R 4.4.0)
+ Signac               * 1.14.0    2024-08-21 [1] CRAN (R 4.4.1)
+ SingleCellExperiment   1.26.0    2024-04-30 [1] Bioconduc~
+ sp                   * 2.1-4     2024-04-30 [1] CRAN (R 4.4.0)
+ spam                   2.11-0    2024-10-03 [1] CRAN (R 4.4.1)
+ SparseArray            1.4.8     2024-05-30 [1] Bioconduc~
+ sparseMatrixStats      1.16.0    2024-04-30 [1] Bioconduc~
+ spatstat.data          3.1-2     2024-06-21 [1] CRAN (R 4.4.0)
+ spatstat.explore       3.3-3     2024-10-22 [1] CRAN (R 4.4.1)
+ spatstat.geom          3.3-3     2024-09-18 [1] CRAN (R 4.4.1)
+ spatstat.random        3.3-2     2024-09-18 [1] CRAN (R 4.4.1)
+ spatstat.sparse        3.1-0     2024-06-21 [1] CRAN (R 4.4.0)
+ spatstat.univar        3.0-1     2024-09-05 [1] CRAN (R 4.4.1)
+ spatstat.utils         3.1-0     2024-08-17 [1] CRAN (R 4.4.0)
+ statmod                1.5.0     2023-01-06 [1] CRAN (R 4.4.0)
+ stringi                1.8.4     2024-05-06 [1] CRAN (R 4.4.0)
+ stringr              * 1.5.1     2023-11-14 [1] CRAN (R 4.4.0)
+ SummarizedExperiment   1.34.0    2024-04-30 [1] Bioconduc~
+ survival               3.6-4     2024-04-24 [1] CRAN (R 4.4.1)
+ tensor                 1.5       2012-05-05 [1] CRAN (R 4.4.0)
+ tibble                 3.2.1     2023-03-20 [1] CRAN (R 4.4.0)
+ tidyr                  1.3.1     2024-01-24 [1] CRAN (R 4.4.0)
+ tidyselect             1.2.1     2024-03-11 [1] CRAN (R 4.4.0)
+ UCSC.utils             1.0.0     2024-05-06 [1] Bioconduc~
+ urlchecker             1.0.1     2021-11-30 [1] CRAN (R 4.4.0)
+ usethis                3.0.0     2024-07-29 [1] CRAN (R 4.4.0)
+ utf8                   1.2.4     2023-10-22 [1] CRAN (R 4.4.0)
+ uwot                   0.2.2     2024-04-21 [1] CRAN (R 4.4.0)
+ VariantAnnotation      1.50.0    2024-04-30 [1] Bioconduc~
+ vctrs                  0.6.5     2023-12-01 [1] CRAN (R 4.4.0)
+ vipor                  0.4.7     2023-12-18 [1] CRAN (R 4.4.0)
+ viridisLite            0.4.2     2023-05-02 [1] CRAN (R 4.4.0)
+ withr                  3.0.2     2024-10-28 [1] CRAN (R 4.4.1)
+ xfun                   0.48      2024-10-03 [1] CRAN (R 4.4.1)
+ XML                    3.99-0.17 2024-06-25 [1] CRAN (R 4.4.0)
+ xtable                 1.8-4     2019-04-21 [1] CRAN (R 4.4.0)
+ XVector                0.44.0    2024-04-30 [1] Bioconduc~
+ yaml                   2.3.10    2024-07-26 [1] CRAN (R 4.4.0)
+ zlibbioc               1.50.0    2024-04-30 [1] Bioconduc~
+ zoo                    1.8-12    2023-04-13 [1] CRAN (R 4.4.0)
+
+ [1] /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/library
+
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</code></pre>
 </div>
 </div>
 

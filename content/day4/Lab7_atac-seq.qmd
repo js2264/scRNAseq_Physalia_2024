@@ -377,13 +377,8 @@ We can now save this new object as an `Assay` in the `PBMC` object and normalize
 ```{r, eval = TRUE, filename = "R"}
 PBMC[['RNA']] <- CreateAssayObject(counts = gene.activities)
 
-# - Normalize the new RNA assay, this time with `SCTransform`
-options('future.globals.maxSize' = 2e9)
-PBMC <- SCTransform(
-  object = PBMC,
-  assay = 'RNA',
-)
-
+# - Normalize the new RNA assay.
+PBMC <- NormalizeData(object = PBMC, assay = 'RNA', normalization.method = 'LogNormalize', scale.factor = median(PBMC$nCount_RNA))
 PBMC
 ```
 
@@ -405,7 +400,7 @@ VlnPlot(
     'NKG7', # NK cell
     'TREM1' # Monocytes
   ), 
-  assay = "SCT"
+  assay = "RNA"
 )
 PBMC$annotation <- dplyr::case_when(
   Idents(PBMC) %in% c(0, 5, 9, 12) ~ "Monocytes", 
@@ -425,7 +420,7 @@ DimPlot(PBMC, group.by = 'annotation', label = TRUE) + NoLegend()
 
 Finally, we can perform differential peak accessibility analysis to identify peaks that are differentially accessible between clusters. This is done using the `FindMarkers` function in `Signac`, which is similar to `FindAllMarkers` in `Seurat`.
 
-```{r, eval = TRUE, filename = "R"}
+```{r, eval = FALSE, filename = "R"}
 Idents(PBMC) <- PBMC$annotation
 da_peaks <- FindMarkers(
   object = PBMC,
@@ -442,3 +437,8 @@ VlnPlot(
 )
 ```
 
+## Session info 
+
+```{r eval = TRUE, echo = FALSE}
+devtools::session_info()
+```

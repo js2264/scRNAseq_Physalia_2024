@@ -661,7 +661,7 @@ Answer
 </div>
 </div>
 </div>
-<p>Now we will normalize the data and identify variable genes. The procedure is the same for all datasets.</p>
+<p>Now we will subsample each dataset to only have 500 cells. This is to speed up subsequent analyses. Often when we are setting up our analysis, we work with a subset of the data to make iteration across analysis decisions faster, and once we have finalized how we want to do the analysis, we work with the full dataset.</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -672,7 +672,10 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Normalize the data with <code>LogNormalize</code> method, and identify the 2000 most variable genes for each dataset, using the <code>vst</code> approach.</p>
+<ul>
+<li>Within metadata dataframe, save what technology each dataset was generated with.</li>
+<li>Randomly subsample each full dataset to 500 cells.</li>
+</ul>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -690,86 +693,20 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">celseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span><span class="va">celseq</span>, normalization.method <span class="op">=</span> <span class="st">"LogNormalize"</span>, scale.factor <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Normalizing layer: counts</code></pre>
-</div>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">celseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindVariableFeatures.html">FindVariableFeatures</a></span><span class="op">(</span><span class="va">celseq</span>, selection.method <span class="op">=</span> <span class="st">"vst"</span>, nfeatures <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding variable features for layer counts</code></pre>
-</div>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">celseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData</a></span><span class="op">(</span><span class="va">celseq</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Centering and scaling data matrix</code></pre>
-</div>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">celseq</span><span class="op">[[</span><span class="st">"tech"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"celseq"</span></span>
-<span><span class="va">celseq</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>An object of class Seurat 
-20148 features across 1004 samples within 1 assay 
-Active assay: RNA (20148 features, 2000 variable features)
- 3 layers present: counts, data, scale.data</code></pre>
-</div>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">celseq2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span><span class="va">celseq2</span>, normalization.method <span class="op">=</span> <span class="st">"LogNormalize"</span>, scale.factor <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Normalizing layer: counts</code></pre>
-</div>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">celseq2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindVariableFeatures.html">FindVariableFeatures</a></span><span class="op">(</span><span class="va">celseq2</span>, selection.method <span class="op">=</span> <span class="st">"vst"</span>, nfeatures <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding variable features for layer counts</code></pre>
-</div>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">celseq2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData</a></span><span class="op">(</span><span class="va">celseq2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Centering and scaling data matrix</code></pre>
-</div>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">celseq2</span><span class="op">[[</span><span class="st">"tech"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"celseq2"</span></span>
-<span><span class="va">celseq2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>An object of class Seurat 
-19140 features across 2285 samples within 1 assay 
-Active assay: RNA (19140 features, 2000 variable features)
- 3 layers present: counts, data, scale.data</code></pre>
-</div>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fluidigmc1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span><span class="va">fluidigmc1</span>, normalization.method <span class="op">=</span> <span class="st">"LogNormalize"</span>, scale.factor <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Normalizing layer: counts</code></pre>
-</div>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fluidigmc1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindVariableFeatures.html">FindVariableFeatures</a></span><span class="op">(</span><span class="va">fluidigmc1</span>, selection.method <span class="op">=</span> <span class="st">"vst"</span>, nfeatures <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding variable features for layer counts</code></pre>
-</div>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fluidigmc1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData</a></span><span class="op">(</span><span class="va">fluidigmc1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Centering and scaling data matrix</code></pre>
-</div>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fluidigmc1</span><span class="op">[[</span><span class="st">"tech"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"fluidigmc1"</span></span>
-<span><span class="va">fluidigmc1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>An object of class Seurat 
-25463 features across 638 samples within 1 assay 
-Active assay: RNA (25463 features, 2000 variable features)
- 3 layers present: counts, data, scale.data</code></pre>
-</div>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">smartseq2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span><span class="va">smartseq2</span>, normalization.method <span class="op">=</span> <span class="st">"LogNormalize"</span>, scale.factor <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Normalizing layer: counts</code></pre>
-</div>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">smartseq2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindVariableFeatures.html">FindVariableFeatures</a></span><span class="op">(</span><span class="va">smartseq2</span>, selection.method <span class="op">=</span> <span class="st">"vst"</span>, nfeatures <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding variable features for layer counts</code></pre>
-</div>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">smartseq2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData</a></span><span class="op">(</span><span class="va">smartseq2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Centering and scaling data matrix</code></pre>
-</div>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">smartseq2</span><span class="op">[[</span><span class="st">"tech"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"smartseq2"</span></span>
-<span><span class="va">smartseq2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>An object of class Seurat 
-26179 features across 2394 samples within 1 assay 
-Active assay: RNA (26179 features, 2000 variable features)
- 3 layers present: counts, data, scale.data</code></pre>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">celseq</span><span class="op">[[</span><span class="st">"tech"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"celseq"</span></span>
+<span><span class="va">celseq2</span><span class="op">[[</span><span class="st">"tech"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"celseq2"</span></span>
+<span><span class="va">fluidigmc1</span><span class="op">[[</span><span class="st">"tech"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"fluidigmc1"</span></span>
+<span><span class="va">smartseq2</span><span class="op">[[</span><span class="st">"tech"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"smartseq2"</span></span>
+<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">celseq</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"tech"</span></span>
+<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">celseq2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"tech"</span></span>
+<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">fluidigmc1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"tech"</span></span>
+<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">smartseq2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"tech"</span></span>
+<span></span>
+<span><span class="co"># This code sub-samples the data in order to speed up calculations and not use too much memory.</span></span>
+<span><span class="va">celseq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">celseq</span>, downsample <span class="op">=</span> <span class="fl">500</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">celseq2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">celseq2</span>, downsample <span class="op">=</span> <span class="fl">500</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">fluidigmc1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">fluidigmc1</span>, downsample <span class="op">=</span> <span class="fl">500</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">smartseq2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">smartseq2</span>, downsample <span class="op">=</span> <span class="fl">500</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -808,20 +745,24 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Merge Seurat objects. Original sample identities are stored in gcdata[["tech"]].</span></span>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Merge Seurat objects. Original sample identities are stored in gcdata[["tech"]].</span></span>
 <span><span class="co"># Cell names will now have the format tech_cellID (smartseq2_cell1...)</span></span>
 <span><span class="va">add.cell.ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"celseq"</span>, <span class="st">"celseq2"</span>, <span class="st">"fluidigmc1"</span>, <span class="st">"smartseq2"</span><span class="op">)</span></span>
 <span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">celseq</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">celseq2</span>, <span class="va">fluidigmc1</span>, <span class="va">smartseq2</span><span class="op">)</span>, add.cell.ids <span class="op">=</span> <span class="va">add.cell.ids</span>, merge.data <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Idents.html">Idents</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"tech"</span>  <span class="co"># use identity based on sample identity</span></span>
+<span></span>
+<span><span class="co"># Examine gcdata. Notice that there are now 4 counts layers, one layer for each technology.</span></span>
 <span><span class="va">gcdata</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>An object of class Seurat 
-33633 features across 6321 samples within 1 assay 
-Active assay: RNA (33633 features, 2000 variable features)
- 12 layers present: counts.1, counts.2, counts.3, counts.4, data.1, scale.data.1, data.2, scale.data.2, data.3, scale.data.3, data.4, scale.data.4</code></pre>
+33633 features across 2000 samples within 1 assay 
+Active assay: RNA (33633 features, 0 variable features)
+ 4 layers present: counts.1, counts.2, counts.3, counts.4</code></pre>
 </div>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span><span class="va">gcdata</span>, <span class="st">"nFeature_RNA"</span>, group.by <span class="op">=</span> <span class="st">"tech"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/VlnPlot.html">VlnPlot</a></span><span class="op">(</span><span class="va">gcdata</span>, <span class="st">"nFeature_RNA"</span>, group.by <span class="op">=</span> <span class="st">"tech"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Default search for "data" layer in "RNA" assay yielded no results; utilizing "counts" layer instead.</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="Lab6_batch_correction_files/figure-html/no_batch_correction-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -831,7 +772,7 @@ Active assay: RNA (33633 features, 2000 variable features)
 </div>
 </div>
 </div>
-<p>After merging, we will perform again the normalization, variable gene selection, and scaling.</p>
+<p>After merging, we normalize the data with <code>LogNormalize</code> method, and identify the 2000 most variable genes for each dataset, using the <code>vst</code> approach. Then we scale the data using <code>ScaleData</code>.</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -842,8 +783,8 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>What is the difference between <code>SelectIntegrationFeatures</code> and <code>FindVariableFeatures</code> in Seurat?</p>
-<p>Run <code>NormalizeData</code>, <code>SelectIntegrationFeatures</code>, and <code>ScaleData</code> on the merged dataset.</p>
+<p>What is the difference between <code>SelectIntegrationFeatures</code> and <code>FindVariableFeatures</code> in Seurat? Take a look at the documentation for both functions.</p>
+<p>Run <code>NormalizeData</code>, <code>FindVariableFeatures</code>, and <code>ScaleData</code> on the merged dataset.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -861,7 +802,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span><span class="va">gcdata</span>, normalization.method <span class="op">=</span> <span class="st">"LogNormalize"</span>, scale.factor <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span><span class="va">gcdata</span>, normalization.method <span class="op">=</span> <span class="st">"LogNormalize"</span>, scale.factor <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Normalizing layer: counts.1</code></pre>
@@ -875,15 +816,20 @@ Answer
 <div class="cell-output cell-output-stderr">
 <pre><code>Normalizing layer: counts.4</code></pre>
 </div>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">var.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SelectIntegrationFeatures.html">SelectIntegrationFeatures</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">celseq</span>, <span class="va">celseq2</span>, <span class="va">fluidigmc1</span>, <span class="va">smartseq2</span><span class="op">)</span>, </span>
-<span>  nfeatures <span class="op">=</span> <span class="fl">2000</span>, </span>
-<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>  fvf.nfeatures <span class="op">=</span> <span class="fl">2000</span>, </span>
-<span>  selection.method <span class="op">=</span> <span class="st">"vst"</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/VariableFeatures.html">VariableFeatures</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">var.genes</span></span>
-<span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData</a></span><span class="op">(</span><span class="va">gcdata</span>, features <span class="op">=</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/VariableFeatures.html">VariableFeatures</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindVariableFeatures.html">FindVariableFeatures</a></span><span class="op">(</span><span class="va">gcdata</span>, nfeatures <span class="op">=</span> <span class="fl">2000</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, selection.method <span class="op">=</span> <span class="st">"vst"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Finding variable features for layer counts.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Finding variable features for layer counts.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Finding variable features for layer counts.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Finding variable features for layer counts.4</code></pre>
+</div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData</a></span><span class="op">(</span><span class="va">gcdata</span>, features <span class="op">=</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/VariableFeatures.html">VariableFeatures</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Centering and scaling data matrix</code></pre>
 </div>
@@ -922,24 +868,24 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunPCA.html">RunPCA</a></span><span class="op">(</span><span class="va">gcdata</span>, features <span class="op">=</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/VariableFeatures.html">VariableFeatures</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">)</span>, npcs <span class="op">=</span> <span class="fl">40</span>, ndims.print <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, nfeatures.print <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunPCA.html">RunPCA</a></span><span class="op">(</span><span class="va">gcdata</span>, features <span class="op">=</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/VariableFeatures.html">VariableFeatures</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">)</span>, npcs <span class="op">=</span> <span class="fl">40</span>, ndims.print <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, nfeatures.print <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>PC_ 1 
-Positive:  IFITM3, ZFP36L1, LGALS3, S100A11, TACSTD2 
-Negative:  CHGB, CHGA, PAM, ABCC8, MIR7-3HG 
+Positive:  CHGB, SCG2, ABCC8, PAM, CHGA 
+Negative:  IFITM3, ZFP36L1, TACSTD2, ANXA4, LGALS3 
 PC_ 2 
-Positive:  KRT8, ELF3, KRT18, CLDN4, TACSTD2 
-Negative:  SPARC, COL1A2, PDGFRB, COL3A1, COL15A1 
+Positive:  SPARC, COL1A2, COL3A1, COL15A1, COL5A1 
+Negative:  KRT8, CLDN4, ELF3, GATM, CFB 
 PC_ 3 
-Positive:  TMEM212, MAB21L3, CCDC142, NLRP12, TLCD2 
-Negative:  CTSD, TIMP1, PEMT, HIF1A, GSTP1 
+Positive:  CCDC142, RAMP2-AS1, L2HGDH, NLRP12, TMEM212 
+Negative:  PDGFRB, COL15A1, SFRP2, COL1A2, BGN 
 PC_ 4 
-Positive:  CPA2, CTRC, PNLIP, CTRB2, CTRB1 
-Negative:  CFTR, IGFBP7, AQP1, VTCN1, TINAGL1 
+Positive:  CPA2, CTRC, CTRB1, CPA1, CTRB2 
+Negative:  CFTR, AQP1, VTCN1, SPP1, KRT19 
 PC_ 5 
-Positive:  FLT1, KDR, ESAM, PODXL, CD93 
-Negative:  COL5A1, COL3A1, COL1A1, SFRP2, COL1A2 </code></pre>
+Positive:  TM4SF4, GC, IRX2, ARX, CRYBA2 
+Negative:  PFKFB2, HADH, INS, IAPP, ADCYAP1 </code></pre>
 </div>
 </div>
 </div>
@@ -963,7 +909,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">gcdata</span>, reduction <span class="op">=</span> <span class="st">"pca"</span>, dims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, group.by <span class="op">=</span> <span class="st">"tech"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">gcdata</span>, reduction <span class="op">=</span> <span class="st">"pca"</span>, dims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, group.by <span class="op">=</span> <span class="st">"tech"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
 <p><img src="Lab6_batch_correction_files/figure-html/no_batch_correction4-1.png" class="img-fluid" width="672"></p>
@@ -1007,7 +953,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Cluster the cells using the first twenty principal components.</span></span>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Cluster the cells using the first twenty principal components.</span></span>
 <span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindNeighbors.html">FindNeighbors</a></span><span class="op">(</span><span class="va">gcdata</span>, reduction <span class="op">=</span> <span class="st">"pca"</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, k.param <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
@@ -1016,19 +962,19 @@ Answer
 <div class="cell-output cell-output-stderr">
 <pre><code>Computing SNN</code></pre>
 </div>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html">FindClusters</a></span><span class="op">(</span><span class="va">gcdata</span>, resolution <span class="op">=</span> <span class="fl">0.8</span>, algorithm <span class="op">=</span> <span class="fl">1</span>, random.seed <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html">FindClusters</a></span><span class="op">(</span><span class="va">gcdata</span>, resolution <span class="op">=</span> <span class="fl">0.8</span>, algorithm <span class="op">=</span> <span class="fl">1</span>, random.seed <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
 
-Number of nodes: 6321
-Number of edges: 220127
+Number of nodes: 2000
+Number of edges: 59992
 
 Running Louvain algorithm...
-Maximum modularity in 10 random starts: 0.9323
-Number of communities: 23
+Maximum modularity in 10 random starts: 0.9181
+Number of communities: 16
 Elapsed time: 0 seconds</code></pre>
 </div>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create a UMAP visualization. </span></span>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create a UMAP visualization. </span></span>
 <span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html">RunUMAP</a></span><span class="op">(</span><span class="va">gcdata</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, reduction <span class="op">=</span> <span class="st">"pca"</span>, n.neighbors <span class="op">=</span> <span class="fl">15</span>, min.dist <span class="op">=</span> <span class="fl">0.5</span>, spread <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, seed.use <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric
@@ -1036,41 +982,28 @@ To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to
 This message will be shown once per session</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:51:39 UMAP embedding parameters a = 0.583 b = 1.334</code></pre>
+<pre><code>23:08:01 UMAP embedding parameters a = 0.583 b = 1.334</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:51:39 Read 6321 rows and found 20 numeric columns</code></pre>
+<pre><code>23:08:01 Read 2000 rows and found 20 numeric columns</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:51:39 Using Annoy for neighbor search, n_neighbors = 15</code></pre>
+<pre><code>23:08:01 Using FNN for neighbor search, n_neighbors = 15</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:51:39 Building Annoy index with metric = euclidean, n_trees = 50</code></pre>
+<pre><code>23:08:01 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 15
+23:08:01 Initializing from normalized Laplacian + noise (using RSpectra)
+23:08:01 Commencing optimization for 500 epochs, with 39324 positive edges
+23:08:03 Optimization finished</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>[----|----|----|----|----|----|----|----|----|----|</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>**************************************************|
-15:51:39 Writing NN index file to temp file /var/folders/dg/mbw146s905lgqgswn6w4ghk80000gn/T//RtmpmeI3uf/filec4c630907302
-15:51:39 Searching Annoy index using 1 thread, search_k = 1500
-15:51:40 Annoy recall = 100%
-15:51:40 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 15
-15:51:41 Initializing from normalized Laplacian + noise (using RSpectra)
-15:51:41 Commencing optimization for 500 epochs, with 127374 positive edges
-15:51:45 Optimization finished</code></pre>
-</div>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualize the Leiden clustering and the batches on the UMAP. </span></span>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualize the Leiden clustering and the batches on the UMAP. </span></span>
 <span><span class="co"># Remember, the clustering is stored in @meta.data in column seurat_clusters and the technology is</span></span>
 <span><span class="co"># stored in the column tech. Remember you can also use DimPlot</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">gcdata</span>, reduction <span class="op">=</span> <span class="st">"umap"</span>, group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Lab6_batch_correction_files/figure-html/no_batch_correction5-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">gcdata</span>, reduction <span class="op">=</span> <span class="st">"umap"</span>, group.by <span class="op">=</span> <span class="st">"tech"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">gcdata</span>, reduction <span class="op">=</span> <span class="st">"umap"</span>, group.by <span class="op">=</span> <span class="st">"tech"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Lab6_batch_correction_files/figure-html/no_batch_correction5-2.png" class="img-fluid" width="672"></p>
 </div>
@@ -1088,7 +1021,7 @@ This message will be shown once per session</code></pre>
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://matthewvavrek.com/programs-and-code/fossil/">fossil</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://matthewvavrek.com/programs-and-code/fossil/">fossil</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: maps</code></pre>
@@ -1108,11 +1041,11 @@ Attaching package: 'shapefiles'</code></pre>
 
     read.dbf, write.dbf</code></pre>
 </div>
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ari</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span>, <span class="va">tech</span>, <span class="va">seurat_clusters</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ari</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span>, <span class="va">tech</span>, <span class="va">seurat_clusters</span><span class="op">)</span></span>
 <span><span class="va">ari</span><span class="op">$</span><span class="va">tech</span> <span class="op">&lt;-</span> <span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/mapvalues.html">mapvalues</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">tech</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"celseq"</span>, <span class="st">"celseq2"</span>, <span class="st">"fluidigmc1"</span>, <span class="st">"smartseq2"</span><span class="op">)</span>, to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/fossil/man/rand.index.html">adj.rand.index</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">tech</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">seurat_clusters</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.67147</code></pre>
+<pre><code>[1] 0.78898</code></pre>
 </div>
 </div>
 </section><section id="batch-correction-canonical-correlation-analysis-cca-mutual-nearest-neighbors-mnn" class="level2" data-number="11.4"><h2 data-number="11.4" class="anchored" data-anchor-id="batch-correction-canonical-correlation-analysis-cca-mutual-nearest-neighbors-mnn">
@@ -1130,7 +1063,7 @@ Question
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The integration workflow in Seurat requires the identification of variable genes that are variable across most samples. Use the <code>FindIntegrationAnchors</code> function to identify anchors on the 4 pancreatic islet datasets, commonly shared variable genes across samples, and integrate samples.</p>
+<p>The integration workflow in Seurat requires the identification of variable genes that are variable across most samples. Use the <code>IntegrateLayers</code> function, with the CCAIntegration method, to identify anchors on the 4 pancreatic islet datasets, commonly shared variable genes across samples, and integrate samples.</p>
 <div class="icon callout callout-style-default callout-answer no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1148,219 +1081,15 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ob.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">celseq</span>, <span class="va">celseq2</span>, <span class="va">fluidigmc1</span>, <span class="va">smartseq2</span><span class="op">)</span></span>
-<span><span class="va">gcdata.anchors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindIntegrationAnchors.html">FindIntegrationAnchors</a></span><span class="op">(</span>object.list <span class="op">=</span> <span class="va">ob.list</span>, anchor.features <span class="op">=</span> <span class="fl">2000</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/IntegrateLayers.html">IntegrateLayers</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">gcdata</span>, method <span class="op">=</span> <span class="va">CCAIntegration</span>, orig.reduction <span class="op">=</span> <span class="st">"pca"</span>, new.reduction <span class="op">=</span> <span class="st">"integrated.cca"</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Computing 2000 integration features</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Scaling features for provided objects</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Different features in new layer data than already exists for scale.data
-Warning: Different features in new layer data than already exists for scale.data
-Warning: Different features in new layer data than already exists for scale.data
-Warning: Different features in new layer data than already exists for scale.data</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding all pairwise anchors</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Running CCA</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Merging objects</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding neighborhoods</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>    Found 3525 anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Filtering anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>    Retained 2761 anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Running CCA</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Merging objects</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding neighborhoods</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>    Found 2182 anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Filtering anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>    Retained 1806 anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Running CCA</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Merging objects</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding neighborhoods</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>    Found 2801 anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Filtering anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>    Retained 2472 anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Running CCA</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Merging objects</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding neighborhoods</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>    Found 3558 anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Filtering anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>    Retained 2723 anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Running CCA</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Merging objects</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding neighborhoods</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>    Found 6214 anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Filtering anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>    Retained 4693 anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Running CCA</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Merging objects</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding neighborhoods</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>    Found 2713 anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Filtering anchors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>    Retained 1724 anchors</code></pre>
-</div>
-<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/IntegrateData.html">IntegrateData</a></span><span class="op">(</span>anchorset <span class="op">=</span> <span class="va">gcdata.anchors</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Merging dataset 3 into 2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Extracting anchors for merged samples</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding integration vectors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding integration vector weights</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Integrating data</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Layer counts isn't present in the assay object; returning NULL</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Merging dataset 1 into 2 3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Extracting anchors for merged samples</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding integration vectors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Different cells in new layer data than already exists for scale.data</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding integration vector weights</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Integrating data</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Layer counts isn't present in the assay object; returning NULL</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Merging dataset 4 into 2 3 1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Extracting anchors for merged samples</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding integration vectors</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Different cells in new layer data than already exists for scale.data</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Finding integration vector weights</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Integrating data</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Layer counts isn't present in the assay object; returning NULL</code></pre>
-</div>
-<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/DefaultAssay.html">DefaultAssay</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"integrated"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>Now that the integration anchors have been used to integrate multiple datasets, we will perform the same analysis as before.</p>
+<p>Now that the integration anchors have been used to integrate multiple datasets, we will perform the same clustering analysis as before.</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1372,10 +1101,7 @@ Question
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Normalize the integrated data with <code>LogNormalize</code> method.</li>
-<li>Identify the 2000 most variable genes for the integrated dataset, using the <code>vst</code> approach.</li>
-<li>Scale the data.</li>
-<li>Perform PCA on data including only the variable genes.</li>
+<li>Perform analysis in the new integrated.cca dimensional reduction space.</li>
 <li>Cluster the cells.</li>
 <li>Perform UMAP embedding and visualize clustering results in 2D.</li>
 </ul>
@@ -1396,105 +1122,56 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Run the standard workflow for visualization and clustering.</span></span>
-<span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData</a></span><span class="op">(</span><span class="va">gcdata</span>, do.center <span class="op">=</span> <span class="cn">TRUE</span>, do.scale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Re-join the four layers after integration.</span></span>
+<span><span class="va">gcdata</span><span class="op">[[</span><span class="st">"RNA"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/SplitLayers.html">JoinLayers</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">[[</span><span class="st">"RNA"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Clustering</span></span>
+<span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindNeighbors.html">FindNeighbors</a></span><span class="op">(</span><span class="va">gcdata</span>, reduction <span class="op">=</span> <span class="st">"integrated.cca"</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, k.param <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Centering data matrix</code></pre>
-</div>
-<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindVariableFeatures.html">FindVariableFeatures</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in FindVariableFeatures.Assay(object = object[[assay]], selection.method = selection.method, : selection.method set to 'vst' but count slot is empty; will use data slot instead</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in eval(predvars, data, env): NaNs produced</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in hvf.info$variance.expected[not.const] &lt;- 10^fit$fitted: number of items to replace is not a multiple of replacement length</code></pre>
-</div>
-<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunPCA.html">RunPCA</a></span><span class="op">(</span><span class="va">gcdata</span>, npcs <span class="op">=</span> <span class="fl">40</span>, ndims.print <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, nfeatures.print <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>PC_ 1 
-Positive:  CHGB, CHGA, VGF, ABCC8, TM4SF4 
-Negative:  SERPINA3, REG1A, TACSTD2, ANXA4, CD44 
-PC_ 2 
-Positive:  REG1B, REG1A, CTRB2, SPINK1, PRSS1 
-Negative:  IGFBP7, SPP1, CFTR, PMEPA1, ANXA2 
-PC_ 3 
-Positive:  INS, IAPP, RBP4, PCSK1, HADH 
-Negative:  TM4SF4, GC, CHGB, LOXL4, MUC13 
-PC_ 4 
-Positive:  SPARC, COL1A1, FAP, VIM, COL1A2 
-Negative:  INS, IAPP, RBP4, HADH, PCSK1 
-PC_ 5 
-Positive:  PPY, SST, AQP3, ID2, PRG4 
-Negative:  INS, G6PC2, IAPP, FAP, LOXL4 </code></pre>
-</div>
-<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">gcdata</span>, dims <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, reduction <span class="op">=</span> <span class="st">"pca"</span>, split.by <span class="op">=</span> <span class="st">"tech"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_Seurat2-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Clustering</span></span>
-<span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindNeighbors.html">FindNeighbors</a></span><span class="op">(</span><span class="va">gcdata</span>, reduction <span class="op">=</span> <span class="st">"pca"</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">20</span>, k.param <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Computing nearest neighbor graph</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Computing SNN</code></pre>
 </div>
-<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html">FindClusters</a></span><span class="op">(</span><span class="va">gcdata</span>, resolution <span class="op">=</span> <span class="fl">0.8</span>, algorithm <span class="op">=</span> <span class="fl">1</span>, random.seed <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html">FindClusters</a></span><span class="op">(</span><span class="va">gcdata</span>, resolution <span class="op">=</span> <span class="fl">0.8</span>, algorithm <span class="op">=</span> <span class="fl">1</span>, random.seed <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
 
-Number of nodes: 6321
-Number of edges: 251064
+Number of nodes: 2000
+Number of edges: 85037
 
 Running Louvain algorithm...
-Maximum modularity in 10 random starts: 0.8658
-Number of communities: 16
+Maximum modularity in 10 random starts: 0.8427
+Number of communities: 9
 Elapsed time: 0 seconds</code></pre>
 </div>
-<div class="sourceCode" id="cb190"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># UMAP</span></span>
-<span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html">RunUMAP</a></span><span class="op">(</span><span class="va">gcdata</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, reduction <span class="op">=</span> <span class="st">"pca"</span>, n.neighbors <span class="op">=</span> <span class="fl">15</span>, min.dist <span class="op">=</span> <span class="fl">0.5</span>, spread <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, seed.use <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># UMAP</span></span>
+<span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunUMAP.html">RunUMAP</a></span><span class="op">(</span><span class="va">gcdata</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span>, reduction <span class="op">=</span> <span class="st">"integrated.cca"</span>, n.neighbors <span class="op">=</span> <span class="fl">15</span>, min.dist <span class="op">=</span> <span class="fl">0.5</span>, spread <span class="op">=</span> <span class="fl">1</span>, metric <span class="op">=</span> <span class="st">"euclidean"</span>, seed.use <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:53:26 UMAP embedding parameters a = 0.583 b = 1.334</code></pre>
+<pre><code>23:08:16 UMAP embedding parameters a = 0.583 b = 1.334</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:53:26 Read 6321 rows and found 30 numeric columns</code></pre>
+<pre><code>23:08:16 Read 2000 rows and found 30 numeric columns</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:53:26 Using Annoy for neighbor search, n_neighbors = 15</code></pre>
+<pre><code>23:08:16 Using FNN for neighbor search, n_neighbors = 15</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>15:53:26 Building Annoy index with metric = euclidean, n_trees = 50</code></pre>
+<pre><code>23:08:16 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 15
+23:08:16 Initializing from normalized Laplacian + noise (using RSpectra)
+23:08:16 Commencing optimization for 500 epochs, with 44152 positive edges
+23:08:18 Optimization finished</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>[----|----|----|----|----|----|----|----|----|----|</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>**************************************************|
-15:53:27 Writing NN index file to temp file /var/folders/dg/mbw146s905lgqgswn6w4ghk80000gn/T//RtmpmeI3uf/filec4c666ff06ea
-15:53:27 Searching Annoy index using 1 thread, search_k = 1500
-15:53:27 Annoy recall = 100%
-15:53:28 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 15
-15:53:28 Found 2 connected components, falling back to 'spca' initialization with init_sdev = 1
-15:53:28 Using 'irlba' for PCA
-15:53:28 PCA: 2 components explained 55.6% variance
-15:53:28 Scaling init to sdev = 1
-15:53:28 Commencing optimization for 500 epochs, with 139426 positive edges
-15:53:33 Optimization finished</code></pre>
-</div>
-<div class="sourceCode" id="cb198"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># After data integration, use the original expression data in all visualization and DE tests.</span></span>
-<span><span class="co"># The integrated data must not be used in DE tests as it violates assumptions of independence in DE tests!</span></span>
-<span><span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/DefaultAssay.html">DefaultAssay</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"RNA"</span>  </span>
-<span></span>
-<span><span class="co"># Visualize the Louvain clustering and the batches on the UMAP. </span></span>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Visualize the Louvain clustering and the batches on the UMAP. </span></span>
 <span><span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">gcdata</span>, reduction <span class="op">=</span> <span class="st">"umap"</span>, group.by <span class="op">=</span> <span class="st">"seurat_clusters"</span><span class="op">)</span></span>
 <span><span class="va">p2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">gcdata</span>, reduction <span class="op">=</span> <span class="st">"umap"</span>, group.by <span class="op">=</span> <span class="st">"tech"</span><span class="op">)</span></span>
 <span><span class="va">p1</span> <span class="op">+</span> <span class="va">p2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_Seurat2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Individually Visualize each technology dataset.</span></span>
+<span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">gcdata</span>, reduction <span class="op">=</span> <span class="st">"umap"</span>, split.by <span class="op">=</span> <span class="st">"tech"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_Seurat2-2.png" class="img-fluid" width="672"></p>
 </div>
@@ -1510,27 +1187,26 @@ Elapsed time: 0 seconds</code></pre>
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ari</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span>, <span class="va">tech</span>, <span class="va">seurat_clusters</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ari</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">[[</span><span class="op">]</span><span class="op">]</span>, <span class="va">tech</span>, <span class="va">seurat_clusters</span><span class="op">)</span></span>
 <span><span class="va">ari</span><span class="op">$</span><span class="va">tech</span> <span class="op">&lt;-</span> <span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/mapvalues.html">mapvalues</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">tech</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"celseq"</span>, <span class="st">"celseq2"</span>, <span class="st">"fluidigmc1"</span>, <span class="st">"smartseq2"</span><span class="op">)</span>, to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/fossil/man/rand.index.html">adj.rand.index</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">tech</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">seurat_clusters</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2728</code></pre>
+<pre><code>[1] 0.29663</code></pre>
 </div>
 </div>
 <section id="differential-gene-expression-and-visualization" class="level3" data-number="11.4.1"><h3 data-number="11.4.1" class="anchored" data-anchor-id="differential-gene-expression-and-visualization">
 <span class="header-section-number">11.4.1</span> Differential gene expression and visualization</h3>
-<p>We can also identify conserved marker genes across the batches. Differential gene expression is done across each batch, and the p-values are combined. (requires <code>metap</code> package installation).</p>
+<p>We can also identify conserved marker genes across the batches. Differential gene expression is done across each batch, and the p-values are combined. (requires <code>metap</code> package installation). Note that we use the original expression data in all visualization and DE tests. We should never use values from the integrated data in DE tests, as they violate assumptions of independence among samples that are required for DE tests!</p>
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/SplitLayers.html">JoinLayers</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">)</span></span>
-<span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindConservedMarkers.html">FindConservedMarkers</a></span><span class="op">(</span><span class="va">gcdata</span>, ident.1 <span class="op">=</span> <span class="fl">0</span>, grouping.var <span class="op">=</span> <span class="st">"tech"</span>, assay <span class="op">=</span> <span class="st">"RNA"</span>, print.bar <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindConservedMarkers.html">FindConservedMarkers</a></span><span class="op">(</span><span class="va">gcdata</span>, ident.1 <span class="op">=</span> <span class="fl">0</span>, grouping.var <span class="op">=</span> <span class="st">"tech"</span>, assay <span class="op">=</span> <span class="st">"RNA"</span>, print.bar <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Testing group fluidigmc1: (0) vs (1, 9, 8, 5, 3, 11, 4, 2, 14, 7, 6, 13, 10, 15, 12)</code></pre>
+<pre><code>Testing group celseq: (0) vs (3, 2, 1, 4, 5, 7, 6, 8)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>For a (much!) faster implementation of the Wilcoxon Rank Sum Test,
@@ -1544,30 +1220,30 @@ efficient implementation (no further action necessary).
 This message will be shown once per session</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Testing group celseq: (0) vs (4, 1, 10, 12, 11, 3, 6, 2, 8, 5, 13, 9, 7, 14)</code></pre>
+<pre><code>Testing group celseq2: (0) vs (2, 3, 6, 7, 1, 4, 5, 8)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Testing group celseq2: (0) vs (3, 14, 6, 10, 1, 4, 11, 5, 2, 15, 7, 12, 8, 9, 13)</code></pre>
+<pre><code>Testing group fluidigmc1: (0) vs (2, 1, 4, 7, 3, 6, 5, 8)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Testing group smartseq2: (0) vs (7, 2, 4, 5, 3, 8, 1, 6, 11, 13, 9, 14, 15, 12, 10)</code></pre>
+<pre><code>Testing group smartseq2: (0) vs (1, 5, 4, 6, 3, 2, 7)</code></pre>
 </div>
-<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">markers</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">markers</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        fluidigmc1_p_val fluidigmc1_avg_log2FC fluidigmc1_pct.1 fluidigmc1_pct.2 fluidigmc1_p_val_adj celseq_p_val celseq_avg_log2FC celseq_pct.1 celseq_pct.2 celseq_p_val_adj celseq2_p_val
-ADCYAP1       1.8084e-82                2.5378            0.957            0.210           6.0822e-78  1.2992e-100            4.5213        0.776        0.060       4.3697e-96   1.9710e-177
-MAFA          9.7556e-71                3.3517            0.760            0.072           3.2811e-66  3.0290e-119            5.2347        0.966        0.108      1.0188e-114   4.9483e-207
-WSCD2         3.8400e-50                2.9897            0.597            0.067           1.2915e-45   8.4615e-75            6.3746        0.414        0.007       2.8458e-70   4.7006e-171
-CYYR1         3.7322e-52                3.5740            0.635            0.072           1.2552e-47   4.0528e-44            4.1326        0.379        0.030       1.3631e-39   2.1459e-125
-SAMD11        3.0785e-71                3.6260            0.893            0.215           1.0354e-66   6.4422e-66            4.3544        0.526        0.038       2.1667e-61    1.9511e-33
-LRRTM3        5.8711e-47                4.6925            0.545            0.049           1.9746e-42   1.2573e-07            2.9436        0.103        0.018       4.2287e-03   9.8492e-118
-        celseq2_avg_log2FC celseq2_pct.1 celseq2_pct.2 celseq2_p_val_adj smartseq2_p_val smartseq2_avg_log2FC smartseq2_pct.1 smartseq2_pct.2 smartseq2_p_val_adj   max_pval minimump_p_val
-ADCYAP1             3.0496         0.904         0.155       6.6289e-173      0.0000e+00               4.8627           0.951           0.076          0.0000e+00 1.8084e-82     0.0000e+00
-MAFA                3.4302         0.985         0.174       1.6643e-202      0.0000e+00               6.3772           0.892           0.033          0.0000e+00 9.7556e-71     0.0000e+00
-WSCD2               3.6747         0.661         0.057       1.5810e-166     4.2769e-290               6.7790           0.760           0.033         1.4385e-285 3.8400e-50    1.7108e-289
-CYYR1               2.4830         0.646         0.085       7.2174e-121     3.6204e-254               4.6442           0.801           0.059         1.2176e-249 4.0528e-44    1.4481e-253
-SAMD11              2.1395         0.210         0.032        6.5622e-29     1.2463e-223               4.5995           0.843           0.098         4.1916e-219 1.9511e-33    4.9851e-223
-LRRTM3              3.8726         0.472         0.042       3.3126e-113     2.0788e-209               7.0461           0.502           0.010         6.9917e-205 1.2573e-07    8.3153e-209</code></pre>
+<pre><code>       celseq_p_val celseq_avg_log2FC celseq_pct.1 celseq_pct.2 celseq_p_val_adj celseq2_p_val celseq2_avg_log2FC celseq2_pct.1 celseq2_pct.2 celseq2_p_val_adj fluidigmc1_p_val fluidigmc1_avg_log2FC
+IRX2     1.8435e-64            4.3477        0.921        0.090       6.2002e-60    5.6331e-52             2.5731         0.974         0.233        1.8946e-47       9.5921e-58                2.9715
+GCG      1.5874e-38            4.4595        0.987        0.833       5.3389e-34    1.6633e-48             2.9664         1.000         1.000        5.5941e-44       1.6438e-62                3.8328
+TTR      3.7735e-40            4.0309        0.987        0.851       1.2691e-35    2.1670e-49             2.5407         1.000         1.000        7.2884e-45       6.0723e-56                2.5704
+PCSK2    1.4578e-42            3.5741        0.987        0.495       4.9030e-38    1.3960e-43             1.9711         1.000         0.938        4.6952e-39       2.1342e-32                1.5479
+F10      2.7709e-25            3.8108        0.447        0.050       9.3193e-21    3.5541e-35             2.4476         0.728         0.142        1.1954e-30       1.8710e-41                2.1900
+CRYBA2   4.4204e-51            4.4266        0.974        0.250       1.4867e-46    1.8107e-40             2.3144         0.921         0.308        6.0901e-36       2.3536e-32                2.2265
+       fluidigmc1_pct.1 fluidigmc1_pct.2 fluidigmc1_p_val_adj smartseq2_p_val smartseq2_avg_log2FC smartseq2_pct.1 smartseq2_pct.2 smartseq2_p_val_adj   max_pval minimump_p_val
+IRX2              0.903            0.149           3.2261e-53      2.6683e-79               4.6777           0.932           0.079          8.9741e-75 5.6331e-52     1.0673e-78
+GCG               1.000            0.961           5.5287e-58      1.6148e-78               5.7615           1.000           0.979          5.4311e-74 1.5874e-38     6.4592e-78
+TTR               1.000            0.927           2.0423e-51      3.3401e-78               3.9099           1.000           0.986          1.1234e-73 3.7735e-40     1.3360e-77
+PCSK2             1.000            0.860           7.1781e-28      1.4128e-70               2.8320           1.000           0.664          4.7516e-66 2.1342e-32     5.6512e-70
+F10               0.764            0.132           6.2926e-37      2.7110e-69               3.5655           0.968           0.304          9.1180e-65 2.7709e-25     1.0844e-68
+CRYBA2            0.944            0.449           7.9158e-28      4.4701e-69               4.5109           0.986           0.546          1.5034e-64 2.3536e-32     1.7880e-68</code></pre>
 </div>
 </div>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
@@ -1598,7 +1274,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData</a></span><span class="op">(</span><span class="va">gcdata</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">)</span>, do.center <span class="op">=</span> <span class="cn">T</span>, do.scale <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gcdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData</a></span><span class="op">(</span><span class="va">gcdata</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">gcdata</span><span class="op">)</span>, do.center <span class="op">=</span> <span class="cn">T</span>, do.scale <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Centering data matrix</code></pre>
@@ -1606,7 +1282,7 @@ Answer
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Different features in new layer data than already exists for scale.data</code></pre>
 </div>
-<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DoHeatmap.html">DoHeatmap</a></span><span class="op">(</span><span class="va">gcdata</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">markers</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, group.by <span class="op">=</span> <span class="st">"tech"</span>, disp.max <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DoHeatmap.html">DoHeatmap</a></span><span class="op">(</span><span class="va">gcdata</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">markers</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>, group.by <span class="op">=</span> <span class="st">"tech"</span>, disp.max <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_Seurat4-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1620,7 +1296,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"GCG"</span>, <span class="st">"INS"</span>, <span class="st">"SST"</span>, <span class="st">"PPY"</span>, <span class="st">"PRSS1"</span>, <span class="st">"KRT19"</span>, <span class="st">"PECAM1"</span>, <span class="st">"COL1A1"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"GCG"</span>, <span class="st">"INS"</span>, <span class="st">"SST"</span>, <span class="st">"PPY"</span>, <span class="st">"PRSS1"</span>, <span class="st">"KRT19"</span>, <span class="st">"PECAM1"</span>, <span class="st">"COL1A1"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html">FeaturePlot</a></span><span class="op">(</span><span class="va">gcdata</span>, <span class="va">genes</span>, ncol <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell-output-display">
@@ -1631,14 +1307,14 @@ Answer
 </div>
 </section></section><section id="batch-correction-integrative-non-negative-matrix-factorization-nmf" class="level2" data-number="11.5"><h2 data-number="11.5" class="anchored" data-anchor-id="batch-correction-integrative-non-negative-matrix-factorization-nmf">
 <span class="header-section-number">11.5</span> Batch correction: integrative non-negative matrix factorization (NMF)</h2>
-<p>Here we use integrative non-negative matrix factorization to see to what extent it can remove potential batch effects.</p>
+<p>Here we use integrative non-negative matrix factorization (NMF/LIGER) to see to what extent it can remove potential batch effects.</p>
 <p>The important parameters in the batch correction are the number of factors (k), the penalty parameter (lambda), and the clustering resolution. The number of factors sets the number of factors (consisting of shared and dataset-specific factors) used in factorizing the matrix. The penalty parameter sets the balance between factors shared across the batches and factors specific to the individual batches. The default setting of lambda=5.0 is usually used by the Macosko lab. Resolution=1.0 is used in the Louvain clustering of the shared neighbor factors that have been quantile normalized.</p>
 <div class="cell">
 <div class="code-with-filename">
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb214"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ob.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"celseq"</span> <span class="op">=</span> <span class="va">celseq</span>, <span class="st">"celseq2"</span> <span class="op">=</span> <span class="va">celseq2</span>, <span class="st">"fluidigmc1"</span> <span class="op">=</span> <span class="va">fluidigmc1</span>, <span class="st">"smartseq2"</span> <span class="op">=</span> <span class="va">smartseq2</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">ob.list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"celseq"</span> <span class="op">=</span> <span class="va">celseq</span>, <span class="st">"celseq2"</span> <span class="op">=</span> <span class="va">celseq2</span>, <span class="st">"fluidigmc1"</span> <span class="op">=</span> <span class="va">fluidigmc1</span>, <span class="st">"smartseq2"</span> <span class="op">=</span> <span class="va">smartseq2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create a LIGER object with raw counts data from each batch.</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://welch-lab.github.io/liger/">rliger</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1650,7 +1326,7 @@ We recommand you backup your old analysis before overwriting any existing result
 
 `readLiger()` is provided for reading an RDS file storing an old object and it converts the object to the up-to-date structure.</code></pre>
 </div>
-<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/createLiger.html">createLiger</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">ob.list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Layers.html">LayerData</a></span><span class="op">(</span><span class="va">data</span><span class="op">[[</span><span class="st">'RNA'</span><span class="op">]</span><span class="op">]</span>, <span class="st">'counts'</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/createLiger.html">createLiger</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">ob.list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Layers.html">LayerData</a></span><span class="op">(</span><span class="va">data</span><span class="op">[[</span><span class="st">'RNA'</span><span class="op">]</span><span class="op">]</span>, <span class="st">'counts'</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ calculating QC for dataset "celseq"</code></pre>
 </div>
@@ -1699,7 +1375,7 @@ We recommand you backup your old analysis before overwriting any existing result
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Removing missing in dataset: "smartseq2"</code></pre>
 </div>
-<div class="sourceCode" id="cb233"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Normalize gene expression for each batch.</span></span>
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Normalize gene expression for each batch.</span></span>
 <span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu">rliger</span><span class="fu">::</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/normalize.html">normalize</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>ℹ Normalizing datasets "celseq"</code></pre>
@@ -1729,34 +1405,22 @@ We recommand you backup your old analysis before overwriting any existing result
 ℹ Normalizing datasets "celseq"
 ✔ Normalizing datasets "celseq" ... done</code></pre>
 </div>
-<div class="sourceCode" id="cb241"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Find variable genes for LIGER analysis.</span></span>
-<span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/selectGenes.html">selectGenes</a></span><span class="op">(</span><span class="va">data.liger</span>, var.thresh <span class="op">=</span> <span class="fl">0.1</span>, do.plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Find variable genes for LIGER analysis. Identify variable genes that are variable across most samples.</span></span>
+<span><span class="va">var.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SelectIntegrationFeatures.html">SelectIntegrationFeatures</a></span><span class="op">(</span><span class="va">ob.list</span>, nfeatures <span class="op">=</span> <span class="fl">2000</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, fvf.nfeatures <span class="op">=</span> <span class="fl">2000</span>, selection.method <span class="op">=</span> <span class="st">"vst"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: The `var.thresh` argument of `selectGenes.liger()` is deprecated as of rliger 1.99.0.
-ℹ Please use the `thresh` argument instead.
-ℹ The deprecated feature was likely used in the rliger package.
-  Please report the issue at &lt;https://github.com/welch-lab/liger/issues&gt;.</code></pre>
+<pre><code>No variable features found for object1 in the object.list. Running FindVariableFeatures ...
+Finding variable features for layer counts
+No variable features found for object2 in the object.list. Running FindVariableFeatures ...
+Finding variable features for layer counts
+No variable features found for object3 in the object.list. Running FindVariableFeatures ...
+Finding variable features for layer counts
+No variable features found for object4 in the object.list. Running FindVariableFeatures ...
+Finding variable features for layer counts</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The `do.plot` argument of `selectGenes.liger()` is deprecated as of rliger 1.99.0.
-ℹ Ignored.
-ℹ The deprecated feature was likely used in the rliger package.
-  Please report the issue at &lt;https://github.com/welch-lab/liger/issues&gt;.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Selecting variable features for dataset "celseq"
-✔ ... 3885 features selected out of 15217 shared features.
-ℹ Selecting variable features for dataset "celseq2"
-✔ ... 6990 features selected out of 15217 shared features.
-ℹ Selecting variable features for dataset "fluidigmc1"
-✔ ... 14985 features selected out of 15217 shared features.
-ℹ Selecting variable features for dataset "smartseq2"
-✔ ... 14909 features selected out of 15217 shared features.
-✔ Finally 15170 shared variable features are selected.</code></pre>
-</div>
-<div class="sourceCode" id="cb245"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/liger-class.html">varFeatures</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span><span class="op">@</span><span class="va">varFeatures</span> <span class="op">&lt;-</span> <span class="va">var.genes</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/liger-class.html">varFeatures</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 15170</code></pre>
+<pre><code>[1] 2000</code></pre>
 </div>
 </div>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
@@ -1789,43 +1453,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb247"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/scaleNotCenter.html">scaleNotCenter</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Scaling dataset "celseq"</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Scaling dataset "celseq" ... done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Scaling dataset "celseq2"</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Scaling dataset "celseq2" ... done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Scaling dataset "fluidigmc1"</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Scaling dataset "fluidigmc1" ... done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Scaling dataset "smartseq2"</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Scaling dataset "smartseq2" ... done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/scaleNotCenter.html">scaleNotCenter</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1862,7 +1490,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb260"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/runIntegration.html">runIntegration</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/runIntegration.html">runIntegration</a></span><span class="op">(</span><span class="va">data.liger</span>, k <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1874,23 +1502,14 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb261"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/ligerDataset-class.html">getMatrix</a></span><span class="op">(</span><span class="va">data.liger</span>, <span class="st">"H"</span><span class="op">)</span><span class="op">$</span><span class="va">celseq</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]   20 1004</code></pre>
-</div>
-<div class="sourceCode" id="cb263"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/ligerDataset-class.html">getMatrix</a></span><span class="op">(</span><span class="va">data.liger</span>, <span class="st">"V"</span><span class="op">)</span><span class="op">$</span><span class="va">celseq</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 15170    20</code></pre>
-</div>
-<div class="sourceCode" id="cb265"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/ligerDataset-class.html">getMatrix</a></span><span class="op">(</span><span class="va">data.liger</span>, <span class="st">"W"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 15170    20</code></pre>
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/ligerDataset-class.html">getMatrix</a></span><span class="op">(</span><span class="va">data.liger</span>, <span class="st">"H"</span><span class="op">)</span><span class="op">$</span><span class="va">celseq</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/ligerDataset-class.html">getMatrix</a></span><span class="op">(</span><span class="va">data.liger</span>, <span class="st">"V"</span><span class="op">)</span><span class="op">$</span><span class="va">celseq</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/ligerDataset-class.html">getMatrix</a></span><span class="op">(</span><span class="va">data.liger</span>, <span class="st">"W"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
-<p>Next, do clustering of cells in shared nearest factor space.</p>
+<p>Next, do normalization and clustering of cells in shared nearest factor space.</p>
 <div class="icon callout callout-style-default callout-question no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1919,23 +1538,8 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb267"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/quantileNorm.html">quantileNorm</a></span><span class="op">(</span><span class="va">data.liger</span>, resolution <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Using largest dataset of recommended type as reference: "smartseq2" with 2394 cells</code></pre>
-</div>
-<div class="sourceCode" id="cb269"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/runCluster.html">runCluster</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ leiden clustering on quantile normalized cell factor loadings</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ leiden clustering on quantile normalized cell factor loadings ... Found 33 clusters.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ cellMeta variable "leiden_cluster" is now set as default.</code></pre>
+<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/quantileNorm.html">quantileNorm</a></span><span class="op">(</span><span class="va">data.liger</span>, resolution <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/runCluster.html">runCluster</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1959,10 +1563,7 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb274"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/ligerDataset-class.html">getMatrix</a></span><span class="op">(</span><span class="va">data.liger</span>, <span class="st">"H.norm"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 6321   20</code></pre>
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/ligerDataset-class.html">getMatrix</a></span><span class="op">(</span><span class="va">data.liger</span>, <span class="st">"H.norm"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1999,54 +1600,12 @@ Answer
 <div class="code-with-filename-file">
 <pre><strong>R</strong></pre>
 </div>
-<div class="sourceCode" id="cb276"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/runUMAP.html">runUMAP</a></span><span class="op">(</span><span class="va">data.liger</span>, n_neighbors <span class="op">=</span> <span class="fl">15</span>, min_dist <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The `n_neighbors` argument of `runUMAP()` is deprecated as of rliger 1.99.0.
-ℹ Please use the `nNeighbors` argument instead.
-ℹ The deprecated feature was likely used in the rliger package.
-  Please report the issue at &lt;https://github.com/welch-lab/liger/issues&gt;.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The `min_dist` argument of `runUMAP()` is deprecated as of rliger 1.99.0.
-ℹ Please use the `minDist` argument instead.
-ℹ The deprecated feature was likely used in the rliger package.
-  Please report the issue at &lt;https://github.com/welch-lab/liger/issues&gt;.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Generating UMAP on quantile normalized cell factor loadings</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Generating UMAP on quantile normalized cell factor loadings ... done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ DimRed "UMAP" is now set as default.</code></pre>
-</div>
-<div class="sourceCode" id="cb283"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/plotDimRed.html">plotByDatasetAndCluster</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Plotting feature "dataset" on 6321 cells</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Plotting feature "dataset" on 6321 cells ... done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Plotting feature "leiden_cluster" on 6321 cells</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Plotting feature "leiden_cluster" on 6321 cells ... done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="sourceCode" id="cb290"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger6b-1.png" class="img-fluid" width="672"></p>
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">data.liger</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/runUMAP.html">runUMAP</a></span><span class="op">(</span><span class="va">data.liger</span>, n_neighbors <span class="op">=</span> <span class="fl">15</span>, min_dist <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/plotDimRed.html">plotByDatasetAndCluster</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span> </span>
+<span><span class="va">p</span></span>
+<span></span>
+<span><span class="va">clusterUmapList</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/plotDimRed.html">plotClusterDimRed</a></span><span class="op">(</span><span class="va">data.liger</span>, splitBy <span class="op">=</span> <span class="st">"dataset"</span>, title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">plot_grid</span><span class="op">(</span>plotlist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">clusterUmapList</span><span class="op">)</span>, align <span class="op">=</span> <span class="st">"hv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -2054,130 +1613,23 @@ Answer
 </div>
 </div>
 </div>
-<p>Here is the end of the LIGER analysis:</p>
+<p>Finally, let’s look at the adjusted rand index between the clusters and technology, and also the genes that load the factors used in data integration.</p>
 <div class="cell">
-<div class="sourceCode" id="cb291"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Let's look to see how the adjusted rand index changed compared to using no batch correction.</span></span>
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Let's look to see how the adjusted rand index changed compared to using no batch correction.</span></span>
 <span><span class="va">tech</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/liger-class.html">cellMeta</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span><span class="op">$</span><span class="va">dataset</span></span>
 <span><span class="va">clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/liger-class.html">cellMeta</a></span><span class="op">(</span><span class="va">data.liger</span><span class="op">)</span><span class="op">$</span><span class="va">leiden_cluster</span></span>
 <span><span class="va">ari</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"tech"</span> <span class="op">=</span> <span class="va">tech</span>, <span class="st">"clusters"</span> <span class="op">=</span> <span class="va">clusters</span><span class="op">)</span></span>
 <span><span class="va">ari</span><span class="op">$</span><span class="va">tech</span> <span class="op">&lt;-</span> <span class="fu">plyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/plyr/man/mapvalues.html">mapvalues</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">tech</span>, from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"celseq"</span>, <span class="st">"celseq2"</span>, <span class="st">"fluidigmc1"</span>, <span class="st">"smartseq2"</span><span class="op">)</span>, to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/fossil/man/rand.index.html">adj.rand.index</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">tech</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">clusters</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.30721</code></pre>
-</div>
-<div class="sourceCode" id="cb293"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Look at factor loadings for each cell using plotFactors. </span></span>
-<span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/plotDimRed.html">plotFactorDimRed</a></span><span class="op">(</span><span class="va">data.liger</span>, factors <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Plotting feature "Factor_1" on 6321 cells</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Plotting feature "Factor_1" on 6321 cells ... done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Plotting feature "Factor_2" on 6321 cells</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Plotting feature "Factor_2" on 6321 cells ... done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Plotting feature "Factor_3" on 6321 cells</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Plotting feature "Factor_3" on 6321 cells ... done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Plotting feature "Factor_4" on 6321 cells</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Plotting feature "Factor_4" on 6321 cells ... done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Plotting feature "Factor_5" on 6321 cells</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Plotting feature "Factor_5" on 6321 cells ... done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$Factor_1</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger7-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-$Factor_2</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger7-2.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-$Factor_3</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger7-3.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-$Factor_4</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger7-4.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-$Factor_5</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger7-5.png" class="img-fluid" width="672"></p>
-</div>
-<div class="sourceCode" id="cb314"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Identify shared and batch-specific marker genes from liger factorization.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/fossil/man/rand.index.html">adj.rand.index</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">tech</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">ari</span><span class="op">$</span><span class="va">clusters</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Identify shared and batch-specific marker genes from liger factorization.</span></span>
 <span><span class="co"># Use the getFactorMarkers function and choose 2 datasets.</span></span>
-<span><span class="co"># Then plot some genes of interest using plotGene.</span></span>
-<span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/getFactorMarkers.html">getFactorMarkers</a></span><span class="op">(</span><span class="va">data.liger</span>, dataset1 <span class="op">=</span> <span class="st">"celseq2"</span>, dataset2 <span class="op">=</span> <span class="st">"smartseq2"</span>, num.genes <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The `num.genes` argument of `getFactorMarkers()` is deprecated as of rliger 1.99.0.
-ℹ Please use the `nGenes` argument instead.
-ℹ The deprecated feature was likely used in the rliger package.
-  Please report the issue at &lt;https://github.com/welch-lab/liger/issues&gt;.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Testing between {.val {dataset1}} and {.val {dataset2}} ■■■■■■■■■■■■■■■■■■■■■■■■          78% | ETA:  1s</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Testing between {.val {dataset1}} and {.val {dataset2}} ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100% | ETA:  0s</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="sourceCode" id="cb319"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/plotDimRed.html">plotGeneDimRed</a></span><span class="op">(</span><span class="va">data.liger</span>, features <span class="op">=</span> <span class="st">"INS"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>ℹ Plotting feature "INS" on 6321 cells</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ Plotting feature "INS" on 6321 cells ... done</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="Lab6_batch_correction_files/figure-html/batchcorrect_liger7-6.png" class="img-fluid" width="672"></p>
-</div>
+<span><span class="co"># Then plot some genes of interest using plotGene functions.</span></span>
+<span><span class="va">markers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://welch-lab.github.io/liger/reference/getFactorMarkers.html">getFactorMarkers</a></span><span class="op">(</span><span class="va">data.liger</span>, dataset1 <span class="op">=</span> <span class="st">"celseq2"</span>, dataset2 <span class="op">=</span> <span class="st">"smartseq2"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/plotDimRed.html">plotGeneDimRed</a></span><span class="op">(</span><span class="va">data.liger</span>, features <span class="op">=</span> <span class="st">"INS"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Look at factor loadings in factor 9, celseq2 vs smartseq2.</span></span>
+<span><span class="fu"><a href="https://welch-lab.github.io/liger/reference/plotGeneLoadings.html">plotGeneLoadings</a></span><span class="op">(</span><span class="va">data.liger</span>, markerTable <span class="op">=</span> <span class="va">markers</span>, useFactor <span class="op">=</span> <span class="fl">9</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="additional-exploration" class="level2" data-number="11.6"><h2 data-number="11.6" class="anchored" data-anchor-id="additional-exploration">
 <span class="header-section-number">11.6</span> Additional exploration</h2>
@@ -2189,7 +1641,7 @@ $Factor_5</code></pre>
 <p>Within your RStudio session, install <a href="https://github.com/theislab/kBET">k-nearest neighbour batch effect test</a> and learn how to use its functionality to quantify batch effects in the pancreatic data.</p>
 </section></section><section id="acknowledgements" class="level2" data-number="11.7"><h2 data-number="11.7" class="anchored" data-anchor-id="acknowledgements">
 <span class="header-section-number">11.7</span> Acknowledgements</h2>
-<p>This document builds off a tutorial from the <a href="https://www.dropbox.com/s/aji4ielg8gc70vj/multiple_pancreas_workflow.R?dl=1">Seurat website</a> and a tutorial from the <a href="http://htmlpreview.github.io/?https://github.com/welch-lab/liger/blob/master/vignettes/Integrating_multi_scRNA_data.html">LIGER website</a>.</p>
+<p>This document builds off a tutorial from the <a href="https://www.dropbox.com/s/aji4ielg8gc70vj/multiple_pancreas_workflow.R?dl=1">Seurat website</a> and a tutorial from the <a href="https://welch-lab.github.io/liger/articles/Integrating_multi_scRNA_data.html">LIGER website</a>.</p>
 </section><section id="session-info" class="level2" data-number="11.8"><h2 data-number="11.8" class="anchored" data-anchor-id="session-info">
 <span class="header-section-number">11.8</span> Session info</h2>
 <div class="cell">
@@ -2204,7 +1656,7 @@ $Factor_5</code></pre>
  collate  en_US.UTF-8
  ctype    en_US.UTF-8
  tz       Europe/Paris
- date     2024-11-03
+ date     2024-11-06
  pandoc   2.19.2 @ /opt/homebrew/bin/ (via rmarkdown)
 
 ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -2232,6 +1684,7 @@ $Factor_5</code></pre>
  fastDummies        1.7.4      2024-08-16 [1] CRAN (R 4.4.0)
  fastmap            1.2.0      2024-05-15 [1] CRAN (R 4.4.0)
  fitdistrplus       1.2-1      2024-07-12 [1] CRAN (R 4.4.0)
+ FNN                1.1.4.1    2024-09-22 [1] CRAN (R 4.4.1)
  foreign          * 0.8-86     2023-11-28 [1] CRAN (R 4.4.1)
  fossil           * 0.4.0      2020-03-23 [1] CRAN (R 4.4.0)
  fs                 1.6.4      2024-04-25 [1] CRAN (R 4.4.0)
@@ -2263,7 +1716,6 @@ $Factor_5</code></pre>
  lattice            0.22-6     2024-03-20 [1] CRAN (R 4.4.1)
  lazyeval           0.2.2      2019-03-15 [1] CRAN (R 4.4.0)
  leiden             0.4.3.1    2023-11-17 [1] CRAN (R 4.4.0)
- leidenAlg          1.1.4      2024-10-17 [1] CRAN (R 4.4.1)
  lifecycle          1.0.4      2023-11-07 [1] CRAN (R 4.4.0)
  limma              3.60.6     2024-10-02 [1] Bioconduc~
  listenv            0.9.1      2024-01-29 [1] CRAN (R 4.4.0)
@@ -2310,7 +1762,6 @@ $Factor_5</code></pre>
  Rcpp               1.0.13     2024-07-17 [1] CRAN (R 4.4.0)
  RcppAnnoy          0.0.22     2024-01-23 [1] CRAN (R 4.4.0)
  RcppHNSW           0.6.0      2024-02-04 [1] CRAN (R 4.4.0)
- RcppPlanc          1.0.0      2024-10-29 [1] https://welch-lab.r-universe.dev (R 4.4.1)
  Rdpack             2.6.1      2024-08-06 [1] CRAN (R 4.4.0)
  remotes            2.5.0      2024-03-17 [1] CRAN (R 4.4.0)
  reshape2           1.4.4      2020-04-09 [1] CRAN (R 4.4.0)
@@ -2325,7 +1776,6 @@ $Factor_5</code></pre>
  sandwich           3.1-1      2024-09-15 [1] CRAN (R 4.4.1)
  scales             1.3.0      2023-11-28 [1] CRAN (R 4.4.0)
  scattermore        1.2        2023-06-12 [1] CRAN (R 4.4.0)
- sccore             1.0.5      2024-02-23 [1] CRAN (R 4.4.0)
  sctransform        0.4.1      2023-10-19 [1] CRAN (R 4.4.0)
  sessioninfo        1.2.2      2021-12-06 [1] CRAN (R 4.4.0)
  Seurat           * 5.1.0      2024-05-10 [1] CRAN (R 4.4.0)

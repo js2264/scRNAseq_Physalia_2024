@@ -1,5 +1,5 @@
 ---
-slides: "Lecture6_pseudotime.pdf"
+slides: "Lecture7_pseudotime.pdf"
 ---
 
 # Lecture 7 - Trajectories and pseudotimes

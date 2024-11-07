@@ -1,0 +1,438 @@
+# Lab 7: Single-cell ATAC-seq analysis workflow
+
+```{r include=FALSE, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+::: {.callout-note icon='true'}
+
+## Notes
+
+The estimated time for this lab is around 1h10.
+
+:::
+
+::: {.callout-tip icon='true'}
+
+## Aims
+
+- Import cells from human PBMC scATACseq dataset
+- Perform scATACseq quality controls and checks 
+- Filter, normalize and plot PBMC scATACseq dataset
+- Compute gene activity scores, check known markers and annotate scATAC clusters
+- Perform differential peak accessibility analysis
+
+:::
+
+ATAC-seq data may be obtained in isolation using a single-cell ATAC-seq protocol (e.g. [10X scATACseq](https://support.10xgenomics.com/single-cell-atac)) or in combination with gene expression data using a single-cell multiome protocole (e.g. [10X multiome](https://www.10xgenomics.com/products/single-cell-multiome-atac-plus-gene-expression) and [SHARE-seq](https://pubmed.ncbi.nlm.nih.gov/33098772/)). 
+
+Several packages are currently avaialble to process scATAC-seq data in R. These include [Signac](https://satijalab.org/signac/index.html) and [ArchR](https://www.archrproject.com/bookdown/index.html#section). This lab will closely follow the [processing steps](https://satijalab.org/signac/articles/pbmc_vignette.html) outlined in `Signac`, which interfaces well with `Seurat` for single-cell analysis. 
+
+In this lab, we will process a PBMC single-cell ATAC-seq (scATAC-seq) dataset and perform preliminary analysis to assess quality of these data. The data for this lab comes from [10X Genomics](https://www.10xgenomics.com/resources/datasets/10-k-peripheral-blood-mononuclear-cells-pbm-cs-from-a-healthy-donor-1-standard-1-0-1). 
+The dataset contains roughly ~ 10,000 cells.
+
+## Process human PBMC dataset
+
+### Download data 
+
+Data comes from [10X Genomics](https://www.10xgenomics.com/resources/datasets/10-k-peripheral-blood-mononuclear-cells-pbm-cs-from-a-healthy-donor-1-standard-1-0-1). Direct download links are provided below.
+
+**Download the files related to scATACseq of all human PBMC cells.**
+
+```{r, eval = TRUE, filename = "R"}
+dir.create('scATAC', showWarnings = FALSE)
+options(timeout=1000)
+download.file("https://cf.10xgenomics.com/samples/cell-atac/1.0.1/atac_v1_pbmc_10k/atac_v1_pbmc_10k_filtered_peak_bc_matrix.h5", "scATAC/atac_v1_pbmc_10k_filtered_peak_bc_matrix.h5")
+download.file("https://cf.10xgenomics.com/samples/cell-atac/1.0.1/atac_v1_pbmc_10k/atac_v1_pbmc_10k_peaks.bed", "scATAC/atac_v1_pbmc_10k_peaks.bed")
+download.file("https://cf.10xgenomics.com/samples/cell-atac/1.0.1/atac_v1_pbmc_10k/atac_v1_pbmc_10k_singlecell.csv", "scATAC/atac_v1_pbmc_10k_singlecell.csv")
+download.file("https://cf.10xgenomics.com/samples/cell-atac/1.0.1/atac_v1_pbmc_10k/atac_v1_pbmc_10k_fragments.tsv.gz", "scATAC/atac_v1_pbmc_10k_fragments.tsv.gz")
+download.file("https://cf.10xgenomics.com/samples/cell-atac/1.0.1/atac_v1_pbmc_10k/atac_v1_pbmc_10k_fragments.tsv.gz.tbi", "scATAC/atac_v1_pbmc_10k_fragments.tsv.gz.tbi")
+```
+
+```{code}
+trying URL 'https://cf.10xgenomics.com/samples/cell-atac/1.0.1/atac_v1_pbmc_10k/atac_v1_pbmc_10k_filtered_peak_bc_matrix.h5'
+Content type 'binary/octet-stream' length 79995014 bytes (76.3 MB)
+==================================================
+downloaded 76.3 MB
+
+trying URL 'https://cf.10xgenomics.com/samples/cell-atac/1.0.1/atac_v1_pbmc_10k/atac_v1_pbmc_10k_peaks.bed'
+Content type 'binary/octet-stream' length 2145757 bytes (2.0 MB)
+==================================================
+downloaded 2.0 MB
+
+trying URL 'https://cf.10xgenomics.com/samples/cell-atac/1.0.1/atac_v1_pbmc_10k/atac_v1_pbmc_10k_singlecell.csv'
+Content type 'text/csv' length 35207776 bytes (33.6 MB)
+==================================================
+downloaded 33.6 MB
+
+trying URL 'https://cf.10xgenomics.com/samples/cell-atac/1.0.1/atac_v1_pbmc_10k/atac_v1_pbmc_10k_fragments.tsv.gz'
+Content type 'text/tab-separated-values' length 1960680306 bytes (1869.9 MB)
+==================================================
+downloaded 1869.9 MB
+```
+
+### Import data 
+
+Notice how the count matrix is in a `.h5` format. We have already encountered 
+this format in [Lab3](../day2/Lab3_Rbioc.qmd). Back then, we imported 
+it with `DropletUtils::read10xCounts`. 
+
+::: {.callout-question .icon .callout-note}
+
+Does this function work here?
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+
+```{r, eval = TRUE, filename = "R"}
+DropletUtils::read10xCounts("scATAC/atac_v1_pbmc_10k_filtered_peak_bc_matrix.h5")
+```
+
+:::
+
+:::
+
+This works because 10X Genomics make sure to distribute files in `.h5` format 
+that are consistent accross single-cell sequencing methodologies. 
+
+However, the `SingleCellExperiment` obtained with this approach is not 
+the most convenient, as it cannot natively leverage `fragments` file (see below). 
+
+Instead, we can create a `Signac` object, a flavour of `Seurat` objects. 
+
+::: {.callout-question .icon .callout-note}
+
+Import counts matrix and feature annotations using an import function provided by `Seurat`.
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r, eval = TRUE, filename = "R"}
+library(Seurat)
+library(Signac)
+library(rtracklayer)
+library(stringr)
+cnts <- Read10X_h5('scATAC/atac_v1_pbmc_10k_filtered_peak_bc_matrix.h5')
+features <- import('scATAC/atac_v1_pbmc_10k_peaks.bed')
+features$peak <- as.character(features) |> str_replace(':', '-')
+metadata <- read.csv(
+  file = "scATAC/atac_v1_pbmc_10k_singlecell.csv",
+  header = TRUE,
+  row.names = 1
+)
+```
+
+:::
+
+How many accessible genomic segments were found in this dataset?
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r, eval = TRUE, filename = "R"}
+features
+length(features)
+```
+
+:::
+
+:::
+
+
+### Create a `Seurat` object 
+
+The next step is to aggregate `counts` and `features` into a `ChromatinAssay`, 
+a scATAC-seq flavour of `Seurat` standard `Assays`.
+The documentation for `?CreateChromatinAssay` indicates that the user can provide: 
+
+1. A `fragments` file, corresponding to the full list of all unique fragments mapped across all single cells. 
+2. Genomic annotations to the `ChromatinAssay`, corresponding to gene annotations, 
+promoter positions, etc. Such annotations can be generated from Ensembl. 
+
+::: {.callout-question .icon .callout-note}
+
+Generate human annotations from Ensembl using a parsing function from `Seurat`.
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r, eval = TRUE, filename = "R"}
+## - Get human gene annotations (hg19/GRCh37) to feed it into the future `ChromatinAssay`
+BiocManager::install('EnsDb.Hsapiens.v75')
+annotations <- GetGRangesFromEnsDb(ensdb = EnsDb.Hsapiens.v75::EnsDb.Hsapiens.v75)
+seqlevelsStyle(annotations) <- 'UCSC'
+```
+
+:::
+
+Create a `ChromatinAssay` using `counts`, `features`, `fragments` and `annotations`.
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r, eval = TRUE, filename = "R"}
+## - Create Chromatin Assay
+assay <- Signac::CreateChromatinAssay(
+    counts = cnts,
+    ranges = features,
+    fragments = "scATAC/atac_v1_pbmc_10k_fragments.tsv.gz",
+    annotation = annotations,
+    genome = "hg19",
+    min.cells = 10, 
+    min.features = 10
+)
+assay
+```
+
+:::
+
+What are the dimensions of this object? Are they comparable to the count matrix? Comment.
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r, eval = TRUE, filename = "R"}
+dim(cnts)
+dim(assay)
+```
+
+:::
+
+:::
+
+It's finally time to wrap the `ChromatinAssay` into a `Seurat` standard object!
+This is done using the `CreateSeuratObject`, as already covered in [Lab6](../day3/Lab6_batch_correction.qmd)
+
+::: {.callout-question .icon .callout-note}
+
+Create a `Seurat` object from the `ChromatinAssay` object.
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r, eval = TRUE, filename = "R"}
+## - Create Seurat object
+PBMC <- Seurat::CreateSeuratObject(
+    counts = assay,
+    assay = 'ATAC', 
+    meta.data = metadata[metadata$is__cell_barcode == 1, ]
+)
+PBMC
+
+PBMC[['ATAC']]
+granges(PBMC)
+Annotation(PBMC)
+```
+
+:::
+
+:::
+
+### Check QCs 
+
+#### Cell-based QCs 
+
+The fraction of reads in peaks (FRiP) is a good indicator of how well each 
+cell was handled during scATACseq processing. 
+
+```{r, eval = TRUE, filename = "R"}
+PBMC$FRiP <- PBMC$peak_region_fragments / PBMC$passed_filters
+PBMC$nCount_ATAC <- colSums(GetAssayData(PBMC, layer = "counts"))
+PBMC$nFeature_ATAC <- colSums(GetAssayData(PBMC, layer = "counts") > 0)
+
+quantile(PBMC$FRiP, seq(0, 1, 0.1))
+quantile(PBMC$nCount_ATAC, seq(0, 1, 0.1))
+quantile(PBMC$nFeature_ATAC, seq(0, 1, 0.1))
+```
+
+#### Peaks-based QCs 
+
+::: {.callout-question .icon .callout-note}
+
+Which analysis are the `fragments` required for, exactly?
+
+Could we still perform normalization/clustering/annotation without them? And motif enrichment analysis?
+
+Since we do have the `fragments` file at hand, most of the QC steps are 
+available (e.g. `TSSEnrichment`, `NucleosomeSignal` or fragment size distribution). 
+Let's go through them one by one. 
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r, eval = TRUE, filename = "R"}
+# compute nucleosome signal score per cell
+PBMC <- NucleosomeSignal(object = PBMC)
+PBMC
+
+# compute TSS enrichment score per cell
+PBMC <- Signac::TSSEnrichment(object = PBMC, fast = FALSE)
+PBMC
+```
+
+:::
+
+:::
+
+
+The `TSSPlot` function from `Signac` can be used to plot the fragment count per peak ~ TSS enrichment. 
+
+```{r, eval = TRUE, filename = "R"}
+PBMC$high.tss <- ifelse(PBMC$TSS.enrichment > 3.5, 'High', 'Low')
+TSSPlot(PBMC, group.by = 'high.tss') + NoLegend()
+PBMC$high.tss <- ifelse(PBMC$TSS.enrichment > 2.5, 'High', 'Low')
+TSSPlot(PBMC, group.by = 'high.tss') + NoLegend()
+```
+
+The `FragmentHistogram` function from `Signac` can be used to plot the fragment size distribution in peaks with different nucleosome signals. 
+
+::: {.callout-question .icon .callout-note}
+
+Group genomic loci by their nucleosome signal (> 4 or < 4) and plot the fragment size distribution.
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r, eval = TRUE, filename = "R"}
+PBMC$nucleosome_group <- ifelse(PBMC$nucleosome_signal > 4, 'NS > 4', 'NS < 4')
+FragmentHistogram(object = PBMC, group.by = 'nucleosome_group')
+```
+
+:::
+
+:::
+
+
+### Filter cells and features 
+
+Just like standard scRNAseq data, scATACseq data needs to be filtered to remove 
+low-quality cells and peaks. 
+
+::: {.callout-question .icon .callout-note}
+
+Filter the `Seurat` object (cells and features) as deemed appropriate.
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r, eval = TRUE, filename = "R"}
+## - Filter data 
+PBMC <- subset(PBMC, subset = nCount_ATAC > 3000 & nCount_ATAC < 100000) 
+PBMC <- subset(PBMC, subset = nFeature_ATAC > 1000 & nFeature_ATAC < 20000) 
+PBMC <- subset(PBMC, subset = FRiP > 0.30) 
+PBMC
+
+## - Remove peaks with low coverage
+PBMC <- PBMC[rowSums(GetAssayData(PBMC, layer = "counts")) > 10, ]
+PBMC <- PBMC[rowSums(GetAssayData(PBMC, layer = "counts") > 0) > 10, ]
+PBMC
+```
+
+:::
+
+:::
+
+
+### Dimensionality reduction and clustering
+
+Now that the dataset is filtered, we can proceed to data normalization, dimensionality reduction and clustering.
+Compared to scRNAseq, scATACseq data is much sparser and has a higher dimensionality. This has important implications for the choice of normalization and dimensionality reduction methods. scATACseq data are generally normalized using a `TF-IDF` normalization, which is implemented in the `RunTFIDF` function in `Signac`, and dimensionality reduction is performed using `LSI` (Latent Semantic Indexing) implemented in the `RunSVD` function.
+
+::: {.callout-question .icon .callout-note}
+
+Normalize then further reduce the dimensionality for visualization purposes.
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r, eval = TRUE, filename = "R"}
+## - Normalize data 
+PBMC <- RunTFIDF(PBMC) 
+
+## - Reduce dimensionality
+PBMC <- FindTopFeatures(PBMC, min.cutoff = 'q50') 
+PBMC <- RunSVD(PBMC) 
+
+## - Embed in 2D UMAP
+PBMC <- RunUMAP(object = PBMC, reduction = 'lsi', dims = 2:30)
+
+## - Cluster cells
+PBMC <- FindNeighbors(object = PBMC, reduction = 'lsi', dims = 2:30)
+PBMC <- FindClusters(object = PBMC, verbose = FALSE, algorithm = 3)
+
+## - Visualize data 
+DimPlot(PBMC, label = TRUE) + NoLegend()
+```
+
+:::
+
+
+What can you observe in the `UMAP` projection of the dataset? Comment on the separation of some cell types into different spatially-resolved clusters.
+
+
+:::
+
+
+## Compute gene activity scores
+
+Signac's `GeneActivity()` function require scATACseq fragment information. Since 
+we have them, we can estimate a gene activity score for each gene in the `annotations`.
+
+```{r, eval = TRUE, filename = "R"}
+gene.activities <- GeneActivity(PBMC)
+```
+
+We can now save this new object as an `Assay` in the `PBMC` object and normalize it.
+
+```{r, eval = TRUE, filename = "R"}
+PBMC[['RNA']] <- CreateAssayObject(counts = gene.activities)
+
+# - Normalize the new RNA assay.
+PBMC <- NormalizeData(object = PBMC, assay = 'RNA', normalization.method = 'LogNormalize', scale.factor = median(PBMC$nCount_RNA))
+PBMC
+```
+
+One can now visualize expression of individual markers across clusters to infer 
+cluster identity. 
+
+::: {.callout-question .icon .callout-note}
+
+Assess the expression of known markers across clusters, projecting the cells in a 2D UMAP.
+
+::: {.callout-answer .icon .callout-note collapse=true}
+
+```{r, eval = TRUE, filename = "R"}
+VlnPlot(
+  object = PBMC,
+  features = c(
+    'MS4A1', # B-cell
+    'CD3D', # T-cell
+    'NKG7', # NK cell
+    'TREM1' # Monocytes
+  ), 
+  assay = "RNA"
+)
+PBMC$annotation <- dplyr::case_when(
+  Idents(PBMC) %in% c(0, 5, 9, 12) ~ "Monocytes", 
+  Idents(PBMC) %in% c(1, 2, 3, 4, 7, 10) ~ "T-cells", 
+  Idents(PBMC) %in% c(6) ~ "NK-cells", 
+  Idents(PBMC) %in% c(8, 11) ~ "B-cells", 
+  Idents(PBMC) %in% c(13, 14) ~ "DC"
+)
+DimPlot(PBMC, group.by = 'annotation', label = TRUE) + NoLegend()
+```
+
+:::
+
+:::
+
+## Find peaks differentially accessible across clusters
+
+Finally, we can perform differential peak accessibility analysis to identify peaks that are differentially accessible between clusters. This is done using the `FindMarkers` function in `Signac`, which is similar to `FindAllMarkers` in `Seurat`.
+
+```{r, eval = TRUE, filename = "R"}
+Idents(PBMC) <- PBMC$annotation
+da_peaks <- FindMarkers(
+  object = PBMC,
+  ident.1 = "Monocytes",
+  ident.2 = "B-cells",
+  test.use = 'LR',
+  latent.vars = 'nCount_ATAC'
+)
+VlnPlot(
+  object = PBMC,
+  features = rownames(da_peaks)[1],
+  pt.size = 0.1,
+  idents = c("Monocytes","B-cells")
+)
+```
